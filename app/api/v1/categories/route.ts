@@ -1,0 +1,52 @@
+import { apiFetch } from "@/lib/api"
+import { type NextRequest, NextResponse } from "next/server"
+
+const API_BASE_URL = "https://uzbekfoodstuff.pythonanywhere.com/api/v1"
+
+export async function GET(request: NextRequest) {
+  try {
+    const authHeader = request.headers.get("authorization")
+
+    const response = await apiFetch(`/product/categories/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...(authHeader && { Authorization: authHeader }),
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch categories")
+    }
+
+    const data = await response.json()
+    return NextResponse.json(data)
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to fetch categories" }, { status: 500 })
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const authHeader = request.headers.get("authorization")
+    const body = await request.json()
+
+    const response = await apiFetch(`/product/categories/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(authHeader && { Authorization: authHeader }),
+      },
+      body: JSON.stringify(body),
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to create category")
+    }
+
+    const data = await response.json()
+    return NextResponse.json(data, { status: 201 })
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to create category" }, { status: 500 })
+  }
+}
