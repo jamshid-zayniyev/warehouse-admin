@@ -56,7 +56,7 @@ export default function LoginPage() {
         <div className="text-center space-y-4">
           <div>
             {/* <h1 className="flex items-center justify-center text-3xl font-bold text-gray-900"><Image src={logo} alt="logo" /></h1> */}
-            <p className="text-gray-600 mt-2">Amaar Plus</p>
+            <p className="text-gray-600 mt-2">{t("login.subtitle")}</p>
           </div>
         </div>
 
