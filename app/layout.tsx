@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: "Professional Content Management System",
   generator: "ATS",
   icons: {
-    icon: "/logo.png",
+    icon: "/amaar.png",
   },
 }
 
