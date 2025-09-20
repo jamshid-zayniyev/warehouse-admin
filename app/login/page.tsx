@@ -10,9 +10,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, Phone, Lock } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
-import logo from "../../public/amaar.png"
+// import logo from "../../public/amaar.png"
 import { useTranslation } from 'next-i18next'
-import Image from "next/image"
+// import Image from "next/image"
 
 export default function LoginPage() {
   const [phoneNumber, setPhoneNumber] = useState("")
@@ -55,7 +55,7 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center space-y-4">
           <div>
-            <h1 className="flex items-center justify-center text-3xl font-bold text-gray-900"><Image src={logo} alt="logo" /></h1>
+            {/* <h1 className="flex items-center justify-center text-3xl font-bold text-gray-900"><Image src={logo} alt="logo" /></h1> */}
             <p className="text-gray-600 mt-2">{t("login.subtitle")}</p>
           </div>
         </div>
