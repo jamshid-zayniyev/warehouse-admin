@@ -9,7 +9,7 @@ import { ColorsProvider } from "@/contexts/ColorsContext"
 import { I18nextProvider } from "react-i18next"
 
 export const metadata: Metadata = {
-  title: "Uzbek Foodstuff",
+  title: "Amaar plus",
   description: "Professional Content Management System",
   generator: "ATS",
   icons: {

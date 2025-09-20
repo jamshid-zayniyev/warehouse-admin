@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, Phone, Lock } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
-import logo from "../../public/Amaar Plus.png"
+import logo from "../../public/amaar.png"
 import { useTranslation } from 'next-i18next'
 import Image from "next/image"
 
@@ -134,7 +134,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div className="text-center text-sm text-gray-500">
-          <p>© 2025 Uzbek Foodstuff. {t("login.footer")}</p>
+          <p>© 2025 Amaar plus. {t("login.footer")}</p>
         </div>
       </div>
     </div>

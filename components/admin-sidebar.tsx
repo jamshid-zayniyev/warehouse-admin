@@ -25,8 +25,8 @@ import {
 } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { useTranslation } from 'next-i18next'
-import logo from '../public/Amaar Plus.png'
-import Image from "next/image"
+// import logo from '../public/amaar.png'
+// import Image from "next/image"
 const navigation = [
   {
     name: "Dashdashboard",
@@ -124,8 +124,8 @@ export function AdminSidebar() {
       >
         <div className="flex h-full flex-col">
           {/* Header */}
-          <div className="flex h-12 items-center mt-[20px] border-b border-sidebar-border px-6">
-            <Image src={logo} alt="logo" />
+          <div className="flex h-12 items-center mt-[20px] border-b border-sidebar-border px-6 text-[20px] md:text-[30px] font-bold">
+            {/* <Image src={logo} alt="logo" /> */} Amaar Plus
           </div>
 
           <ScrollArea className="flex-1 px-3 py-4">
