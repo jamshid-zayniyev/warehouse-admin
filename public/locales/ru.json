@@ -1,0 +1,755 @@
+{
+    "dashboard": {
+        "title": "Обзор панели",
+        "subtitle": "Управляйте контентом и следите за статистикой системы",
+        "stats": {
+            "users": "Пользователи",
+            "users_desc": "Активные пользователи",
+            "orders": "Заказы",
+            "orders_desc": "Все заказы",
+            "categories": "Категории",
+            "categories_desc": "Все категории",
+            "products": "Продукты",
+            "products_desc": "Все продукты",
+            "banners": "Баннеры",
+            "banners_desc": "Опубликованные баннеры",
+            "messages": "Сообщения",
+            "messages_desc": "Непрочитанные сообщения",
+            "news": "Новости",
+            "news_desc": "Опубликованные статьи",
+            "contact_info": "Контактная информация",
+            "contact_info_desc": "Настройки контактов",
+            "social_media": "Соцсети",
+            "social_media_desc": "Подключенные платформы"
+        },
+        "quick_actions": {
+            "title": "Быстрые действия",
+            "subtitle": "Общие задачи и ярлыки для управления контентом",
+            "add_banner": "Добавить новый баннер",
+            "create_news": "Создать новость",
+            "view_messages": "Посмотреть сообщения"
+        }
+    },
+    "orders": {
+        "title": "Управление заказами",
+        "orderId": "ID заказа",
+        "customer": "Клиент",
+        "phone": "Телефон",
+        "total": "Итого",
+        "status": "Статус",
+        "payment": "Оплата",
+        "actions": "Действия",
+        "view": "Просмотр",
+        "noOrders": "Заказов пока нет",
+        "noOrdersDescription": "Заказы появятся здесь, когда клиенты их разместят",
+        "orderDetails": "Детали заказа",
+        "customerInformation": "Информация о клиенте",
+        "deliveryInformation": "Информация о доставке",
+        "orderItems": "Товары в заказе",
+        "subtotal": "Промежуточный итог",
+        "orderTotal": "ОБЩАЯ СУММА",
+        "paymentMethod": "Способ оплаты",
+        "orderStatus": "Статус заказа",
+        "close": "Закрыть",
+        "color": "Цвет",
+        "noImage": "Изображение недоступно",
+        "deliveryType": "Тип",
+        "pickup": "Самовывоз",
+        "delivery": "Доставка",
+        "statuses": {
+            "p": "В ожидании",
+            "s": "Успешно",
+            "d": "Доставлено",
+            "c": "Отменено",
+            "unknown": "Неизвестно"
+        }
+    },
+    "userManagement": {
+        "title": "Управление пользователями",
+        "description": "Просмотр и управление учетными записями пользователей",
+        "usersCount": "пользователей",
+        "searchUsers": "Поиск пользователей",
+        "searchPlaceholder": "Поиск по имени или номеру телефона...",
+        "users": "Пользователи",
+        "allUsers": "Все зарегистрированные учетные записи пользователей",
+        "user": "Пользователь",
+        "phoneNumber": "Номер телефона",
+        "profileImage": "Изображение профиля",
+        "hasImage": "Есть изображение",
+        "noImage": "Нет изображения",
+        "actions": "Действия",
+        "noUsersMatch": "Пользователи не найдены",
+        "noUsersFound": "Пользователи не найдены",
+        "userDetails": "Детали пользователя",
+        "profileInfo": "Информация профиля для",
+        "id": "ID",
+        "fullName": "Полное имя",
+        "available": "Доступно",
+        "notSet": "Не установлено",
+        "close": "Закрыть",
+        "copyPhone": "Копировать телефон",
+        "copied": "Скопировано",
+        "phoneCopied": "Номер телефона скопирован в буфер обмена",
+        "createUser": "Создать пользователя",
+        "addNewUser": "Добавить нового пользователя в систему",
+        "password": "Пароль",
+        "enterFullName": "Введите полное имя",
+        "enterPhoneNumber": "Введите номер телефона",
+        "enterPassword": "Введите пароль",
+        "cancel": "Отмена",
+        "create": "Создать",
+        "editUser": "Редактировать пользователя",
+        "updateUser": "Обновить информацию о пользователе",
+        "saveChanges": "Сохранить изменения",
+        "deleteConfirm": "Вы уверены, что хотите удалить этого пользователя?",
+        "userCreated": "Пользователь успешно создан",
+        "userUpdated": "Пользователь успешно обновлен",
+        "userDeleted": "Пользователь успешно удален",
+        "error": "Ошибка",
+        "failedFetch": "Не удалось загрузить пользователей",
+        "failedCreate": "Не удалось создать пользователя",
+        "failedUpdate": "Не удалось обновить пользователя",
+        "failedDelete": "Не удалось удалить пользователя"
+    },
+    "aboutManagement": {
+        "tabs": {
+            "about": "Статистика",
+            "currency": "Валюты"
+        },
+        "title": "Управление разделом 'О нас'",
+        "description": "Управляйте статистикой и достижениями вашей компании",
+        "sections": "Разделы 'О нас'",
+        "sectionsDescription": "Просмотр и управление всей статистикой раздела 'О нас'",
+        "editDialog": {
+            "title": "Редактировать раздел 'О нас'",
+            "description": "Обновите статистику для вашего раздела 'О нас'."
+        },
+        "createDialog": {
+            "title": "Создать раздел 'О нас'",
+            "description": "Добавьте новую статистику для демонстрации ваших достижений."
+        },
+        "fields": {
+            "happyClients": "Довольные клиенты",
+            "productTypes": "Типы продуктов",
+            "experience": "Лет опыта",
+            "happyClientsPlaceholder": "Введите количество довольных клиентов",
+            "productTypesPlaceholder": "Введите количество типов продуктов",
+            "experiencePlaceholder": "Введите количество лет опыта"
+        },
+        "table": {
+            "id": "ID",
+            "happyClients": "Довольные клиенты",
+            "productTypes": "Типы продуктов",
+            "experience": "Опыт (лет)",
+            "actions": "Действия",
+            "noData": "Разделы 'О нас' не найдены. Создайте первый!"
+        },
+        "actions": {
+            "cancel": "Отмена",
+            "update": "Обновить",
+            "create": "Создать",
+            "edit": "Редактировать"
+        },
+        "messages": {
+            "success": {
+                "updated": "Раздел 'О нас' успешно обновлен",
+                "created": "Раздел 'О нас' успешно создан",
+                "deleted": "Раздел 'О нас' успешно удален"
+            },
+            "error": {
+                "fetch": "Не удалось загрузить данные раздела 'О нас'",
+                "general": "Что-то пошло не так. Пожалуйста, попробуйте снова.",
+                "delete": "Не удалось удалить элемент"
+            },
+            "confirmDelete": "Вы уверены, что хотите удалить этот элемент?"
+        }
+    },
+    "currencyManagement": {
+        "title": "Управление Валютами",
+        "description": "Управление валютами, доступными в системе",
+        "sections": "Валюты",
+        "actions": {
+            "create": "Добавить Валюту",
+            "update": "Обновить Валюту",
+            "cancel": "Отмена",
+            "delete": "Удалить"
+        },
+        "fields": {
+            "nameUz": "Название (Узбекский)",
+            "nameUzPlaceholder": "Введите название на узбекском",
+            "nameEn": "Название (Английский)",
+            "nameEnPlaceholder": "Введите название на английском",
+            "nameRu": "Название (Русский)",
+            "nameRuPlaceholder": "Введите название на русском"
+        },
+        "table": {
+            "id": "ID",
+            "nameUz": "Название (UZ)",
+            "nameEn": "Название (EN)",
+            "nameRu": "Название (RU)",
+            "actions": "Действия",
+            "noData": "Валюты не найдены"
+        },
+        "createDialog": {
+            "title": "Добавить Валюту",
+            "description": "Создать новую валюту для системы"
+        },
+        "editDialog": {
+            "title": "Редактировать Валюту",
+            "description": "Обновите информацию о валюте"
+        },
+        "messages": {
+            "success": {
+                "created": "Валюта успешно создана",
+                "updated": "Валюта успешно обновлена",
+                "deleted": "Валюта успешно удалена"
+            },
+            "error": {
+                "fetch": "Не удалось загрузить валюты",
+                "create": "Не удалось создать валюту",
+                "update": "Не удалось обновить валюту",
+                "delete": "Не удалось удалить валюту",
+                "general": "Произошла ошибка при обработке вашего запроса"
+            },
+            "confirmDelete": "Вы уверены, что хотите удалить эту валюту?"
+        }
+    },
+    "categoryManagement": {
+        "title": "Управление категориями",
+        "description": "Управление категориями продуктов",
+        "list": "Список категорий",
+        "listDescription": "Управление всеми категориями продуктов",
+        "gallery": "Галерея категорий",
+        "galleryDescription": "Просмотр всех категорий",
+        "editDialog": {
+            "title": "Редактировать категорию",
+            "description": "Обновите детали категории."
+        },
+        "createDialog": {
+            "title": "Создать категорию",
+            "description": "Добавьте новую категорию продуктов."
+        },
+        "fields": {
+            "nameEn": "Название (Английский)",
+            "nameUz": "Название (Узбекский)",
+            "nameRu": "Название (Русский)",
+            "nameEnPlaceholder": "Введите название категории на английском",
+            "nameUzPlaceholder": "Введите название категории на узбекском",
+            "nameRuPlaceholder": "Введите название категории на русском",
+            "image": "Изображение категории"
+        },
+        "languages": {
+            "en": "Английский",
+            "uz": "Узбекский",
+            "ru": "Русский"
+        },
+        "table": {
+            "id": "ID",
+            "name": "Название",
+            "slug": "Слаг",
+            "image": "Изображение",
+            "actions": "Действия",
+            "noData": "Категории не найдены.",
+            "languageLabels": {
+                "uz": "УЗ",
+                "en": "АН",
+                "ru": "РУ"
+            }
+        },
+        "actions": {
+            "addCategory": "Добавить категорию",
+            "cancel": "Отмена",
+            "update": "Обновить",
+            "create": "Создать",
+            "edit": "Редактировать",
+            "delete": "Удалить"
+        },
+        "messages": {
+            "success": {
+                "updated": "Категория успешно обновлена",
+                "created": "Категория успешно создана",
+                "deleted": "Категория успешно удалена"
+            },
+            "error": {
+                "fetch": "Не удалось загрузить данные категорий",
+                "create": "Не удалось создать категорию",
+                "update": "Не удалось обновить категорию",
+                "delete": "Не удалось удалить категорию"
+            },
+            "confirmDelete": "Вы уверены, что хотите удалить эту категорию?"
+        }
+    },
+    "productManagement": {
+        "title": "Управление товарами",
+        "description": "Управляйте всеми товарами с расширенными функциями",
+        "productList": "Список товаров",
+        "productGallery": "Галерея товаров",
+        "createProduct": "Создать товар",
+        "editProduct": "Редактировать товар",
+        "updateProduct": "Обновить детали товара",
+        "addProduct": "Добавить новый товар с цветами, функциями и изображениями",
+        "addFeaturesColors": "Добавить характеристики и цвета",
+        "addFeaturesDescription": "Добавьте характеристики и цвета для вашего нового товара",
+        "titleLabel": "Название",
+        "descriptionLabel": "Описание",
+        "price": "Цена",
+        "oldPrice": "Старая цена",
+        "cancel": "Отмена",
+        "create": "Создать",
+        "update": "Обновить",
+        "done": "Готово",
+        "id": "ID",
+        "image": "Изображение",
+        "actions": "Действия",
+        "noProducts": "Товары не найдены",
+        "success": "Успех",
+        "productCreated": "Товар успешно создан",
+        "productUpdated": "Товар успешно обновлен",
+        "productDeleted": "Товар успешно удален",
+        "error": "Ошибка",
+        "failedFetch": "Не удалось загрузить товары",
+        "failedCreate": "Не удалось создать товар",
+        "failedUpdate": "Не удалось обновить товар",
+        "failedDelete": "Не удалось удалить товар",
+        "deleteConfirm": "Вы уверены, что хотите удалить этот товар?",
+        "imagesUploaded": "Изображения успешно загружены",
+        "errorUploading": "Ошибка загрузки изображений",
+        "placeholderTitle": "Напишите название продукта"
+    },
+    "bannerManagement": {
+        "title": "Управление баннерами",
+        "description": "Управляйте баннерами и рекламными изображениями вашего сайта",
+        "addBanner": "Добавить баннер",
+        "editBanner": "Редактировать баннер",
+        "createBanner": "Создать баннер",
+        "updateDescription": "Обновите изображение баннера.",
+        "createDescription": "Загрузите новое изображение баннера для вашего сайта.",
+        "bannerImage": "Изображение баннера",
+        "uploadPlaceholder": "Загрузить изображение баннера",
+        "cancel": "Отмена",
+        "create": "Создать",
+        "update": "Обновить",
+        "bannerCollection": "Коллекция баннеров",
+        "collectionDescription": "Просмотр и управление всеми баннерами сайта",
+        "id": "ID",
+        "preview": "Предпросмотр",
+        "imagePath": "Путь к изображению",
+        "actions": "Действия",
+        "noBanners": "Баннеры не найдены. Загрузите свой первый баннер!",
+        "bannerGallery": "Галерея баннеров",
+        "galleryDescription": "Предпросмотр всех баннеров в виде сетки",
+        "deleteConfirmation": "Вы уверены, что хотите удалить этот баннер?",
+        "success": {
+            "created": "Баннер успешно создан",
+            "updated": "Баннер успешно обновлен",
+            "deleted": "Баннер успешно удален"
+        },
+        "error": {
+            "fetch": "Не удалось загрузить данные баннеров",
+            "create": "Не удалось создать баннер",
+            "update": "Не удалось обновить баннер",
+            "delete": "Не удалось удалить баннер"
+        }
+    },
+    "common": {
+        "error": "Ошибка",
+        "success": "Успех",
+        "copied": "Скопировано"
+    },
+    "contactManagement": {
+        "title": "Контактные сообщения",
+        "description": "Просмотр и управление запросами и сообщениями клиентов",
+        "messagesCount": "{count} сообщений",
+        "filters": {
+            "title": "Фильтры и поиск",
+            "searchPlaceholder": "Поиск сообщений, имен, email...",
+            "filterTheme": "Фильтр по теме",
+            "allThemes": "Все темы"
+        },
+        "table": {
+            "title": "Сообщения",
+            "description": "Все контактные сообщения и запросы клиентов",
+            "headers": {
+                "contact": "Контакт",
+                "theme": "Тема",
+                "messagePreview": "Предпросмотр сообщения",
+                "date": "Дата",
+                "actions": "Действия"
+            },
+            "noResults": {
+                "filtered": "Нет сообщений, соответствующих вашим фильтрам",
+                "empty": "Сообщения не найдены"
+            }
+        },
+        "dialog": {
+            "title": "Детали сообщения",
+            "description": "Полное сообщение от {name}",
+            "fields": {
+                "name": "Имя",
+                "email": "Email",
+                "theme": "Тема",
+                "date": "Дата",
+                "message": "Сообщение"
+            },
+            "buttons": {
+                "close": "Закрыть",
+                "copyEmail": "Копировать Email",
+                "reply": "Ответить"
+            }
+        },
+        "actions": {
+            "view": "Просмотреть сообщение",
+            "delete": "Удалить сообщение",
+            "deleteConfirm": "Вы уверены, что хотите удалить это сообщение?"
+        },
+        "toasts": {
+            "success": {
+                "delete": "Сообщение успешно удалено"
+            },
+            "error": {
+                "fetch": "Не удалось загрузить контактные сообщения",
+                "delete": "Не удалось удалить сообщение",
+                "copyEmail": "Email адрес скопирован в буфер обмена"
+            }
+        },
+        "themes": {
+            "generalInquiry": "Общий запрос",
+            "technicalSupport": "Техническая поддержка",
+            "partnership": "Партнерство",
+            "feedback": "Обратная связь"
+        }
+    },
+    "newsTypes": {
+        "p": "Продукт",
+        "s": "Безопасность",
+        "c": "Компания",
+        "t": "Технологии"
+    },
+    "NewsCommon": {
+        "error": "Error",
+        "success": "Success",
+        "cancel": "Cancel",
+        "create": "Create",
+        "update": "Update",
+        "close": "Close"
+    },
+    "newsManagement": {
+        "title": "News Management",
+        "description": "Create and manage news articles, press releases, and stories",
+        "createArticle": "Create Article",
+        "editArticle": "Edit News Article",
+        "createDescription": "Create a new news article with images.",
+        "editDescription": "Update the news article details.",
+        "type": "Type",
+        "selectType": "Select article type",
+        "images": "Images",
+        "uploadImages": "Upload article images",
+        "upload": "Upload",
+        "untitled": "Untitled",
+        "noDescription": "No description",
+        "notProvided": "Not provided",
+        "image": "Image",
+        "articleImage": "Article image",
+        "newsArticles": "News Articles",
+        "manageArticles": "Manage all news articles, press releases, and stories",
+        "noArticles": "No news articles found. Create your first article!",
+        "deleteConfirmation": "Are you sure you want to delete this news article?",
+        "types": {
+            "product": "Product",
+            "security": "Security",
+            "company": "Company",
+            "technology": "Technology"
+        },
+        "languages": {
+            "english": "English",
+            "uzbek": "Uzbek",
+            "russian": "Russian"
+        },
+        "form": {
+            "titleEnglish": "Title (English)",
+            "titleEnglishPlaceholder": "Enter article title in English",
+            "descriptionEnglish": "Description (English)",
+            "descriptionEnglishPlaceholder": "Enter article description in English",
+            "titleUzbek": "Title (Uzbek)",
+            "titleUzbekPlaceholder": "Enter article title in Uzbek",
+            "descriptionUzbek": "Description (Uzbek)",
+            "descriptionUzbekPlaceholder": "Enter article description in Uzbek",
+            "titleRussian": "Title (Russian)",
+            "titleRussianPlaceholder": "Enter article title in Russian",
+            "descriptionRussian": "Description (Russian)",
+            "descriptionRussianPlaceholder": "Enter article description in Russian"
+        },
+        "table": {
+            "title": "Title",
+            "type": "Type",
+            "images": "Images",
+            "date": "Date",
+            "actions": "Actions"
+        },
+        "success": {
+            "created": "News created successfully",
+            "updated": "News updated successfully",
+            "deleted": "News article deleted successfully"
+        },
+        "errors": {
+            "fetchFailed": "Failed to fetch news data",
+            "createFailed": "Something went wrong",
+            "updateFailed": "Something went wrong",
+            "deleteFailed": "Failed to delete news article"
+        }
+    },
+    "OurContactCommon": {
+        "error": "Ошибка",
+        "success": "Успех",
+        "cancel": "Отмена",
+        "create": "Создать",
+        "update": "Обновить",
+        "close": "Закрыть",
+        "delete": "Удалить",
+        "edit": "Редактировать",
+        "add": "Добавить",
+        "loading": "Загрузка..."
+    },
+    "OurcontactManagement": {
+        "title": "Наша контактная информация",
+        "description": "Управление контактными данными компании, отображаемыми клиентам",
+        "addContactInfo": "Добавить контактную информацию",
+        "editContactInfo": "Редактировать контактную информацию",
+        "createContactInfo": "Создать контактную информацию",
+        "editDescription": "Обновите контактные данные вашей компании.",
+        "createDescription": "Добавьте контактную информацию вашей компании для клиентов.",
+        "address": "Адрес",
+        "phoneNumbers": "Номера телефонов",
+        "emailAddresses": "Адреса электронной почты",
+        "workingHours": "Рабочие часы",
+        "addPhone": "Добавить телефон",
+        "addEmail": "Добавить email",
+        "noContactInfo": "Нет контактной информации",
+        "noContactInfoDescription": "Добавьте контактные данные вашей компании для начала работы.",
+        "contactInfoNumber": "Контактная информация #{{id}}",
+        "deleteConfirmation": "Вы уверены, что хотите удалить эту контактную информацию?",
+        "placeholders": {
+            "addressUz": "Адрес (Узбекский)",
+            "addressRu": "Адрес (Русский)",
+            "addressEn": "Адрес (Английский)",
+            "workingTimeUz": "Рабочее время (Узбекский)",
+            "workingTimeRu": "Рабочее время (Русский)",
+            "workingTimeEn": "Рабочее время (Английский)",
+            "phoneNumber": "Введите номер телефона",
+            "emailAddress": "Введите адрес электронной почты"
+        },
+        "languages": {
+            "uzbek": "Узбекский",
+            "russian": "Русский",
+            "english": "Английский"
+        },
+        "success": {
+            "created": "Контактная информация успешно создана",
+            "updated": "Контактная информация успешно обновлена",
+            "deleted": "Контактная информация успешно удалена"
+        },
+        "errors": {
+            "fetchFailed": "Не удалось получить контактные данные",
+            "createFailed": "Что-то пошло не так",
+            "updateFailed": "Что-то пошло не так",
+            "deleteFailed": "Не удалось удалить контактную информацию"
+        }
+    },
+    "SocialMediaCommon": {
+        "error": "Ошибка",
+        "success": "Успешно",
+        "cancel": "Отмена",
+        "create": "Создать",
+        "update": "Обновить",
+        "close": "Закрыть",
+        "delete": "Удалить",
+        "edit": "Редактировать",
+        "add": "Добавить",
+        "loading": "Загрузка...",
+        "copied": "Скопировано",
+        "empty": "Пусто",
+        "notConfigured": "Не настроено"
+    },
+    "SocialMediaManagement": {
+        "title": "Управление Социальными Сетями",
+        "description": "Управляйте присутствием вашей компании в социальных сетях",
+        "addSocialMedia": "Добавить Социальные Сети",
+        "updateLinks": "Обновить Ссылки",
+        "editSocialMediaLinks": "Редактировать Ссылки на Социальные Сети",
+        "addSocialMediaLinks": "Добавить Ссылки на Социальные Сети",
+        "editDescription": "Обновите ваши ссылки.",
+        "createDescription": "Добавьте ссылки на социальные сети вашей компании.",
+        "noSocialMediaLinks": "Нет Ссылок на Социальные Сети",
+        "noSocialMediaDescription": "Добавьте профили вашей компании в социальных сетях для начала работы.",
+        "socialMediaLinksNumber": "Ссылки на Социальные Сети #{{id}}",
+        "deleteConfirmation": "Вы уверены, что хотите удалить эту конфигурацию социальных сетей?",
+        "inputHelpText": "Введите полный URL или имя пользователя (начинающееся с @). Оставьте пустым, если не используется.",
+        "platforms": {
+            "telegram": "Telegram",
+            "facebook": "Facebook",
+            "x": "X (Twitter)",
+            "instagram": "Instagram",
+            "youtube": "YouTube"
+        },
+        "placeholders": {
+            "telegram": "https://t.me/username или @username",
+            "facebook": "https://facebook.com/username",
+            "x": "https://x.com/username или @username",
+            "instagram": "https://instagram.com/username",
+            "youtube": "https://youtube.com/@username"
+        },
+        "success": {
+            "created": "Ссылки на социальные сети успешно созданы",
+            "updated": "Ссылки на социальные сети успешно обновлены",
+            "deleted": "Конфигурация социальных сетей успешно удалена",
+            "linkCopied": "Ссылка {{platform}} скопирована в буфер обмена"
+        },
+        "errors": {
+            "fetchFailed": "Не удалось загрузить данные социальных сетей",
+            "invalidUrl": "Недопустимый {{platform}} URL или имя пользователя",
+            "createFailed": "Что-то пошло не так. Пожалуйста, попробуйте еще раз.",
+            "updateFailed": "Что-то пошло не так. Пожалуйста, попробуйте еще раз.",
+            "deleteFailed": "Не удалось удалить элемент"
+        }
+    },
+    "companyName": "Узбекские Продукты",
+    "Dashdashboard": "Панель управления",
+    "Dashorders": "Заказы",
+    "users": "Пользователи",
+    "about": "О нас",
+    "categories": "Категории",
+    "products": "Продукты",
+    "banners": "Баннеры",
+    "contactMessages": "Сообщения",
+    "news": "Новости",
+    "ourContact": "Наши контакты",
+    "socialMedia": "Социальные сети",
+    "adminUser": "Администратор",
+    "administrator": "Администратор",
+    "signOut": "Выйти",
+    "loadingCategories": "Загрузка категорий...",
+    "Category": "Категория",
+    "AllCategories": "Все категории",
+    "Selectcategory": "Выберите категорию",
+    "colors": "Цвета",
+    "addColor": "Добавить цвет",
+    "createNewColor": "Создать новый цвет",
+    "colorName": "Название цвета",
+    "enterColorName": "Введите название цвета",
+    "colorImage": "Изображение цвета",
+    "preview": "Предпросмотр",
+    "createColor": "Создать цвет",
+    "productImageFor": "Изображение товара для {{colorName}}",
+    "priceFor": "Цена для {{colorName}}",
+    "saving": "Сохранение...",
+    "save": "Сохранить",
+    "missingProductId": "Отсутствует productId. Передайте реальный идентификатор продукта в ColorSelector.",
+    "chooseImageAndPrice": "Пожалуйста, выберите изображение и введите цену, затем нажмите Сохранить.",
+    "mustBeLoggedIn": "Вы должны быть авторизованы.",
+    "saveColorFailed": "Не удалось сохранить цвет:",
+    "failedToSaveProductColor": "Не удалось сохранить цвет товара",
+    "colorSaved": "Цвет сохранен ✅",
+    "features": "Характеристики",
+    "addFeature": "Добавить характеристику",
+    "fillFeatureDetails": "Заполните тип характеристики, значение и цену, чтобы добавить новую характеристику.",
+    "featureType": "Тип характеристики",
+    "newType": "Новый тип",
+    "createNewType": "Создать новый тип",
+    "enterNewTypeName": "Введите название для нового типа характеристики.",
+    "typeName": "Название типа",
+    "enterTypeName": "Введите название типа",
+    "createType": "Создать тип",
+    "selectFeatureType": "Выберите тип характеристики",
+    "featureValue": "Значение характеристики",
+    "enterFeatureValue": "Введите значение характеристики",
+    "featurePrice": "Цена характеристики",
+    "managefeatures": "Управление функциями для идентификатора продукта:",
+    "enterFeaturePrice": "Введите цену характеристики",
+    "noFeaturesAdded": "Характеристики не добавлены",
+    "mustBeLoggedInToAddFeature": "Вы должны быть авторизованы, чтобы добавить характеристику.",
+    "failedToCreateFeature": "Не удалось создать характеристику",
+    "errorCreatingFeature": "Ошибка при создании характеристики:",
+    "failedToAddFeature": "Не удалось добавить характеристику.",
+    "currentFeatures": "Текущие функции",
+    "assignedfeatures": "Характеристики, присвоенные этому продукту",
+    "loadingfeatures": "Загрузка характеристик...",
+    "firstFeature": "Начните с добавления вашей первой функции в этот продукт",
+    "nofeature": "Пока нет функций",
+    "TotalFeatures": "Всего функций",
+    "ThisProduct": "Этот продукт",
+    "AvailableTypes": "Доступные типы",
+    "Images": "Изображения",
+    "imageUploader": {
+        "images": "Изображения",
+        "uploadSuccess": "Изображения успешно загружены ✅",
+        "uploadError": "Ошибка при загрузке изображений",
+        "remove": "Удалить"
+    },
+    "login": {
+        "subtitle": "Войдите, чтобы управлять своим контентом",
+        "welcome": "С возвращением",
+        "description": "Введите свои данные для доступа к Uzbek Foodstuff",
+        "phoneLabel": "Номер телефона",
+        "passwordLabel": "Пароль",
+        "passwordPlaceholder": "Введите ваш пароль",
+        "signIn": "Войти",
+        "signingIn": "Вход...",
+        "footer": "Все права защищены.",
+        "errors": {
+            "invalidPhone": "Номер телефона должен начинаться с +998",
+            "invalidCredentials": "Неверный номер телефона или пароль",
+            "failed": "Ошибка входа. Попробуйте еще раз."
+        }
+    },
+    "success": "Успешно",
+    "error": "Ошибка",
+    "colorUpdated": "Цвет успешно обновлён",
+    "colorCreated": "Цвет успешно создан",
+    "failedToSaveColor": "Не удалось сохранить цвет",
+    "confirmDeleteColor": "Вы уверены, что хотите удалить этот цвет?",
+    "colorDeleted": "Цвет успешно удалён",
+    "failedToDeleteColor": "Не удалось удалить цвет",
+    "colorManagement": {
+        "title": "Управление цветами",
+        "description": "Здесь вы можете управлять цветами товаров.",
+        "addColor": "Добавить цвет",
+        "colorList": "Список цветов",
+        "manageColorsHere": "Просматривайте, создавайте, редактируйте и удаляйте цвета товаров.",
+        "preview": "Превью",
+        "name": "Название",
+        "actions": "Действия",
+        "noColors": "Цвета отсутствуют.",
+        "assignColors": "Назначить цвета для товара",
+        "assignDescription": "Выберите, какие цвета принадлежат товару.",
+        "addImage": "Добавить изображение"
+    },
+    "editColor": "Редактировать цвет",
+    "updateColorInfo": "Обновите информацию о цвете ниже.",
+    "addNewColorInfo": "Добавьте новый цвет для товаров.",
+    "cancel": "Отмена",
+    "update": "Обновить",
+    "create": "Создать",
+    "fetchcategories": {
+        "failedToFetch": "Не удалось получить категории"
+    },
+    "fetchcolors": {
+        "failedToFetch": "Не удалось получить цвета",
+        "created": "Новый цвет успешно создан",
+        "failedToCreate": "Не удалось создать цвет"
+    },
+    "fetchfeatures": {
+        "failedToFetch": "Не удалось получить характеристики",
+        "created": "Новая характеристика успешно создана",
+        "failedToCreate": "Не удалось создать характеристику"
+    },
+    "productColors": {
+        "failedToFetch": "Не удалось получить цвета продукта",
+        "created": "Цвет продукта успешно создан",
+        "failedToCreate": "Не удалось создать цвет продукта"
+    },
+    "types": {
+        "failedToFetch": "Не удалось получить типы продуктов",
+        "created": "Новый тип продукта успешно создан",
+        "failedToCreate": "Не удалось создать тип продукта"
+    }
+}

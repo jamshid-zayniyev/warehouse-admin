@@ -1,0 +1,748 @@
+{
+    "dashboard": {
+        "title": "Dashboard Overview",
+        "subtitle": "Manage your content and monitor system statistics",
+        "stats": {
+            "users": "Users",
+            "users_desc": "Active users",
+            "orders": "Orders",
+            "orders_desc": "All orders",
+            "categories": "Categories",
+            "categories_desc": "All categories",
+            "products": "Products",
+            "products_desc": "All products",
+            "banners": "Banners",
+            "banners_desc": "Published banners",
+            "messages": "Contact Messages",
+            "messages_desc": "Unread messages",
+            "news": "News Articles",
+            "news_desc": "Published articles",
+            "contact_info": "Contact Info",
+            "contact_info_desc": "Contact configurations",
+            "social_media": "Social Media",
+            "social_media_desc": "Connected platforms"
+        },
+        "quick_actions": {
+            "title": "Quick Actions",
+            "subtitle": "Common tasks and shortcuts for content management",
+            "add_banner": "Add New Banner",
+            "create_news": "Create News Article",
+            "view_messages": "View Messages"
+        }
+    },
+    "orders": {
+        "title": "Order Management",
+        "orderId": "Order ID",
+        "customer": "Customer",
+        "phone": "Phone",
+        "total": "Total",
+        "status": "Status",
+        "payment": "Payment",
+        "actions": "Actions",
+        "view": "View",
+        "noOrders": "No orders yet",
+        "noOrdersDescription": "Orders will appear here when customers place them",
+        "orderDetails": "Order Details",
+        "customerInformation": "Customer Information",
+        "deliveryInformation": "Delivery Information",
+        "orderItems": "Order Items",
+        "subtotal": "Subtotal",
+        "orderTotal": "ORDER TOTAL",
+        "paymentMethod": "Payment Method",
+        "orderStatus": "Order Status",
+        "close": "Close",
+        "color": "Color",
+        "noImage": "No image available",
+        "deliveryType": "Type",
+        "pickup": "Pickup",
+        "delivery": "Delivery",
+        "statuses": {
+            "p": "Pending",
+            "s": "Success",
+            "d": "Delivered",
+            "c": "Cancelled",
+            "unknown": "Unknown"
+        }
+    },
+    "userManagement": {
+        "title": "User Management",
+        "description": "View and manage user accounts",
+        "usersCount": "users",
+        "searchUsers": "Search Users",
+        "searchPlaceholder": "Search by name or phone number...",
+        "users": "Users",
+        "allUsers": "All registered user accounts",
+        "user": "User",
+        "phoneNumber": "Phone Number",
+        "profileImage": "Profile Image",
+        "hasImage": "Has Image",
+        "noImage": "No Image",
+        "actions": "Actions",
+        "noUsersMatch": "No users match your search",
+        "noUsersFound": "No users found",
+        "userDetails": "User Details",
+        "profileInfo": "Profile information for",
+        "id": "ID",
+        "fullName": "Full Name",
+        "available": "Available",
+        "notSet": "Not set",
+        "close": "Close",
+        "copyPhone": "Copy Phone",
+        "copied": "Copied",
+        "phoneCopied": "Phone number copied to clipboard",
+        "createUser": "Create User",
+        "addNewUser": "Add a new user to the system",
+        "password": "Password",
+        "enterFullName": "Enter full name",
+        "enterPhoneNumber": "Enter phone number",
+        "enterPassword": "Enter password",
+        "cancel": "Cancel",
+        "create": "Create",
+        "editUser": "Edit User",
+        "updateUser": "Update user information",
+        "saveChanges": "Save Changes",
+        "deleteConfirm": "Are you sure you want to delete this user?",
+        "userCreated": "User created successfully",
+        "userUpdated": "User updated successfully",
+        "userDeleted": "User deleted successfully",
+        "error": "Error",
+        "failedFetch": "Failed to fetch users",
+        "failedCreate": "Failed to create user",
+        "failedUpdate": "Failed to update user",
+        "failedDelete": "Failed to delete user"
+    },
+    "aboutManagement": {
+        "tabs": {
+            "about": "About Statistics",
+            "currency": "Currencies"
+        },
+        "title": "About Management",
+        "description": "Manage your company statistics and achievements",
+        "sections": "About Sections",
+        "sectionsDescription": "View and manage all about section statistics",
+        "editDialog": {
+            "title": "Edit About Section",
+            "description": "Update the statistics for your about section."
+        },
+        "createDialog": {
+            "title": "Create About Section",
+            "description": "Add new statistics to showcase your achievements."
+        },
+        "fields": {
+            "happyClients": "Happy Clients",
+            "productTypes": "Product Types",
+            "experience": "Years of Experience",
+            "happyClientsPlaceholder": "Enter number of happy clients",
+            "productTypesPlaceholder": "Enter number of product types",
+            "experiencePlaceholder": "Enter years of experience"
+        },
+        "table": {
+            "id": "ID",
+            "happyClients": "Happy Clients",
+            "productTypes": "Product Types",
+            "experience": "Experience (Years)",
+            "actions": "Actions",
+            "noData": "No about sections found. Create your first one!"
+        },
+        "actions": {
+            "cancel": "Cancel",
+            "update": "Update",
+            "create": "Create",
+            "edit": "Edit"
+        },
+        "messages": {
+            "success": {
+                "updated": "About section updated successfully",
+                "created": "About section created successfully",
+                "deleted": "About section deleted successfully"
+            },
+            "error": {
+                "fetch": "Failed to fetch about data",
+                "general": "Something went wrong. Please try again.",
+                "delete": "Failed to delete item"
+            },
+            "confirmDelete": "Are you sure you want to delete this item?"
+        }
+    },
+    "categoryManagement": {
+        "title": "Category Management",
+        "description": "Manage product categories",
+        "list": "Category List",
+        "listDescription": "Manage all product categories",
+        "gallery": "Category Gallery",
+        "galleryDescription": "Preview all categories",
+        "editDialog": {
+            "title": "Edit Category",
+            "description": "Update category details."
+        },
+        "createDialog": {
+            "title": "Create Category",
+            "description": "Add a new product category."
+        },
+        "fields": {
+            "nameEn": "Name (English)",
+            "nameUz": "Name (Uzbek)",
+            "nameRu": "Name (Russian)",
+            "nameEnPlaceholder": "Enter category name in English",
+            "nameUzPlaceholder": "Enter category name in Uzbek",
+            "nameRuPlaceholder": "Enter category name in Russian",
+            "image": "Category Image"
+        },
+        "languages": {
+            "en": "English",
+            "uz": "Uzbek",
+            "ru": "Russian"
+        },
+        "table": {
+            "id": "ID",
+            "name": "Name",
+            "slug": "Slug",
+            "image": "Image",
+            "actions": "Actions",
+            "noData": "No categories found.",
+            "languageLabels": {
+                "uz": "UZ",
+                "en": "EN",
+                "ru": "RU"
+            }
+        },
+        "actions": {
+            "addCategory": "Add Category",
+            "cancel": "Cancel",
+            "update": "Update",
+            "create": "Create",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "messages": {
+            "success": {
+                "updated": "Category updated successfully",
+                "created": "Category created successfully",
+                "deleted": "Category deleted successfully"
+            },
+            "error": {
+                "fetch": "Failed to fetch category data",
+                "create": "Failed to create category",
+                "update": "Failed to update category",
+                "delete": "Failed to delete category"
+            },
+            "confirmDelete": "Are you sure you want to delete this category?"
+        }
+    },
+    "productManagement": {
+        "title": "Product Management",
+        "description": "Manage all products with enhanced features",
+        "productList": "Product List",
+        "productGallery": "Product Gallery",
+        "createProduct": "Create Product",
+        "editProduct": "Edit Product",
+        "updateProduct": "Update product details",
+        "addProduct": "Add a new product with colors, features, and images",
+        "addFeaturesColors": "Add Features & Colors",
+        "addFeaturesDescription": "Add features and colors for your newly created product",
+        "titleLabel": "Title",
+        "descriptionLabel": "Description",
+        "price": "Price",
+        "oldPrice": "Old Price",
+        "cancel": "Cancel",
+        "create": "Create",
+        "update": "Update",
+        "done": "Done",
+        "id": "ID",
+        "image": "Image",
+        "actions": "Actions",
+        "noProducts": "No products found",
+        "success": "Success",
+        "productCreated": "Product created successfully",
+        "productUpdated": "Product updated successfully",
+        "productDeleted": "Product deleted successfully",
+        "error": "Error",
+        "failedFetch": "Failed to fetch products",
+        "failedCreate": "Failed to create product",
+        "failedUpdate": "Failed to update product",
+        "failedDelete": "Failed to delete product",
+        "deleteConfirm": "Are you sure you want to delete this product?",
+        "imagesUploaded": "Images uploaded successfully",
+        "errorUploading": "Error uploading images",
+        "placeholderTitle": "Write the title of the product"
+    },
+    "bannerManagement": {
+        "title": "Banner Management",
+        "description": "Manage your website banners and promotional images",
+        "addBanner": "Add Banner",
+        "editBanner": "Edit Banner",
+        "createBanner": "Create Banner",
+        "updateDescription": "Update the banner image.",
+        "createDescription": "Upload a new banner image for your website.",
+        "bannerImage": "Banner Image",
+        "uploadPlaceholder": "Upload banner image",
+        "cancel": "Cancel",
+        "create": "Create",
+        "update": "Update",
+        "bannerCollection": "Banner Collection",
+        "collectionDescription": "View and manage all website banners",
+        "id": "ID",
+        "preview": "Preview",
+        "imagePath": "Image Path",
+        "actions": "Actions",
+        "noBanners": "No banners found. Upload your first banner!",
+        "bannerGallery": "Banner Gallery",
+        "galleryDescription": "Preview of all banners in grid layout",
+        "deleteConfirmation": "Are you sure you want to delete this banner?",
+        "success": {
+            "created": "Banner created successfully",
+            "updated": "Banner updated successfully",
+            "deleted": "Banner deleted successfully"
+        },
+        "error": {
+            "fetch": "Failed to fetch banner data",
+            "create": "Failed to create banner",
+            "update": "Failed to update banner",
+            "delete": "Failed to delete banner"
+        }
+    },
+    "common": {
+        "error": "Error",
+        "success": "Success",
+        "copied": "Copied"
+    },
+    "contactManagement": {
+        "title": "Contact Messages",
+        "description": "View and manage customer inquiries and messages",
+        "messagesCount": "{count} messages",
+        "filters": {
+            "title": "Filters & Search",
+            "searchPlaceholder": "Search messages, names, emails...",
+            "filterTheme": "Filter by theme",
+            "allThemes": "All Themes"
+        },
+        "table": {
+            "title": "Messages",
+            "description": "All customer contact messages and inquiries",
+            "headers": {
+                "contact": "Contact",
+                "theme": "Theme",
+                "messagePreview": "Message Preview",
+                "date": "Date",
+                "actions": "Actions"
+            },
+            "noResults": {
+                "filtered": "No messages match your filters",
+                "empty": "No messages found"
+            }
+        },
+        "dialog": {
+            "title": "Message Details",
+            "description": "Full message from {name}",
+            "fields": {
+                "name": "Name",
+                "email": "Email",
+                "theme": "Theme",
+                "date": "Date",
+                "message": "Message"
+            },
+            "buttons": {
+                "close": "Close",
+                "copyEmail": "Copy Email",
+                "reply": "Reply"
+            }
+        },
+        "actions": {
+            "view": "View message",
+            "delete": "Delete message",
+            "deleteConfirm": "Are you sure you want to delete this message?"
+        },
+        "toasts": {
+            "success": {
+                "delete": "Message deleted successfully"
+            },
+            "error": {
+                "fetch": "Failed to fetch contact messages",
+                "delete": "Failed to delete message",
+                "copyEmail": "Email address copied to clipboard"
+            }
+        },
+        "themes": {
+            "generalInquiry": "General Inquiry",
+            "technicalSupport": "Technical Support",
+            "partnership": "Partnership",
+            "feedback": "Feedback"
+        }
+    },
+    "NewsCommon": {
+        "error": "Error",
+        "success": "Success",
+        "cancel": "Cancel",
+        "create": "Create",
+        "update": "Update",
+        "close": "Close"
+    },
+    "newsManagement": {
+        "title": "News Management",
+        "description": "Create and manage news articles, press releases, and stories",
+        "createArticle": "Create Article",
+        "editArticle": "Edit News Article",
+        "createDescription": "Create a new news article with images.",
+        "editDescription": "Update the news article details.",
+        "type": "Type",
+        "selectType": "Select article type",
+        "images": "Images",
+        "uploadImages": "Upload article images",
+        "upload": "Upload",
+        "untitled": "Untitled",
+        "noDescription": "No description",
+        "notProvided": "Not provided",
+        "image": "Image",
+        "articleImage": "Article image",
+        "newsArticles": "News Articles",
+        "manageArticles": "Manage all news articles, press releases, and stories",
+        "noArticles": "No news articles found. Create your first article!",
+        "deleteConfirmation": "Are you sure you want to delete this news article?",
+        "types": {
+            "product": "Product",
+            "security": "Security",
+            "company": "Company",
+            "technology": "Technology"
+        },
+        "languages": {
+            "english": "English",
+            "uzbek": "Uzbek",
+            "russian": "Russian"
+        },
+        "form": {
+            "titleEnglish": "Title (English)",
+            "titleEnglishPlaceholder": "Enter article title in English",
+            "descriptionEnglish": "Description (English)",
+            "descriptionEnglishPlaceholder": "Enter article description in English",
+            "titleUzbek": "Title (Uzbek)",
+            "titleUzbekPlaceholder": "Enter article title in Uzbek",
+            "descriptionUzbek": "Description (Uzbek)",
+            "descriptionUzbekPlaceholder": "Enter article description in Uzbek",
+            "titleRussian": "Title (Russian)",
+            "titleRussianPlaceholder": "Enter article title in Russian",
+            "descriptionRussian": "Description (Russian)",
+            "descriptionRussianPlaceholder": "Enter article description in Russian"
+        },
+        "table": {
+            "title": "Title",
+            "type": "Type",
+            "images": "Images",
+            "date": "Date",
+            "actions": "Actions"
+        },
+        "success": {
+            "created": "News created successfully",
+            "updated": "News updated successfully",
+            "deleted": "News article deleted successfully"
+        },
+        "errors": {
+            "fetchFailed": "Failed to fetch news data",
+            "createFailed": "Something went wrong",
+            "updateFailed": "Something went wrong",
+            "deleteFailed": "Failed to delete news article"
+        }
+    },
+    "OurContactCommon": {
+        "error": "Error",
+        "success": "Success",
+        "cancel": "Cancel",
+        "create": "Create",
+        "update": "Update",
+        "close": "Close",
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add",
+        "loading": "Loading..."
+    },
+    "OurcontactManagement": {
+        "title": "Our Contact Information",
+        "description": "Manage your company's contact details displayed to customers",
+        "addContactInfo": "Add Contact Info",
+        "editContactInfo": "Edit Contact Information",
+        "createContactInfo": "Create Contact Information",
+        "editDescription": "Update your company's contact details.",
+        "createDescription": "Add your company's contact information for customers.",
+        "address": "Address",
+        "phoneNumbers": "Phone Numbers",
+        "emailAddresses": "Email Addresses",
+        "workingHours": "Working Hours",
+        "addPhone": "Add Phone",
+        "addEmail": "Add Email",
+        "noContactInfo": "No Contact Information",
+        "noContactInfoDescription": "Add your company's contact details to get started.",
+        "contactInfoNumber": "Contact Information #{{id}}",
+        "deleteConfirmation": "Are you sure you want to delete this contact information?",
+        "placeholders": {
+            "addressUz": "Address (Uzbek)",
+            "addressRu": "Address (Russian)",
+            "addressEn": "Address (English)",
+            "workingTimeUz": "Working hours (Uzbek)",
+            "workingTimeRu": "Working hours (Russian)",
+            "workingTimeEn": "Working hours (English)",
+            "phoneNumber": "Enter phone number",
+            "emailAddress": "Enter email address"
+        },
+        "languages": {
+            "uzbek": "Uzbek",
+            "russian": "Russian",
+            "english": "English"
+        },
+        "success": {
+            "created": "Contact information created successfully",
+            "updated": "Contact information updated successfully",
+            "deleted": "Contact information deleted successfully"
+        },
+        "errors": {
+            "fetchFailed": "Failed to fetch contact data",
+            "createFailed": "Something went wrong",
+            "updateFailed": "Something went wrong",
+            "deleteFailed": "Failed to delete contact information"
+        }
+    },
+    "SocialMediaCommon": {
+        "error": "Error",
+        "success": "Success",
+        "cancel": "Cancel",
+        "create": "Create",
+        "update": "Update",
+        "close": "Close",
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add",
+        "loading": "Loading...",
+        "copied": "Copied",
+        "empty": "Empty",
+        "notConfigured": "Not configured"
+    },
+    "SocialMediaManagement": {
+        "title": "Social Media Management",
+        "description": "Manage your company's social media presence",
+        "addSocialMedia": "Add Social Media",
+        "updateLinks": "Update Links",
+        "editSocialMediaLinks": "Edit Social Media Links",
+        "addSocialMediaLinks": "Add Social Media Links",
+        "editDescription": "Update your links.",
+        "createDescription": "Add your company's social media links.",
+        "noSocialMediaLinks": "No Social Media Links",
+        "noSocialMediaDescription": "Add your company's social media profiles to get started.",
+        "socialMediaLinksNumber": "Social Media Links #{{id}}",
+        "deleteConfirmation": "Are you sure you want to delete this social media configuration?",
+        "inputHelpText": "Enter full URL or username (starting with @). Leave empty if not used.",
+        "platforms": {
+            "telegram": "Telegram",
+            "facebook": "Facebook",
+            "x": "X (Twitter)",
+            "instagram": "Instagram",
+            "youtube": "YouTube"
+        },
+        "placeholders": {
+            "telegram": "https://t.me/username or @username",
+            "facebook": "https://facebook.com/username",
+            "x": "https://x.com/username or @username",
+            "instagram": "https://instagram.com/username",
+            "youtube": "https://youtube.com/@username"
+        },
+        "success": {
+            "created": "Social media links created successfully",
+            "updated": "Social media links updated successfully",
+            "deleted": "Social media configuration deleted successfully",
+            "linkCopied": "{{platform}} link copied to clipboard"
+        },
+        "errors": {
+            "fetchFailed": "Failed to fetch social media data",
+            "invalidUrl": "Invalid {{platform}} URL or username",
+            "createFailed": "Something went wrong. Please try again.",
+            "updateFailed": "Something went wrong. Please try again.",
+            "deleteFailed": "Failed to delete item"
+        }
+    },
+    "companyName": "Uzbek Foodstuff",
+    "Dashdashboard": "Dashboard",
+    "Dashorders": "Orders",
+    "users": "Users",
+    "about": "About",
+    "categories": "Categories",
+    "products": "Products",
+    "banners": "Banners",
+    "contactMessages": "Contact Messages",
+    "news": "News",
+    "ourContact": "Our Contact",
+    "socialMedia": "Social Media",
+    "adminUser": "Admin User",
+    "administrator": "Administrator",
+    "signOut": "Sign Out",
+    "loadingCategories": "Loading categories...",
+    "Category": "Category",
+    "AllCategories": "All Categories",
+    "Selectcategory": "Select category",
+    "colors": "Colors",
+    "addColor": "Add Color",
+    "createNewColor": "Create New Color",
+    "colorName": "Color Name",
+    "enterColorName": "Enter color name",
+    "colorImage": "Color Image",
+    "preview": "Preview",
+    "createColor": "Create Color",
+    "productImageFor": "Product Image for {{colorName}}",
+    "priceFor": "Price for {{colorName}}",
+    "saving": "Saving...",
+    "save": "Save",
+    "missingProductId": "Missing productId. Pass the real product id to ColorSelector.",
+    "chooseImageAndPrice": "Please choose an image and enter a price, then click Save.",
+    "mustBeLoggedIn": "You must be logged in.",
+    "saveColorFailed": "Save color failed:",
+    "failedToSaveProductColor": "Failed to save product color",
+    "colorSaved": "Color saved ✅",
+    "features": "Features",
+    "addFeature": "Add Feature",
+    "fillFeatureDetails": "Fill in the feature type, value, and price to add a new feature.",
+    "featureType": "Feature Type",
+    "newType": "New Type",
+    "createNewType": "Create New Type",
+    "enterNewTypeName": "Enter a name for the new feature type.",
+    "typeName": "Type Name",
+    "enterTypeName": "Enter type name",
+    "createType": "Create Type",
+    "selectFeatureType": "Select feature type",
+    "featureValue": "Feature Value",
+    "enterFeatureValue": "Enter feature value",
+    "featurePrice": "Feature Price",
+    "enterFeaturePrice": "Enter feature price",
+    "noFeaturesAdded": "No features added",
+    "mustBeLoggedInToAddFeature": "You must be logged in to add a feature.",
+    "failedToCreateFeature": "Failed to create feature",
+    "errorCreatingFeature": "Error creating feature:",
+    "failedToAddFeature": "Failed to add feature.",
+    "managefeatures": "Manage features for product ID: ",
+    "currentFeatures": "Current Features",
+    "assignedfeatures": "Features assigned to this product",
+    "loadingfeatures": "Loading features...",
+    "nofeature": "No features yet",
+    "firstFeature": "Get started by adding your first feature to this product",
+    "TotalFeatures": "Total Features",
+    "AvailableTypes": "",
+    "ThisProduct": "",
+    "imageUploader": {
+        "images": "Images",
+        "uploadSuccess": "Images uploaded successfully ✅",
+        "uploadError": "Error uploading images",
+        "remove": "Remove"
+    },
+    "login": {
+        "subtitle": "Sign in to manage your content",
+        "welcome": "Welcome back",
+        "description": "Enter your credentials to access the Uzbek Foodstuff",
+        "phoneLabel": "Phone Number",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "signIn": "Sign In",
+        "signingIn": "Signing in...",
+        "footer": "All rights reserved.",
+        "errors": {
+            "invalidPhone": "Phone number must start with +998",
+            "invalidCredentials": "Invalid phone number or password",
+            "failed": "Login failed. Please try again."
+        }
+    },
+    "success": "Success",
+    "error": "Error",
+    "colorUpdated": "Color updated successfully",
+    "colorCreated": "Color created successfully",
+    "failedToSaveColor": "Failed to save color",
+    "confirmDeleteColor": "Are you sure you want to delete this color?",
+    "colorDeleted": "Color deleted successfully",
+    "failedToDeleteColor": "Failed to delete color",
+    "colorManagement": {
+        "title": "Color Management",
+        "description": "Manage product colors here.",
+        "addColor": "Add Color",
+        "colorList": "Color List",
+        "manageColorsHere": "View, create, edit and delete product colors.",
+        "preview": "Preview",
+        "name": "Name",
+        "actions": "Actions",
+        "noColors": "No colors available.",
+        "assignColors": "Assign Colors to Product",
+        "assignDescription": "Select which colors belong to the product.",
+        "addImage": "Add image"
+    },
+    "editColor": "Edit Color",
+    "updateColorInfo": "Update the color information below.",
+    "addNewColorInfo": "Add a new color for products.",
+    "cancel": "Cancel",
+    "update": "Update",
+    "create": "Create",
+    "fetchcategories": {
+        "failedToFetch": "Failed to fetch categories"
+    },
+    "fetchcolors": {
+        "failedToFetch": "Failed to fetch colors",
+        "created": "New color created successfully",
+        "failedToCreate": "Failed to create color"
+    },
+    "fetchfeatures": {
+        "failedToFetch": "Failed to fetch features",
+        "created": "New feature created successfully",
+        "failedToCreate": "Failed to create feature"
+    },
+    "productColors": {
+        "failedToFetch": "Failed to fetch product colors",
+        "created": "Product color created successfully",
+        "failedToCreate": "Failed to create product color"
+    },
+    "types": {
+        "failedToFetch": "Failed to fetch product types",
+        "created": "New product type created successfully",
+        "failedToCreate": "Failed to create product type"
+    },
+    "currencyManagement": {
+        "title": "Currency Management",
+        "description": "Manage currencies available in the system",
+        "sections": "Currencies",
+        "actions": {
+            "create": "Add Currency",
+            "update": "Update Currency",
+            "cancel": "Cancel",
+            "delete": "Delete"
+        },
+        "fields": {
+            "nameUz": "Name (Uzbek)",
+            "nameUzPlaceholder": "Enter name in Uzbek",
+            "nameEn": "Name (English)",
+            "nameEnPlaceholder": "Enter name in English",
+            "nameRu": "Name (Russian)",
+            "nameRuPlaceholder": "Enter name in Russian"
+        },
+        "table": {
+            "id": "ID",
+            "nameUz": "Name (UZ)",
+            "nameEn": "Name (EN)",
+            "nameRu": "Name (RU)",
+            "actions": "Actions",
+            "noData": "No currencies found"
+        },
+        "createDialog": {
+            "title": "Add Currency",
+            "description": "Create a new currency for the system"
+        },
+        "editDialog": {
+            "title": "Edit Currency",
+            "description": "Update the currency information"
+        },
+        "messages": {
+            "success": {
+                "created": "Currency created successfully",
+                "updated": "Currency updated successfully",
+                "deleted": "Currency deleted successfully"
+            },
+            "error": {
+                "fetch": "Failed to fetch currencies",
+                "create": "Failed to create currency",
+                "update": "Failed to update currency",
+                "delete": "Failed to delete currency",
+                "general": "An error occurred while processing your request"
+            },
+            "confirmDelete": "Are you sure you want to delete this currency?"
+        }
+    }
+}

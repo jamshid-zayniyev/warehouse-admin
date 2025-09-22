@@ -1,0 +1,750 @@
+{
+    "dashboard": {
+        "title": "Boshqaruv paneli",
+        "subtitle": "Kontentingizni boshqaring va tizim statistikalarini kuzatib boring",
+        "stats": {
+            "users": "Foydalanuvchilar",
+            "users_desc": "Faol foydalanuvchilar",
+            "orders": "Buyurtmalar",
+            "orders_desc": "Barcha buyurtmalar",
+            "categories": "Kategoriyalar",
+            "categories_desc": "Barcha kategoriyalar",
+            "products": "Mahsulotlar",
+            "products_desc": "Barcha mahsulotlar",
+            "banners": "Bannerlar",
+            "banners_desc": "Chop etilgan bannerlar",
+            "messages": "Xabarlar",
+            "messages_desc": "O‘qilmagan xabarlar",
+            "news": "Yangiliklar",
+            "news_desc": "Chop etilgan maqolalar",
+            "contact_info": "Aloqa ma'lumotlari",
+            "contact_info_desc": "Aloqa sozlamalari",
+            "social_media": "Ijtimoiy tarmoqlar",
+            "social_media_desc": "Ulangan platformalar"
+        },
+        "quick_actions": {
+            "title": "Tezkor amallar",
+            "subtitle": "Kontentni boshqarish uchun umumiy vazifalar va qisqa yo‘llar",
+            "add_banner": "Yangi banner qo‘shish",
+            "create_news": "Yangilik maqolasi yaratish",
+            "view_messages": "Xabarlarni ko‘rish"
+        }
+    },
+    "orders": {
+        "title": "Buyurtmalarni boshqarish",
+        "orderId": "Buyurtma ID",
+        "customer": "Mijoz",
+        "phone": "Telefon",
+        "total": "Jami",
+        "status": "Holat",
+        "payment": "To'lov",
+        "actions": "Harakatlar",
+        "view": "Ko'rish",
+        "noOrders": "Hali buyurtmalar yo'q",
+        "noOrdersDescription": "Mijozlar buyurtma berishganda buyurtmalar shu yerda paydo bo'ladi",
+        "orderDetails": "Buyurtma tafsilotlari",
+        "customerInformation": "Mijoz ma'lumotlari",
+        "deliveryInformation": "Yetkazib berish ma'lumotlari",
+        "orderItems": "Buyurtma mahsulotlari",
+        "subtotal": "Aralash summa",
+        "orderTotal": "UMUMIY SUMMA",
+        "paymentMethod": "To'lov usuli",
+        "orderStatus": "Buyurtma holati",
+        "close": "Yopish",
+        "color": "Rang",
+        "noImage": "Rasm mavjud emas",
+        "deliveryType": "Turi",
+        "pickup": "Olib ketish",
+        "delivery": "Yetkazib berish",
+        "statuses": {
+            "p": "Kutilmoqda",
+            "s": "Muvaffaqiyatli",
+            "d": "Yetkazib berildi",
+            "c": "Bekor qilindi",
+            "unknown": "Noma'lum"
+        }
+    },
+    "userManagement": {
+        "title": "Foydalanuvchilarni boshqarish",
+        "description": "Foydalanuvchi hisoblarini ko'rish va boshqarish",
+        "usersCount": "foydalanuvchi",
+        "searchUsers": "Foydalanuvchilarni qidirish",
+        "searchPlaceholder": "Ism yoki telefon raqami bo'yicha qidirish...",
+        "users": "Foydalanuvchilar",
+        "allUsers": "Barcha ro'yxatdan o'tgan foydalanuvchi hisoblari",
+        "user": "Foydalanuvchi",
+        "phoneNumber": "Telefon raqami",
+        "profileImage": "Profil rasmi",
+        "hasImage": "Rasm mavjud",
+        "noImage": "Rasm yo'q",
+        "actions": "Harakatlar",
+        "noUsersMatch": "Hech qanday foydalanuvchi topilmadi",
+        "noUsersFound": "Foydalanuvchilar topilmadi",
+        "userDetails": "Foydalanuvchi tafsilotlari",
+        "profileInfo": "Uchun profil ma'lumoti",
+        "id": "ID",
+        "fullName": "To'liq ism",
+        "available": "Mavjud",
+        "notSet": "O'rnatilmagan",
+        "close": "Yopish",
+        "copyPhone": "Telefonni nusxalash",
+        "copied": "Nusxalandi",
+        "phoneCopied": "Telefon raqami buferga nusxalandi",
+        "createUser": "Foydalanuvchi yaratish",
+        "addNewUser": "Tizimga yangi foydalanuvchi qo'shish",
+        "password": "Parol",
+        "enterFullName": "To'liq ismni kiriting",
+        "enterPhoneNumber": "Telefon raqamini kiriting",
+        "enterPassword": "Parolni kiriting",
+        "cancel": "Bekor qilish",
+        "create": "Yaratish",
+        "editUser": "Foydalanuvchini tahrirlash",
+        "updateUser": "Foydalanuvchi ma'lumotlarini yangilash",
+        "saveChanges": "O'zgarishlarni saqlash",
+        "deleteConfirm": "Bu foydalanuvchini o'chirishni istaysizmi?",
+        "userCreated": "Foydalanuvchi muvaffaqiyatli yaratildi",
+        "userUpdated": "Foydalanuvchi muvaffaqiyatli yangilandi",
+        "userDeleted": "Foydalanuvchi muvaffaqiyatli o'chirildi",
+        "error": "Xato",
+        "failedFetch": "Foydalanuvchilarni yuklab bo'lmadi",
+        "failedCreate": "Foydalanuvchi yaratib bo'lmadi",
+        "failedUpdate": "Foydalanuvchini yangilab bo'lmadi",
+        "failedDelete": "Foydalanuvchini o'chirib bo'lmadi"
+    },
+    "aboutManagement": {
+        "tabs": {
+            "about": "Statistika",
+            "currency": "Valyutalar"
+        },
+        "title": "'Biz haqimizda' bo'limini boshqarish",
+        "description": "Kompaniya statistikasi va yutuqlarini boshqaring",
+        "sections": "'Biz haqimizda' bo'limlari",
+        "sectionsDescription": "Barcha 'biz haqimizda' bo'limi statistikasini ko'rish va boshqarish",
+        "editDialog": {
+            "title": "'Biz haqimizda' bo'limini tahrirlash",
+            "description": "'Biz haqimizda' bo'limi uchun statistikani yangilang."
+        },
+        "createDialog": {
+            "title": "'Biz haqimizda' bo'limini yaratish",
+            "description": "O'z yutuqlaringizni namoyish etish uchun yangi statistika qo'shing."
+        },
+        "fields": {
+            "happyClients": "Mamnun mijozlar",
+            "productTypes": "Mahsulot turlari",
+            "experience": "Yillik tajriba",
+            "happyClientsPlaceholder": "Mamnun mijozlar sonini kiriting",
+            "productTypesPlaceholder": "Mahsulot turlari sonini kiriting",
+            "experiencePlaceholder": "Tajriba yillarini kiriting"
+        },
+        "table": {
+            "id": "ID",
+            "happyClients": "Mamnun mijozlar",
+            "productTypes": "Mahsulot turlari",
+            "experience": "Tajriba (yil)",
+            "actions": "Harakatlar",
+            "noData": "'Biz haqimizda' bo'limlari topilmadi. Birinchisini yarating!"
+        },
+        "actions": {
+            "cancel": "Bekor qilish",
+            "update": "Yangilash",
+            "create": "Yaratish",
+            "edit": "Tahrirlash"
+        },
+        "messages": {
+            "success": {
+                "updated": "'Biz haqimizda' bo'limi muvaffaqiyatli yangilandi",
+                "created": "'Biz haqimizda' bo'limi muvaffaqiyatli yaratildi",
+                "deleted": "'Biz haqimizda' bo'limi muvaffaqiyatli o'chirildi"
+            },
+            "error": {
+                "fetch": "'Biz haqimizda' ma'lumotlarini yuklab bo'lmadi",
+                "general": "Xatolik yuz berdi. Iltimos, qayta urunib ko'ring.",
+                "delete": "Elementni o'chirib bo'lmadi"
+            },
+            "confirmDelete": "Haqiqatan ham ushbu elementni o'chirmoqchimisiz?"
+        }
+    },
+    "currencyManagement": {
+        "title": "Valyuta Boshqaruvi",
+        "description": "Tizimdagi mavjud valyutalarni boshqaring",
+        "sections": "Valyutalar",
+        "actions": {
+            "create": "Valyuta Qo'shish",
+            "update": "Valyutani Yangilash",
+            "cancel": "Bekor Qilish",
+            "delete": "O'chirish"
+        },
+        "fields": {
+            "nameUz": "Nomi (O'zbekcha)",
+            "nameUzPlaceholder": "O'zbekcha nomini kiriting",
+            "nameEn": "Nomi (Inglizcha)",
+            "nameEnPlaceholder": "Inglizcha nomini kiriting",
+            "nameRu": "Nomi (Ruscha)",
+            "nameRuPlaceholder": "Ruscha nomini kiriting"
+        },
+        "table": {
+            "id": "ID",
+            "nameUz": "Nomi (UZ)",
+            "nameEn": "Nomi (EN)",
+            "nameRu": "Nomi (RU)",
+            "actions": "Harakatlar",
+            "noData": "Valyuta topilmadi"
+        },
+        "createDialog": {
+            "title": "Valyuta Qo'shish",
+            "description": "Tizim uchun yangi valyuta yarating"
+        },
+        "editDialog": {
+            "title": "Valyutani Tahrirlash",
+            "description": "Valyuta ma'lumotlarini yangilang"
+        },
+        "messages": {
+            "success": {
+                "created": "Valyuta muvaffaqiyatli yaratildi",
+                "updated": "Valyuta muvaffaqiyatli yangilandi",
+                "deleted": "Valyuta muvaffaqiyatli o'chirildi"
+            },
+            "error": {
+                "fetch": "Valyutalarni yuklab bo'lmadi",
+                "create": "Valyuta yaratish muvaffaqiyatsiz tugadi",
+                "update": "Valyutani yangilash muvaffaqiyatsiz tugadi",
+                "delete": "Valyutani o'chirish muvaffaqiyatsiz tugadi",
+                "general": "So'rovingizni qayta ishlashda xatolik yuz berdi"
+            },
+            "confirmDelete": "Bu valyutani o'chirishni istaysizmi?"
+        }
+    },
+    "categoryManagement": {
+        "title": "Kategoriyalarni boshqarish",
+        "description": "Mahsulot kategoriyalarini boshqaring",
+        "list": "Kategoriyalar ro'yxati",
+        "listDescription": "Barcha mahsulot kategoriyalarini boshqaring",
+        "gallery": "Kategoriyalar galereyasi",
+        "galleryDescription": "Barcha kategoriyalarni ko'rib chiqing",
+        "editDialog": {
+            "title": "Kategoriyani tahrirlash",
+            "description": "Kategoriya tafsilotlarini yangilang."
+        },
+        "createDialog": {
+            "title": "Kategoriya yaratish",
+            "description": "Yangi mahsulot kategoriyasini qo'shing."
+        },
+        "fields": {
+            "nameEn": "Nomi (Inglizcha)",
+            "nameUz": "Nomi (O'zbekcha)",
+            "nameRu": "Nomi (Ruscha)",
+            "nameEnPlaceholder": "Kategoriya nomini ingliz tilida kiriting",
+            "nameUzPlaceholder": "Kategoriya nomini o'zbek tilida kiriting",
+            "nameRuPlaceholder": "Kategoriya nomini rus tilida kiriting",
+            "image": "Kategoriya rasmi"
+        },
+        "languages": {
+            "en": "Inglizcha",
+            "uz": "O'zbekcha",
+            "ru": "Ruscha"
+        },
+        "table": {
+            "id": "ID",
+            "name": "Nomi",
+            "slug": "Slug",
+            "image": "Rasm",
+            "actions": "Harakatlar",
+            "noData": "Kategoriyalar topilmadi.",
+            "languageLabels": {
+                "uz": "UZ",
+                "en": "EN",
+                "ru": "RU"
+            }
+        },
+        "actions": {
+            "addCategory": "Kategoriya qo'shish",
+            "cancel": "Bekor qilish",
+            "update": "Yangilash",
+            "create": "Yaratish",
+            "edit": "Tahrirlash",
+            "delete": "O'chirish"
+        },
+        "messages": {
+            "success": {
+                "updated": "Kategoriya muvaffaqiyatli yangilandi",
+                "created": "Kategoriya muvaffaqiyatli yaratildi",
+                "deleted": "Kategoriya muvaffaqiyatli o'chirildi"
+            },
+            "error": {
+                "fetch": "Kategoriya ma'lumotlarini yuklab bo'lmadi",
+                "create": "Kategoriya yaratib bo'lmadi",
+                "update": "Kategoriyani yangilab bo'lmadi",
+                "delete": "Kategoriyani o'chirib bo'lmadi"
+            },
+            "confirmDelete": "Haqiqatan ham ushbu kategoriyani o'chirmoqchimisiz?"
+        }
+    },
+    "productManagement": {
+        "title": "Mahsulotlarni boshqarish",
+        "description": "Barcha mahsulotlarni kengaytirilgan funksiyalar bilan boshqaring",
+        "productList": "Mahsulotlar ro'yxati",
+        "productGallery": "Mahsulotlar galereyasi",
+        "createProduct": "Mahsulot yaratish",
+        "editProduct": "Mahsulotni tahrirlash",
+        "updateProduct": "Mahsulot tafsilotlarini yangilash",
+        "addProduct": "Ranglar, xususiyatlar va rasmlar bilan yangi mahsulot qo'shing",
+        "addFeaturesColors": "Xususiyatlar va ranglar qo'shing",
+        "addFeaturesDescription": "Yangi yaratilgan mahsulotingiz uchun xususiyatlar va ranglar qo'shing",
+        "titleLabel": "Sarlavha",
+        "descriptionLabel": "Tavsif",
+        "price": "Narx",
+        "oldPrice": "Eski narx",
+        "cancel": "Bekor qilish",
+        "create": "Yaratish",
+        "update": "Yangilash",
+        "done": "Bajarildi",
+        "id": "ID",
+        "image": "Rasm",
+        "actions": "Harakatlar",
+        "noProducts": "Hech qanday mahsulot topilmadi",
+        "success": "Muvaffaqiyat",
+        "productCreated": "Mahsulot muvaffaqiyatli yaratildi",
+        "productUpdated": "Mahsulot muvaffaqiyatli yangilandi",
+        "productDeleted": "Mahsulot muvaffaqiyatli o'chirildi",
+        "error": "Xato",
+        "failedFetch": "Mahsulotlarni yuklab bo'lmadi",
+        "failedCreate": "Mahsulot yaratish muvaffaqiyatsiz tugadi",
+        "failedUpdate": "Mahsulotni yangilash muvaffaqiyatsiz tugadi",
+        "failedDelete": "Mahsulotni o'chirish muvaffaqiyatsiz tugadi",
+        "deleteConfirm": "Haqiqatan ham bu mahsulotni o'chirmoqchimisiz?",
+        "imagesUploaded": "Rasmlar muvaffaqiyatli yuklandi",
+        "errorUploading": "Rasmlarni yuklashda xato",
+        "placeholderTitle": "Mahsulot nomini yozing"
+    },
+    "bannerManagement": {
+        "title": "Bannerlarni boshqarish",
+        "description": "Veb-saytingiz bannerlari va reklama rasmlarini boshqaring",
+        "addBanner": "Banner qo'shish",
+        "editBanner": "Bannerni tahrirlash",
+        "createBanner": "Banner yaratish",
+        "updateDescription": "Banner rasmini yangilang.",
+        "createDescription": "Veb-saytingiz uchun yangi banner rasmini yuklang.",
+        "bannerImage": "Banner rasm",
+        "uploadPlaceholder": "Banner rasm yuklash",
+        "cancel": "Bekor qilish",
+        "create": "Yaratish",
+        "update": "Yangilash",
+        "bannerCollection": "Bannerlar to'plami",
+        "collectionDescription": "Barcha veb-sayt bannerlarini ko'rish va boshqarish",
+        "id": "ID",
+        "preview": "Oldindan ko'rish",
+        "imagePath": "Rasm manzili",
+        "actions": "Harakatlar",
+        "noBanners": "Hech qanday banner topilmadi. Birinchi banneringizni yuklang!",
+        "bannerGallery": "Bannerlar galereyasi",
+        "galleryDescription": "Barcha bannerlarning to'r ko'rinishida oldindan ko'rish",
+        "deleteConfirmation": "Haqiqatan ham ushbu bannerni o'chirmoqchimisiz?",
+        "success": {
+            "created": "Banner muvaffaqiyatli yaratildi",
+            "updated": "Banner muvaffaqiyatli yangilandi",
+            "deleted": "Banner muvaffaqiyatli o'chirildi"
+        },
+        "error": {
+            "fetch": "Banner ma'lumotlarini yuklab bo'lmadi",
+            "create": "Banner yaratib bo'lmadi",
+            "update": "Bannerni yangilab bo'lmadi",
+            "delete": "Bannerni o'chirib bo'lmadi"
+        }
+    },
+    "common": {
+        "error": "Xato",
+        "success": "Muvaffaqiyat",
+        "copied": "Nusxalandi"
+    },
+    "contactManagement": {
+        "title": "Kontakt xabarlari",
+        "description": "Mijozlarning so'rovlari va xabarlarini ko'rish va boshqarish",
+        "messagesCount": "{count} ta xabar",
+        "filters": {
+            "title": "Filtrlash va qidirish",
+            "searchPlaceholder": "Xabarlar, ismlar, email manzillarini qidirish...",
+            "filterTheme": "Mavzu bo'yicha filtrlash",
+            "allThemes": "Barcha mavzular"
+        },
+        "table": {
+            "title": "Xabarlar",
+            "description": "Barcha mijoz kontakt xabarlari va so'rovlari",
+            "headers": {
+                "contact": "Kontakt",
+                "theme": "Mavzu",
+                "messagePreview": "Xabar ko'rinishi",
+                "date": "Sana",
+                "actions": "Harakatlar"
+            },
+            "noResults": {
+                "filtered": "Sizning filtrlaringizga mos xabarlar topilmadi",
+                "empty": "Xabarlar topilmadi"
+            }
+        },
+        "dialog": {
+            "title": "Xabar tafsilotlari",
+            "description": "{name} dan to'liq xabar",
+            "fields": {
+                "name": "Ism",
+                "email": "Email",
+                "theme": "Mavzu",
+                "date": "Sana",
+                "message": "Xabar"
+            },
+            "buttons": {
+                "close": "Yopish",
+                "copyEmail": "Emailni nusxalash",
+                "reply": "Javob berish"
+            }
+        },
+        "actions": {
+            "view": "Xabarni ko'rish",
+            "delete": "Xabarni o'chirish",
+            "deleteConfirm": "Bu xabarni o'chirishga ishonchingiz komilmi?"
+        },
+        "toasts": {
+            "success": {
+                "delete": "Xabar muvaffaqiyatli o'chirildi"
+            },
+            "error": {
+                "fetch": "Kontakt xabarlarini yuklab bo'lmadi",
+                "delete": "Xabarni o'chirib bo'lmadi",
+                "copyEmail": "Email manzili buferga nusxalandi"
+            }
+        },
+        "themes": {
+            "generalInquiry": "Umumiy so'rov",
+            "technicalSupport": "Texnik yordam",
+            "partnership": "Hamkorlik",
+            "feedback": "Fikr-mulohaza"
+        }
+    },
+    "NewsCommon": {
+        "error": "Xato",
+        "success": "Muvaffaqiyat",
+        "cancel": "Bekor qilish",
+        "create": "Yaratish",
+        "update": "Yangilash",
+        "close": "Yopish"
+    },
+    "newsManagement": {
+        "title": "Yangiliklar boshqaruvi",
+        "description": "Yangiliklar maqolalari, press-relizlar va hikoyalarni yaratish va boshqarish",
+        "createArticle": "Maqola yaratish",
+        "editArticle": "Yangiliklar maqolasini tahrirlash",
+        "createDescription": "Rasmlar bilan yangi yangiliklar maqolasini yaratish.",
+        "editDescription": "Yangiliklar maqolasi tafsilotlarini yangilash.",
+        "type": "Turi",
+        "selectType": "Maqola turini tanlang",
+        "images": "Rasmlar",
+        "uploadImages": "Maqola rasmlarini yuklash",
+        "upload": "Yuklash",
+        "untitled": "Nomsiz",
+        "noDescription": "Tavsif yo'q",
+        "notProvided": "Taqdim etilmagan",
+        "image": "Rasm",
+        "articleImage": "Maqola rasmi",
+        "newsArticles": "Yangiliklar maqolalari",
+        "manageArticles": "Barcha yangiliklar maqolalari, press-relizlar va hikoyalarni boshqarish",
+        "noArticles": "Yangiliklar maqolalari topilmadi. Birinchi maqolangizni yarating!",
+        "deleteConfirmation": "Ushbu yangiliklar maqolasini o'chirmoqchi ekanligingizga ishonchingiz komilmi?",
+        "types": {
+            "product": "Mahsulot",
+            "security": "Xavfsizlik",
+            "company": "Kompaniya",
+            "technology": "Texnologiya"
+        },
+        "languages": {
+            "english": "Inglizcha",
+            "uzbek": "O'zbekcha",
+            "russian": "Ruscha"
+        },
+        "form": {
+            "titleEnglish": "Sarlavha (Inglizcha)",
+            "titleEnglishPlaceholder": "Maqola sarlavhasini inglizcha kiriting",
+            "descriptionEnglish": "Tavsif (Inglizcha)",
+            "descriptionEnglishPlaceholder": "Maqola tavsifini inglizcha kiriting",
+            "titleUzbek": "Sarlavha (O'zbekcha)",
+            "titleUzbekPlaceholder": "Maqola sarlavhasini o'zbekcha kiriting",
+            "descriptionUzbek": "Tavsif (O'zbekcha)",
+            "descriptionUzbekPlaceholder": "Maqola tavsifini o'zbekcha kiriting",
+            "titleRussian": "Sarlavha (Ruscha)",
+            "titleRussianPlaceholder": "Maqola sarlavhasini ruscha kiriting",
+            "descriptionRussian": "Tavsif (Ruscha)",
+            "descriptionRussianPlaceholder": "Maqola tavsifini ruscha kiriting"
+        },
+        "table": {
+            "title": "Sarlavha",
+            "type": "Turi",
+            "images": "Rasmlar",
+            "date": "Sana",
+            "actions": "Amallar"
+        },
+        "success": {
+            "created": "Yangilik muvaffaqiyatli yaratildi",
+            "updated": "Yangilik muvaffaqiyatli yangilandi",
+            "deleted": "Yangiliklar maqolasi muvaffaqiyatli o'chirildi"
+        },
+        "errors": {
+            "fetchFailed": "Yangiliklar ma'lumotlarini olishda xatolik yuz berdi",
+            "createFailed": "Nimadir noto'g'ri ketdi",
+            "updateFailed": "Nimadir noto'g'ri ketdi",
+            "deleteFailed": "Yangiliklar maqolasini o'chirishda xatolik yuz berdi"
+        }
+    },
+    "OurContactCommon": {
+        "error": "Xato",
+        "success": "Muvaffaqiyat",
+        "cancel": "Bekor qilish",
+        "create": "Yaratish",
+        "update": "Yangilash",
+        "close": "Yopish",
+        "delete": "O'chirish",
+        "edit": "Tahrirlash",
+        "add": "Qo'shish",
+        "loading": "Yuklanmoqda..."
+    },
+    "OurcontactManagement": {
+        "title": "Bizning aloqa ma'lumotlarimiz",
+        "description": "Mijozlarga ko'rsatiladigan kompaniya aloqa ma'lumotlarini boshqaring",
+        "addContactInfo": "Aloqa ma'lumotini qo'shish",
+        "editContactInfo": "Aloqa ma'lumotini tahrirlash",
+        "createContactInfo": "Aloqa ma'lumotini yaratish",
+        "editDescription": "Kompaniyangizning aloqa ma'lumotlarini yangilang.",
+        "createDescription": "Mijozlar uchun kompaniyangizning aloqa ma'lumotlarini qo'shing.",
+        "address": "Manzil",
+        "phoneNumbers": "Telefon raqamlari",
+        "emailAddresses": "Elektron pochta manzillari",
+        "workingHours": "Ish vaqti",
+        "addPhone": "Telefon qo'shish",
+        "addEmail": "Email qo'shish",
+        "noContactInfo": "Aloqa ma'lumotlari yo'q",
+        "noContactInfoDescription": "Boshlash uchun kompaniyangizning aloqa ma'lumotlarini qo'shing.",
+        "contactInfoNumber": "Aloqa ma'lumotlari #{{id}}",
+        "deleteConfirmation": "Ushbu aloqa ma'lumotlarini o'chirmoqchi ekanligingizga ishonchingiz komilmi?",
+        "placeholders": {
+            "addressUz": "Manzil (O'zbekcha)",
+            "addressRu": "Manzil (Ruscha)",
+            "addressEn": "Manzil (Inglizcha)",
+            "workingTimeUz": "Ish vaqti (O'zbekcha)",
+            "workingTimeRu": "Ish vaqti (Ruscha)",
+            "workingTimeEn": "Ish vaqti (Inglizcha)",
+            "phoneNumber": "Telefon raqamini kiriting",
+            "emailAddress": "Elektron pochta manzilini kiriting"
+        },
+        "languages": {
+            "uzbek": "O'zbekcha",
+            "russian": "Ruscha",
+            "english": "Inglizcha"
+        },
+        "success": {
+            "created": "Aloqa ma'lumotlari muvaffaqiyatli yaratildi",
+            "updated": "Aloqa ma'lumotlari muvaffaqiyatli yangilandi",
+            "deleted": "Aloqa ma'lumotlari muvaffaqiyatli o'chirildi"
+        },
+        "errors": {
+            "fetchFailed": "Aloqa ma'lumotlarini olishda xatolik yuz berdi",
+            "createFailed": "Nimadir noto'g'ri ketdi",
+            "updateFailed": "Nimadir noto'g'ri ketdi",
+            "deleteFailed": "Aloqa ma'lumotlarini o'chirishda xatolik yuz berdi"
+        }
+    },
+    "SocialMediaCommon": {
+        "error": "Xatolik",
+        "success": "Muvaffaqiyatli",
+        "cancel": "Bekor qilish",
+        "create": "Yaratish",
+        "update": "Yangilash",
+        "close": "Yopish",
+        "delete": "O'chirish",
+        "edit": "Tahrirlash",
+        "add": "Qo'shish",
+        "loading": "Yuklanmoqda...",
+        "copied": "Nusxalandi",
+        "empty": "Bo'sh",
+        "notConfigured": "Sozlanmagan"
+    },
+    "SocialMediaManagement": {
+        "title": "Ijtimoiy Tarmoqlarni Boshqarish",
+        "description": "Kompaniyangizning ijtimoiy tarmoqlardagi mavjudligini boshqaring",
+        "addSocialMedia": "Ijtimoiy Tarmoq Qo'shish",
+        "updateLinks": "Havolalarni Yangilash",
+        "editSocialMediaLinks": "Ijtimoiy Tarmoq Havolalarini Tahrirlash",
+        "addSocialMediaLinks": "Ijtimoiy Tarmoq Havolalarini Qo'shish",
+        "editDescription": "Havolalaringizni yangilang.",
+        "createDescription": "Kompaniyangizning ijtimoiy tarmoq havolalarini qo'shing.",
+        "noSocialMediaLinks": "Ijtimoiy Tarmoq Havalalari Yo'q",
+        "noSocialMediaDescription": "Boshlash uchun kompaniyangizning ijtimoiy tarmoq profillarini qo'shing.",
+        "socialMediaLinksNumber": "Ijtimoiy Tarmoq Havalalari #{{id}}",
+        "deleteConfirmation": "Ushbu ijtimoiy tarmoq konfiguratsiyasini o'chirishga ishonchingiz komilmi?",
+        "inputHelpText": "To'liq URL yoki foydalanuvchi nomini kiriting (@ bilan boshlangan). Agar ishlatilmasa, bo'sh qoldiring.",
+        "platforms": {
+            "telegram": "Telegram",
+            "facebook": "Facebook",
+            "x": "X (Twitter)",
+            "instagram": "Instagram",
+            "youtube": "YouTube"
+        },
+        "placeholders": {
+            "telegram": "https://t.me/username yoki @username",
+            "facebook": "https://facebook.com/username",
+            "x": "https://x.com/username yoki @username",
+            "instagram": "https://instagram.com/username",
+            "youtube": "https://youtube.com/@username"
+        },
+        "success": {
+            "created": "Ijtimoiy tarmoq havalalari muvaffaqiyatli yaratildi",
+            "updated": "Ijtimoiy tarmoq havalalari muvaffaqiyatli yangilandi",
+            "deleted": "Ijtimoiy tarmoq konfiguratsiyasi muvaffaqiyatli o'chirildi",
+            "linkCopied": "{{platform}} havolasi clipboardga nusxalandi"
+        },
+        "errors": {
+            "fetchFailed": "Ijtimoiy tarmoq ma'lumotlarini olishda xatolik",
+            "invalidUrl": "Noto'g'ri {{platform}} URL yoki foydalanuvchi nomi",
+            "createFailed": "Nimadir noto'g'ri ketdi. Qaytadan urinib ko'ring.",
+            "updateFailed": "Nimadir noto'g'ri ketdi. Qaytadan urinib ko'ring.",
+            "deleteFailed": "Elementni o'chirishda xatolik"
+        }
+    },
+    "companyName": "O'zbek Oziq-ovqat Mahsulotlari",
+    "Dashdashboard": "Boshqaruv paneli",
+    "Dashorders": "Buyurtmalar",
+    "users": "Foydalanuvchilar",
+    "about": "Biz haqimizda",
+    "categories": "Kategoriyalar",
+    "products": "Mahsulotlar",
+    "banners": "Bannerlar",
+    "contactMessages": "Xabarlar",
+    "news": "Yangiliklar",
+    "ourContact": "Bog'lanish",
+    "socialMedia": "Ijtimoiy tarmoqlar",
+    "adminUser": "Admin foydalanuvchi",
+    "administrator": "Administrator",
+    "signOut": "Chiqish",
+    "loadingCategories": "Kategoriyalar yuklanmoqda...",
+    "Category": "Kategoriya",
+    "AllCategories": "Barcha Kategoriyalar",
+    "Selectcategory": "Kategoriyani tanlang",
+    "colors": "Ranglar",
+    "addColor": "Rang qo'shish",
+    "createNewColor": "Yangi rang yaratish",
+    "colorName": "Rang nomi",
+    "enterColorName": "Rang nomini kiriting",
+    "colorImage": "Rang rasmi",
+    "preview": "Oldin ko'rish",
+    "createColor": "Rang yaratish",
+    "productImageFor": "{{colorName}} uchun mahsulot rasmi",
+    "priceFor": "{{colorName}} uchun narx",
+    "saving": "Saqlanmoqda...",
+    "save": "Saqlash",
+    "missingProductId": "productId yo'q. ColorSelector-ga haqiqiy mahsulot identifikatorini o'tkazing.",
+    "chooseImageAndPrice": "Iltimos, rasm tanlang va narxni kiriting, so'ngra Saqlash tugmasini bosing.",
+    "mustBeLoggedIn": "Siz tizimga kiring.",
+    "saveColorFailed": "Rangni saqlash muvaffaqiyatsiz tugadi:",
+    "failedToSaveProductColor": "Mahsulot rangini saqlab bo'lmadi",
+    "colorSaved": "Rang saqlandi ✅",
+    "features": "Xususiyatlar",
+    "addFeature": "Xususiyat qo'shish",
+    "fillFeatureDetails": "Yangi xususiyat qo'shish uchun xususiyat turi, qiymati va narxini to'ldiring.",
+    "featureType": "Xususiyat turi",
+    "newType": "Yangi tur",
+    "createNewType": "Yangi tur yaratish",
+    "enterNewTypeName": "Yangi xususiyat turi uchun nom kiriting.",
+    "typeName": "Tur nomi",
+    "enterTypeName": "Tur nomini kiriting",
+    "createType": "Tur yaratish",
+    "selectFeatureType": "Xususiyat turini tanlang",
+    "featureValue": "Xususiyat qiymati",
+    "enterFeatureValue": "Xususiyat qiymatini kiriting",
+    "featurePrice": "Xususiyat narxi",
+    "enterFeaturePrice": "Xususiyat narxini kiriting",
+    "noFeaturesAdded": "Xususiyatlar qo'shilmagan",
+    "mustBeLoggedInToAddFeature": "Xususiyat qo'shish uchun tizimga kiring.",
+    "failedToCreateFeature": "Xususiyat yaratish muvaffaqiyatsiz tugadi",
+    "errorCreatingFeature": "Xususiyat yaratishda xatolik:",
+    "failedToAddFeature": "Xususiyat qo'shish muvaffaqiyatsiz tugadi.",
+    "managefeatures": "Mahsulot identifikatori funksiyalarini boshqarish:",
+    "currentFeatures": "Joriy xususiyatlar",
+    "assignedfeatures": "Ushbu mahsulotga tayinlangan xususiyatlar",
+    "loadingfeatures": "Xususiyatlar yuklanmoqda...",
+    "nofeature": "Hali hech qanday xususiyat mavjud emas",
+    "firstFeature": "Ushbu mahsulotga birinchi xususiyatni qo'shish bilan boshlang",
+    "TotalFeatures": "Umumiy xususiyatlar",
+    "ThisProduct": "Ushbu mahsulot",
+    "AvailableTypes": "Mavjud turlar",
+    "Images": "Rasmlar",
+    "imageUploader": {
+        "images": "Rasmlar",
+        "uploadSuccess": "Rasmlar muvaffaqiyatli yuklandi ✅",
+        "uploadError": "Rasmlarni yuklashda xatolik",
+        "remove": "O‘chirish"
+    },
+    "login": {
+        "subtitle": "Kontentingizni boshqarish uchun tizimga kiring",
+        "welcome": "Xush kelibsiz",
+        "description": "Uzbek Foodstuff tizimiga kirish uchun maʼlumotlaringizni kiriting",
+        "phoneLabel": "Telefon raqami",
+        "passwordLabel": "Parol",
+        "passwordPlaceholder": "Parolingizni kiriting",
+        "signIn": "Kirish",
+        "signingIn": "Kirilmoqda...",
+        "footer": "Barcha huquqlar himoyalangan.",
+        "errors": {
+            "invalidPhone": "Telefon raqami +998 bilan boshlanishi kerak",
+            "invalidCredentials": "Telefon raqami yoki parol noto‘g‘ri",
+            "failed": "Kirish amalga oshmadi. Qayta urinib ko‘ring."
+        }
+    },
+    "success": "Muvaffaqiyatli",
+    "error": "Xatolik",
+    "colorUpdated": "Rang muvaffaqiyatli yangilandi",
+    "colorCreated": "Yangi rang muvaffaqiyatli yaratildi",
+    "failedToSaveColor": "Rangni saqlashda xatolik yuz berdi",
+    "confirmDeleteColor": "Ushbu rangni o‘chirishni xohlaysizmi?",
+    "colorDeleted": "Rang muvaffaqiyatli o‘chirildi",
+    "failedToDeleteColor": "Rangni o‘chirishda xatolik yuz berdi",
+    "colorManagement": {
+        "title": "Ranglarni boshqarish",
+        "description": "Bu yerda mahsulot ranglarini boshqarishingiz mumkin.",
+        "addColor": "Rang qo‘shish",
+        "colorList": "Ranglar ro‘yxati",
+        "manageColorsHere": "Mahsulot ranglarini ko‘rish, qo‘shish, tahrirlash va o‘chirish mumkin.",
+        "preview": "Ko‘rinishi",
+        "name": "Nomi",
+        "actions": "Amallar",
+        "noColors": "Hech qanday rang mavjud emas.",
+        "assignColors": "Mahsulotga rang biriktirish",
+        "assignDescription": "Mahsulotga tegishli ranglarni tanlang.",
+        "addImage": "Rasm qo'shish"
+    },
+    "editColor": "Rangni tahrirlash",
+    "updateColorInfo": "Quyida rang haqidagi ma'lumotlarni yangilang.",
+    "addNewColorInfo": "Mahsulotlar uchun yangi rang qo‘shing.",
+    "cancel": "Bekor qilish",
+    "update": "Yangilash",
+    "create": "Yaratish",
+    "fetchcategories": {
+        "failedToFetch": "Kategoriyalarni olishda xatolik yuz berdi"
+    },
+    "fetchcolors": {
+        "failedToFetch": "Ranglarni olishda xatolik yuz berdi",
+        "created": "Yangi rang muvaffaqiyatli yaratildi",
+        "failedToCreate": "Rang yaratishda xatolik yuz berdi"
+    },
+    "succss": "Muvaffaqiyatli",
+    "fetchfeatures": {
+        "failedToFetch": "Xususiyatlarni olishda xatolik yuz berdi",
+        "created": "Yangi xususiyat muvaffaqiyatli yaratildi",
+        "failedToCreate": "Xususiyat yaratishda xatolik yuz berdi"
+    },
+    "productColors": {
+        "failedToFetch": "Mahsulot ranglarini olishda xatolik yuz berdi",
+        "created": "Mahsulot rangi muvaffaqiyatli yaratildi",
+        "failedToCreate": "Mahsulot rangini yaratishda xatolik yuz berdi"
+    },
+    "types": {
+        "failedToFetch": "Mahsulot turlarini olishda xatolik yuz berdi",
+        "created": "Yangi mahsulot turi muvaffaqiyatli yaratildi",
+        "failedToCreate": "Mahsulot turini yaratishda xatolik yuz berdi"
+    }
+}
