@@ -39,24 +39,19 @@ const navigation = [
     icon: ShoppingCart,
   },
   {
-    name: "users",
-    href: "/admin/users",
-    icon: User,
-  },
-  {
-    name: "about",
-    href: "/admin/about",
-    icon: Users,
+    name: "products",
+    href: "/admin/products",
+    icon: ShoppingBag,
   },
   {
     name: "categories",
     href: "/admin/categories",
     icon: Grid,
   },
-  {
-    name: "products",
-    href: "/admin/products",
-    icon: ShoppingBag,
+    {
+    name: "Kirim",
+    href: "/admin/banners",
+    icon: ImageIcon,
   },
   {
     name: "banners",
@@ -68,6 +63,11 @@ const navigation = [
     href: "/admin/contact",
     icon: MessageSquare,
   },
+  {
+  name: "users",
+  href: "/admin/users",
+  icon: User,
+},
   {
     name: "news",
     href: "/admin/news",
@@ -82,6 +82,11 @@ const navigation = [
     name: "socialMedia",
     href: "/admin/social-media",
     icon: Share2,
+  },
+    {
+    name: "about",
+    href: "/admin/about",
+    icon: Users,
   },
   {
     name: "colors",

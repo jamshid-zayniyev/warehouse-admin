@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import type { Banner, CreateBanner } from "@/lib/types"
 import { apiFetch } from "@/lib/api"
 
-const API_BASE_URL = "https://uzbekfoodstuff.pythonanywhere.com/api/v1"
+const API_BASE_URL = "https://warehouseats.pythonanywhere.com/api/v1"
 
 export async function GET(request: NextRequest) {
   try {

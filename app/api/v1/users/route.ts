@@ -2,8 +2,8 @@ import { type NextRequest, NextResponse } from "next/server"
 import type { User, UpdateUser } from "@/lib/types"
 import { apiFetch } from "@/lib/api"
 
-const API_BASE_URL = "https://uzbekfoodstuff.pythonanywhere.com/api/v1/user/me"
-const API_EDIT_URL = "https://uzbekfoodstuff.pythonanywhere.com/api/v1/user/me-edit/"
+const API_BASE_URL = "https://warehouseats.pythonanywhere.com/api/v1/user/me"
+const API_EDIT_URL = "https://warehouseats.pythonanywhere.com/api/v1/user/me-edit/"
 
 // GET /api/user/me → User (current user profile)
 export async function GET(request: NextRequest) {

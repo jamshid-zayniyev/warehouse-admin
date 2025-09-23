@@ -60,7 +60,7 @@ export default function CategoryManagement() {
   const normalizeImageUrl = (url: string) => {
     if (!url) return "/placeholder.svg"
     if (url.startsWith("http")) return url
-    return `https://uzbekfoodstuff.pythonanywhere.com${url}?t=${Date.now()}`
+    return `https://warehouseats.pythonanywhere.com${url}?t=${Date.now()}`
   }
 
   const fetchCategoryData = async () => {

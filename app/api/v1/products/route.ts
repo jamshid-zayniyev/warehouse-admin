@@ -1,7 +1,7 @@
 import { apiFetch } from "@/lib/api"
 import { type NextRequest, NextResponse } from "next/server"
 
-const API_BASE_URL = "https://uzbekfoodstuff.pythonanywhere.com/api/v1"
+const API_BASE_URL = "https://warehouseats.pythonanywhere.com/api/v1"
 
 // ✅ GET all products
 export async function GET(request: NextRequest) {
