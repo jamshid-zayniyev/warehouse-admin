@@ -25,8 +25,7 @@ import {
 } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { useTranslation } from 'next-i18next'
-// import logo from '../public/amaar.png'
-// import Image from "next/image"
+
 const navigation = [
   {
     name: "Dashdashboard",
@@ -92,6 +91,11 @@ const navigation = [
     name: "colors",
     href: "/admin/colors",
     icon: Palette,
+  },
+  {
+    name: "Suppliers",
+    href: "/admin/suppliers",
+    icon: Users,
   },
 ]
 
