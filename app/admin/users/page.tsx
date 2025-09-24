@@ -15,6 +15,7 @@ import type { User } from "@/lib/types"
 import { authService } from "@/lib/auth"
 import Loader from "@/components/ui/loader"
 import { useTranslation } from 'next-i18next'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function UserManagement() {
   const { t } = useTranslation();
@@ -32,14 +33,18 @@ export default function UserManagement() {
   const [createForm, setCreateForm] = useState({
     full_name: "",
     phone_number: "",
-    password: ""
+    password: "",
+    auth_type: "p", 
+    
   })
+
+const [errorMessage, setErrorMessage] = useState("");
 
 
   const fetchUserData = async () => {
     setIsLoading(true)
     try {
-      const response = await authService.makeAuthenticatedRequest("/user")
+      const response = await authService.makeAuthenticatedRequest("/user/")
       if (response.ok) {
         const data: User[] = await response.json()
         setUserData(data)
@@ -84,7 +89,7 @@ export default function UserManagement() {
         setUserData(updatedData)
         setFilteredData(updatedData)
         setIsCreateDialogOpen(false)
-        setCreateForm({ full_name: "", phone_number: "", password: createForm.password })
+        setCreateForm({ full_name: "", phone_number: "", password: createForm.password, auth_type: "p",   })
         toast({
           title: t('userManagement.userCreated'),
           description: t('userManagement.userCreated'),
@@ -99,6 +104,7 @@ export default function UserManagement() {
         variant: "destructive",
       })
     }
+    
   }
 
 
@@ -194,7 +200,7 @@ export default function UserManagement() {
       <div className="space-y-8">
         <div className="animate-slide-in flex flex-col md:flex-row items-center justify-between">
           <div>
-            <h1 className="text-xl md:text-xl md:text-3xl font-bold text-foreground flex items-center gap-3 my-4 my-4">
+            <h1 className="text-xl md:text-3xl font-bold text-foreground flex items-center gap-3 my-4">
               <Users className="h-6 w-6 md:h-8 md:w-8 text-primary" />
               {t('userManagement.title')}
             </h1>
@@ -383,52 +389,76 @@ export default function UserManagement() {
           </DialogContent>
         </Dialog>
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogContent className="sm:max-w-[500px]">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <Plus className="h-5 w-5" /> {t('userManagement.createUser')}
-              </DialogTitle>
-              <DialogDescription>{t('userManagement.addNewUser')}</DialogDescription>
-            </DialogHeader>
+  <DialogContent className="sm:max-w-[500px]">
+    <DialogHeader>
+      <DialogTitle className="flex items-center gap-2">
+        <Plus className="h-5 w-5" /> {t('userManagement.createUser')}
+      </DialogTitle>
+      <DialogDescription>{t('userManagement.addNewUser')}</DialogDescription>
+    </DialogHeader>
 
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="full_name">{t('userManagement.fullName')}</Label>
-                <Input
-                  id="full_name"
-                  value={createForm.full_name}
-                  onChange={(e) => setCreateForm({ ...createForm, full_name: e.target.value })}
-                  placeholder={t('userManagement.enterFullName')}
-                />
-              </div>
-              <div>
-                <Label htmlFor="phone_number">{t('userManagement.phoneNumber')}</Label>
-                <Input
-                  id="phone_number"
-                  value={createForm.phone_number}
-                  onChange={(e) => setCreateForm({ ...createForm, phone_number: e.target.value })}
-                  placeholder={t('userManagement.enterPhoneNumber')}
-                />
-              </div>
-              <div>
-                <Label htmlFor="password">{t('userManagement.password')}</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={createForm.password}
-                  onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
-                  placeholder={t('userManagement.enterPassword')}
-                />
-              </div>
-              <div className="flex justify-end gap-3 pt-4">
-                <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
-                  {t('userManagement.cancel')}
-                </Button>
-                <Button onClick={handleCreateUser}>{t('userManagement.create')}</Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
+    <div className="space-y-4">
+      <div>
+        <Label htmlFor="auth_type">{t('userManagement.authType')}</Label>
+        <Select 
+          value={createForm.auth_type} 
+          onValueChange={(value) => setCreateForm({ ...createForm, auth_type: value })}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder={t('userManagement.selectAuthType')} />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="p">{t('userManagement.person')}</SelectItem>
+            <SelectItem value="c">{t('userManagement.company')}</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div>
+        <Label htmlFor="full_name">{t('userManagement.fullName')}</Label>
+        <Input
+          id="full_name"
+          value={createForm.full_name}
+          onChange={(e) => setCreateForm({ ...createForm, full_name: e.target.value })}
+          placeholder={t('userManagement.enterFullName')}
+        />
+      </div>
+      {/* <div>
+        <Label htmlFor="full_name">{t('userManagement.username')}</Label>
+        <Input
+          id="full_name"
+          value={createForm.username}
+          onChange={(e) => setCreateForm({ ...createForm, username: e.target.value })}
+          placeholder={t('userManagement.enterFullName')}
+        />
+      </div> */}
+      <div>
+        <Label htmlFor="phone_number">{t('userManagement.phoneNumber')}</Label>
+        <Input
+          id="phone_number"
+          value={createForm.phone_number}
+          onChange={(e) => setCreateForm({ ...createForm, phone_number: e.target.value })}
+          placeholder={t('userManagement.enterPhoneNumber')}
+        />
+      </div>
+      <div>
+        <Label htmlFor="password">{t('userManagement.password')}</Label>
+        <Input
+          id="password"
+          type="password"
+          value={createForm.password}
+          onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
+          placeholder={t('userManagement.enterPassword')}
+        />
+      </div>
+      <div className="flex justify-end gap-3 pt-4">
+        <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+          {t('userManagement.cancel')}
+        </Button>
+        <Button onClick={handleCreateUser}>{t('userManagement.create')}</Button>
+      </div>
+    </div>
+  </DialogContent>
+</Dialog>
 
 
 
