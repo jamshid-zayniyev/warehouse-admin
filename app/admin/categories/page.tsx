@@ -21,7 +21,6 @@ import { useTranslation } from "next-i18next";
 type Supplier = {
   id: number;
   user: number;
-  market_name: string;
   user_full_name:string;
   assigned_categories: number[];
 };
@@ -286,7 +285,7 @@ export default function CategoryManagement() {
     console.log(suppliers);
     
     const supplier = suppliers.find(s => s.id === supplierId);
-    return supplier ? `${supplier.user_full_name}(${supplier.market_name})` : `Supplier #${supplierId}`;
+    return supplier ? `${supplier.user_full_name}` : `Supplier #${supplierId}`;
   };
 
   useEffect(() => {
@@ -421,7 +420,7 @@ export default function CategoryManagement() {
                     <SelectContent>
                       {suppliers.map((supplier) => (
                         <SelectItem key={supplier.id} value={supplier.id.toString()}>
-                          {supplier.user_full_name}({supplier.market_name})
+                          {supplier.user_full_name}
                         </SelectItem>
                       ))}
                     </SelectContent>
