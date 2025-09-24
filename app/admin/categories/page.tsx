@@ -1,228 +1,300 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useState, useEffect } from "react"
-import { AdminLayout } from "@/components/admin-layout"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useToast } from "@/hooks/use-toast"
-import { Plus, Edit, Trash2, Tags, Languages } from "lucide-react"
-import Image from "next/image"
-import { authService } from "@/lib/auth"
-import Loader from "@/components/ui/loader"
-import { useTranslation } from "next-i18next"
+import React from "react";
+import { useState, useEffect } from "react";
+import { AdminLayout } from "@/components/admin-layout";
+import { Button } from "@/components/ui/button";
+import {Card,CardContent,CardDescription,CardHeader,CardTitle,} from "@/components/ui/card";
+import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,} from "@/components/ui/table";
+import {Dialog,DialogContent,DialogDescription,DialogHeader,DialogTitle,DialogTrigger,} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { Plus, Edit, Trash2, Tags, Languages } from "lucide-react";
+import Image from "next/image";
+import { authService } from "@/lib/auth";
+import Loader from "@/components/ui/loader";
+import { useTranslation } from "next-i18next";
 
+type Supplier = {
+  id: number;
+  user: number;
+  market_name: string;
+  assigned_categories: number[];
+};
 
 type Category = {
-  id: number
-  name: string | null
-  name_uz: string | null
-  name_en: string | null
-  name_ru: string | null
-  slug: string
-  image: string
-}
+  id: number;
+  name: string | null;
+  name_uz: string | null;
+  name_en: string | null;
+  name_ru: string | null;
+  slug: string;
+  supplier: number; // This should be the supplier ID
+  image: string;
+};
 
 type CreateCategory = {
-  name_uz: string
-  name_en: string
-  name_ru: string
-  image: File | string
-}
+  name_uz: string;
+  name_en: string;
+  name_ru: string;
+  supplier: number; // Supplier ID
+  image: File | string;
+};
 
 export default function CategoryManagement() {
-  const { t } = useTranslation()
-  const [categoryData, setCategoryData] = useState<Category[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [editingItem, setEditingItem] = useState<Category | null>(null)
+  const { t } = useTranslation();
+  const [categoryData, setCategoryData] = useState<Category[]>([]);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSuppliersLoading, setIsSuppliersLoading] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<Category | null>(null);
   const [formData, setFormData] = useState<CreateCategory>({
     name_uz: "",
     name_en: "",
     name_ru: "",
+    supplier: 0,
     image: "",
-  })
-  const [imagePreview, setImagePreview] = useState<string>("")
-  const { toast } = useToast()
+  });
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const { toast } = useToast();
 
   const normalizeImageUrl = (url: string) => {
-    if (!url) return "/placeholder.svg"
-    if (url.startsWith("http")) return url
-    return `https://warehouseats.pythonanywhere.com${url}?t=${Date.now()}`
-  }
+    if (!url) return "/placeholder.svg";
+    if (url.startsWith("http")) return url;
+    return `https://warehouseats.pythonanywhere.com${url}?t=${Date.now()}`;
+  };
+
+  // Fetch suppliers
+  const fetchSuppliers = async () => {
+    try {
+      const response = await authService.makeAuthenticatedRequest(
+        "/supplier/suppliers/"
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setSuppliers(data);
+      } else {
+        throw new Error("Failed to fetch suppliers");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to load suppliers",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSuppliersLoading(false);
+    }
+  };
 
   const fetchCategoryData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const response = await authService.makeAuthenticatedRequest("/product/categories/")
+      const response = await authService.makeAuthenticatedRequest(
+        "/product/categories/"
+      );
       if (response.ok) {
-        const data = await response.json()
-        setCategoryData(data)
+        const data = await response.json();
+        setCategoryData(data);
       } else {
-        throw new Error("Failed to fetch category data")
+        throw new Error("Failed to fetch category data");
       }
     } catch (error) {
       toast({
         title: "Error",
         description: t("categoryManagement.messages.error.fetch"),
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result as string)
-      }
-      reader.readAsDataURL(file)
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
 
-      setFormData({ ...formData, image: file })
+      setFormData({ ...formData, image: file });
     }
-  }
+  };
+
+  const handleSupplierChange = (value: string) => {
+    setFormData({ ...formData, supplier: parseInt(value) });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+    
+    // Validate supplier selection
+    if (!formData.supplier || formData.supplier === 0) {
+      toast({
+        title: "Error",
+        description: "Please select a supplier",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
-      const formDataToSend = new FormData()
-      formDataToSend.append("name_uz", formData.name_uz)
-      formDataToSend.append("name_en", formData.name_en)
-      formDataToSend.append("name_ru", formData.name_ru)
+      const formDataToSend = new FormData();
+      formDataToSend.append("name_uz", formData.name_uz);
+      formDataToSend.append("name_en", formData.name_en);
+      formDataToSend.append("name_ru", formData.name_ru);
+      formDataToSend.append("supplier", formData.supplier.toString());
 
       if (formData.image instanceof File) {
-        formDataToSend.append("image", formData.image)
-      } else if (typeof formData.image === "string" && formData.image.startsWith("data:")) {
-        // Handle base64 image if needed
-        const response = await fetch(formData.image)
-        const blob = await response.blob()
-        formDataToSend.append("image", blob, "image.png")
+        formDataToSend.append("image", formData.image);
+      } else if (formData.image && formData.image !== editingItem?.image) {
+        // Handle base64 image if needed (only if it's different from the existing one)
+        const response = await fetch(formData.image as string);
+        const blob = await response.blob();
+        formDataToSend.append("image", blob, "image.png");
       }
 
-      const endpoint = editingItem ? `/product/categories/${editingItem.id}/` : "/product/categories/"
-      const method = editingItem ? "PUT" : "POST"
+      const endpoint = editingItem
+        ? `/product/categories/${editingItem.id}/`
+        : "/product/categories/";
+      const method = editingItem ? "PUT" : "POST";
 
       const response = await authService.makeAuthenticatedRequest(endpoint, {
         method,
         body: formDataToSend,
-      })
+      });
 
       if (response.ok) {
-        const result = await response.json()
+        const result = await response.json();
         if (editingItem) {
-          setCategoryData(categoryData.map((item) =>
-            item.id === editingItem.id ? { ...result, image: normalizeImageUrl(result.image) } : item
-          ))
-          toast({ 
-            title: "Success", 
-            description: t("categoryManagement.messages.success.updated") 
-          })
+          setCategoryData(
+            categoryData.map((item) =>
+              item.id === editingItem.id
+                ? { ...result, image: normalizeImageUrl(result.image) }
+                : item
+            )
+          );
+          toast({
+            title: "Success",
+            description: t("categoryManagement.messages.success.updated"),
+          });
         } else {
-          setCategoryData([...categoryData, { ...result, image: normalizeImageUrl(result.image) }])
-          toast({ 
-            title: "Success", 
-            description: t("categoryManagement.messages.success.created") 
-          })
+          setCategoryData([
+            ...categoryData,
+            { ...result, image: normalizeImageUrl(result.image) },
+          ]);
+          toast({
+            title: "Success",
+            description: t("categoryManagement.messages.success.created"),
+          });
         }
-        setIsDialogOpen(false)
-        resetForm()
+        setIsDialogOpen(false);
+        resetForm();
       } else {
-        const errorText = await response.text()
-        throw new Error(`HTTP ${response.status}: ${errorText}`)
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast({
         title: "Error",
-        description: t(editingItem ? "categoryManagement.messages.error.update" : "categoryManagement.messages.error.create"),
+        description: t(
+          editingItem
+            ? "categoryManagement.messages.error.update"
+            : "categoryManagement.messages.error.create"
+        ),
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const resetForm = () => {
-    setEditingItem(null)
+    setEditingItem(null);
     setFormData({
       name_uz: "",
       name_en: "",
       name_ru: "",
+      supplier: 0,
       image: "",
-    })
-    setImagePreview("")
-  }
+    });
+    setImagePreview("");
+  };
 
   const handleEdit = (item: Category) => {
-    setEditingItem(item)
+    setEditingItem(item);
     setFormData({
       name_uz: item.name_uz || "",
       name_en: item.name_en || "",
       name_ru: item.name_ru || "",
+      supplier: item.supplier,
       image: item.image,
-    })
-    setImagePreview(normalizeImageUrl(item.image))
-    setIsDialogOpen(true)
-  }
+    });
+    setImagePreview(normalizeImageUrl(item.image));
+    setIsDialogOpen(true);
+  };
 
   const handleDelete = async (id: number) => {
     if (confirm(t("categoryManagement.messages.confirmDelete"))) {
       try {
-        const response = await authService.makeAuthenticatedRequest(`/product/categories/${id}/`, {
-          method: "DELETE",
-        })
+        const response = await authService.makeAuthenticatedRequest(
+          `/product/categories/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
 
         if (response.ok) {
-          setCategoryData(categoryData.filter((item) => item.id !== id))
-          toast({ 
-            title: "Success", 
-            description: t("categoryManagement.messages.success.deleted") 
-          })
+          setCategoryData(categoryData.filter((item) => item.id !== id));
+          toast({
+            title: "Success",
+            description: t("categoryManagement.messages.success.deleted"),
+          });
         } else {
-          throw new Error("Failed to delete")
+          throw new Error("Failed to delete");
         }
       } catch (error) {
         toast({
           title: "Error",
           description: t("categoryManagement.messages.error.delete"),
           variant: "destructive",
-        })
+        });
       }
     }
-  }
+  };
 
   const openCreateDialog = () => {
-    resetForm()
-    setIsDialogOpen(true)
-  }
+    resetForm();
+    setIsDialogOpen(true);
+  };
 
   // Helper function to get display name (fallback to English if available)
   const getDisplayName = (item: Category) => {
-    return item.name_en || item.name_uz || item.name_ru || item.name || "Untitled"
-  }
+    return (
+      item.name_en || item.name_uz || item.name_ru || item.name || "Untitled"
+    );
+  };
+
+  // Helper function to get supplier market name by ID
+  const getSupplierName = (supplierId: number) => {
+    const supplier = suppliers.find(s => s.id === supplierId);
+    return supplier ? supplier.market_name : `Supplier #${supplierId}`;
+  };
 
   useEffect(() => {
-    fetchCategoryData()
-  }, [])
+    fetchSuppliers();
+    fetchCategoryData();
+  }, []);
 
-  if (isLoading) {
-    return (
-      <Loader />
-    )
+  if (isLoading || isSuppliersLoading) {
+    return <Loader />;
   }
+
   return (
     <AdminLayout>
       <div className="space-y-8">
@@ -233,7 +305,9 @@ export default function CategoryManagement() {
               <Tags className="h-6 w-6 md:h-8 md:w-8 text-primary" />
               {t("categoryManagement.title")}
             </h1>
-            <p className="text-muted-foreground mt-2">{t("categoryManagement.description")}</p>
+            <p className="text-muted-foreground mt-2">
+              {t("categoryManagement.description")}
+            </p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
@@ -245,10 +319,9 @@ export default function CategoryManagement() {
             <DialogContent className="sm:max-w-[600px]">
               <DialogHeader>
                 <DialogTitle>
-                  {editingItem 
-                    ? t("categoryManagement.editDialog.title") 
-                    : t("categoryManagement.createDialog.title")
-                  }
+                  {editingItem
+                    ? t("categoryManagement.editDialog.title")
+                    : t("categoryManagement.createDialog.title")}
                 </DialogTitle>
                 <DialogDescription>
                   {editingItem
@@ -260,24 +333,33 @@ export default function CategoryManagement() {
                 <Tabs defaultValue="en" className="w-full">
                   <TabsList className="grid grid-cols-3 w-full">
                     <TabsTrigger value="en" className="flex items-center gap-2">
-                      <Languages className="h-4 w-4" /> {t("categoryManagement.languages.en")}
+                      <Languages className="h-4 w-4" />{" "}
+                      {t("categoryManagement.languages.en")}
                     </TabsTrigger>
                     <TabsTrigger value="uz" className="flex items-center gap-2">
-                      <Languages className="h-4 w-4" /> {t("categoryManagement.languages.uz")}
+                      <Languages className="h-4 w-4" />{" "}
+                      {t("categoryManagement.languages.uz")}
                     </TabsTrigger>
                     <TabsTrigger value="ru" className="flex items-center gap-2">
-                      <Languages className="h-4 w-4" /> {t("categoryManagement.languages.ru")}
+                      <Languages className="h-4 w-4" />{" "}
+                      {t("categoryManagement.languages.ru")}
                     </TabsTrigger>
                   </TabsList>
 
                   <TabsContent value="en" className="space-y-4 mt-4">
                     <div>
-                      <Label htmlFor="name_en">{t("categoryManagement.fields.nameEn")}</Label>
+                      <Label htmlFor="name_en">
+                        {t("categoryManagement.fields.nameEn")}
+                      </Label>
                       <Input
                         id="name_en"
                         value={formData.name_en}
-                        onChange={(e) => setFormData({ ...formData, name_en: e.target.value })}
-                        placeholder={t("categoryManagement.fields.nameEnPlaceholder")}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name_en: e.target.value })
+                        }
+                        placeholder={t(
+                          "categoryManagement.fields.nameEnPlaceholder"
+                        )}
                         required
                       />
                     </div>
@@ -285,12 +367,18 @@ export default function CategoryManagement() {
 
                   <TabsContent value="uz" className="space-y-4 mt-4">
                     <div>
-                      <Label htmlFor="name_uz">{t("categoryManagement.fields.nameUz")}</Label>
+                      <Label htmlFor="name_uz">
+                        {t("categoryManagement.fields.nameUz")}
+                      </Label>
                       <Input
                         id="name_uz"
                         value={formData.name_uz}
-                        onChange={(e) => setFormData({ ...formData, name_uz: e.target.value })}
-                        placeholder={t("categoryManagement.fields.nameUzPlaceholder")}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name_uz: e.target.value })
+                        }
+                        placeholder={t(
+                          "categoryManagement.fields.nameUzPlaceholder"
+                        )}
                         required
                       />
                     </div>
@@ -298,20 +386,49 @@ export default function CategoryManagement() {
 
                   <TabsContent value="ru" className="space-y-4 mt-4">
                     <div>
-                      <Label htmlFor="name_ru">{t("categoryManagement.fields.nameRu")}</Label>
+                      <Label htmlFor="name_ru">
+                        {t("categoryManagement.fields.nameRu")}
+                      </Label>
                       <Input
                         id="name_ru"
                         value={formData.name_ru}
-                        onChange={(e) => setFormData({ ...formData, name_ru: e.target.value })}
-                        placeholder={t("categoryManagement.fields.nameRuPlaceholder")}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name_ru: e.target.value })
+                        }
+                        placeholder={t(
+                          "categoryManagement.fields.nameRuPlaceholder"
+                        )}
                         required
                       />
                     </div>
                   </TabsContent>
                 </Tabs>
 
+                {/* Supplier Selector - Placed above file input */}
                 <div>
-                  <Label htmlFor="image">{t("categoryManagement.fields.image")}</Label>
+                  <Label htmlFor="supplier">Supplier</Label>
+                  <Select 
+                    value={formData.supplier.toString()} 
+                    onValueChange={handleSupplierChange}
+                    required
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a supplier" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {suppliers.map((supplier) => (
+                        <SelectItem key={supplier.id} value={supplier.id.toString()}>
+                          {supplier.market_name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="image">
+                    {t("categoryManagement.fields.image")}
+                  </Label>
                   <Input
                     id="image"
                     type="file"
@@ -320,19 +437,28 @@ export default function CategoryManagement() {
                   />
                   {imagePreview && (
                     <div className="relative w-full h-32 border rounded mt-2 overflow-hidden">
-                      <Image src={imagePreview} alt="Preview" fill className="object-cover" />
+                      <Image
+                        src={imagePreview}
+                        alt="Preview"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                   )}
                 </div>
+              
                 <div className="flex justify-end gap-2 pt-4">
-                  <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setIsDialogOpen(false)}
+                  >
                     {t("categoryManagement.actions.cancel")}
                   </Button>
                   <Button type="submit">
-                    {editingItem 
-                      ? t("categoryManagement.actions.update") 
-                      : t("categoryManagement.actions.create")
-                    }
+                    {editingItem
+                      ? t("categoryManagement.actions.update")
+                      : t("categoryManagement.actions.create")}
                   </Button>
                 </div>
               </form>
@@ -344,7 +470,9 @@ export default function CategoryManagement() {
         <Card>
           <CardHeader>
             <CardTitle>{t("categoryManagement.list")}</CardTitle>
-            <CardDescription>{t("categoryManagement.listDescription")}</CardDescription>
+            <CardDescription>
+              {t("categoryManagement.listDescription")}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {isLoading ? (
@@ -357,58 +485,92 @@ export default function CategoryManagement() {
                   <TableRow>
                     <TableHead>{t("categoryManagement.table.id")}</TableHead>
                     <TableHead>{t("categoryManagement.table.name")}</TableHead>
+                    <TableHead>Supplier</TableHead>
                     <TableHead>{t("categoryManagement.table.slug")}</TableHead>
                     <TableHead>{t("categoryManagement.table.image")}</TableHead>
-                    <TableHead className="text-right">{t("categoryManagement.table.actions")}</TableHead>
+                    <TableHead className="text-right">
+                      {t("categoryManagement.table.actions")}
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {categoryData.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                      <TableCell
+                        colSpan={6}
+                        className="text-center py-8 text-muted-foreground"
+                      >
                         {t("categoryManagement.table.noData")}
                       </TableCell>
                     </TableRow>
                   ) : (
                     categoryData.map((cat, i) => (
-                      <TableRow key={cat.id} style={{ animationDelay: `${i * 0.1}s` }}>
+                      <TableRow
+                        key={cat.id}
+                        style={{ animationDelay: `${i * 0.1}s` }}
+                      >
                         <TableCell>{cat.id}</TableCell>
                         <TableCell>
                           <div className="space-y-1">
-                            <div className="font-medium">{getDisplayName(cat)}</div>
+                            <div className="font-medium">
+                              {getDisplayName(cat)}
+                            </div>
                             <div className="text-xs text-muted-foreground">
                               {cat.name_uz && (
                                 <span>
-                                  {t("categoryManagement.table.languageLabels.uz")}: {cat.name_uz}
+                                  {t(
+                                    "categoryManagement.table.languageLabels.uz"
+                                  )}
+                                  : {cat.name_uz}
                                 </span>
                               )}
                               {cat.name_en && (
                                 <span>
                                   {cat.name_uz && " | "}
-                                  {t("categoryManagement.table.languageLabels.en")}: {cat.name_en}
+                                  {t(
+                                    "categoryManagement.table.languageLabels.en"
+                                  )}
+                                  : {cat.name_en}
                                 </span>
                               )}
                               {cat.name_ru && (
                                 <span>
                                   {(cat.name_uz || cat.name_en) && " | "}
-                                  {t("categoryManagement.table.languageLabels.ru")}: {cat.name_ru}
+                                  {t(
+                                    "categoryManagement.table.languageLabels.ru"
+                                  )}
+                                  : {cat.name_ru}
                                 </span>
                               )}
                             </div>
                           </div>
                         </TableCell>
+                        <TableCell>{getSupplierName(cat.supplier)}</TableCell>
                         <TableCell>{cat.slug}</TableCell>
                         <TableCell>
                           <div className="relative w-16 h-10 border rounded overflow-hidden">
-                            <Image src={normalizeImageUrl(cat.image)} alt={getDisplayName(cat)} fill className="object-cover" />
+                            <Image
+                              src={normalizeImageUrl(cat.image)}
+                              alt={getDisplayName(cat)}
+                              fill
+                              className="object-cover"
+                            />
                           </div>
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex gap-2 justify-end">
-                            <Button size="sm" variant="outline" onClick={() => handleEdit(cat)}>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleEdit(cat)}
+                            >
                               <Edit className="h-4 w-4" />
                             </Button>
-                            <Button size="sm" variant="outline" onClick={() => handleDelete(cat.id)}>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleDelete(cat.id)}
+                            >
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
@@ -427,29 +589,45 @@ export default function CategoryManagement() {
           <Card>
             <CardHeader>
               <CardTitle>{t("categoryManagement.gallery")}</CardTitle>
-              <CardDescription>{t("categoryManagement.galleryDescription")}</CardDescription>
+              <CardDescription>
+                {t("categoryManagement.galleryDescription")}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {categoryData.map((cat) => (
-                  <div key={cat.id} className="relative aspect-video border rounded-lg overflow-hidden group">
-                    <Image src={normalizeImageUrl(cat.image)} alt={getDisplayName(cat)} fill className="object-cover" />
+                  <div
+                    key={cat.id}
+                    className="relative aspect-video border rounded-lg overflow-hidden group"
+                  >
+                    <Image
+                      src={normalizeImageUrl(cat.image)}
+                      alt={getDisplayName(cat)}
+                      fill
+                      className="object-cover"
+                    />
                     <div className="absolute bottom-0 w-full bg-black/70 text-white p-3">
                       <div className="font-medium">{getDisplayName(cat)}</div>
                       <div className="text-xs opacity-80 mt-1">
+                        Supplier: {getSupplierName(cat.supplier)}
+                      </div>
+                      <div className="text-xs opacity-80 mt-1">
                         {cat.name_uz && (
                           <div>
-                            {t("categoryManagement.table.languageLabels.uz")}: {cat.name_uz}
+                            {t("categoryManagement.table.languageLabels.uz")}:{" "}
+                            {cat.name_uz}
                           </div>
                         )}
                         {cat.name_en && (
                           <div>
-                            {t("categoryManagement.table.languageLabels.en")}: {cat.name_en}
+                            {t("categoryManagement.table.languageLabels.en")}:{" "}
+                            {cat.name_en}
                           </div>
                         )}
                         {cat.name_ru && (
                           <div>
-                            {t("categoryManagement.table.languageLabels.ru")}: {cat.name_ru}
+                            {t("categoryManagement.table.languageLabels.ru")}:{" "}
+                            {cat.name_ru}
                           </div>
                         )}
                       </div>
@@ -462,5 +640,5 @@ export default function CategoryManagement() {
         )}
       </div>
     </AdminLayout>
-  )
+  );
 }

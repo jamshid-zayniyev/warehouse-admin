@@ -422,15 +422,7 @@ const [errorMessage, setErrorMessage] = useState("");
           placeholder={t('userManagement.enterFullName')}
         />
       </div>
-      {/* <div>
-        <Label htmlFor="full_name">{t('userManagement.username')}</Label>
-        <Input
-          id="full_name"
-          value={createForm.username}
-          onChange={(e) => setCreateForm({ ...createForm, username: e.target.value })}
-          placeholder={t('userManagement.enterFullName')}
-        />
-      </div> */}
+      
       <div>
         <Label htmlFor="phone_number">{t('userManagement.phoneNumber')}</Label>
         <Input
