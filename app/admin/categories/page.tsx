@@ -4,9 +4,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { AdminLayout } from "@/components/admin-layout";
 import { Button } from "@/components/ui/button";
-import {Card,CardContent,CardDescription,CardHeader,CardTitle,} from "@/components/ui/card";
-import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,} from "@/components/ui/table";
-import {Dialog,DialogContent,DialogDescription,DialogHeader,DialogTitle,DialogTrigger,} from "@/components/ui/dialog";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -56,6 +56,15 @@ type CreateCategory = {
   image: File | string;
 };
 
+type FormErrors = {
+  name_uz?: string;
+  name_en?: string;
+  name_ru?: string;
+  supplier?: string;
+  image?: string;
+  non_field_errors?: string;
+};
+
 export default function CategoryManagement() {
   const { t } = useTranslation();
   const [categoryData, setCategoryData] = useState<Category[]>([]);
@@ -72,6 +81,8 @@ export default function CategoryManagement() {
     image: "",
   });
   const [imagePreview, setImagePreview] = useState<string>("");
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const normalizeImageUrl = (url: string) => {
@@ -86,7 +97,7 @@ export default function CategoryManagement() {
       const response = await authService.makeAuthenticatedRequest(
         "/user/supplier/"
       );
-      
+
       if (response.ok) {
         const data = await response.json();
         setSuppliers(data);
@@ -137,23 +148,39 @@ export default function CategoryManagement() {
       reader.readAsDataURL(file);
 
       setFormData({ ...formData, image: file });
+
+      // Clear image error when new image is selected
+      if (errors.image) {
+        setErrors({ ...errors, image: undefined });
+      }
     }
   };
 
   const handleSupplierChange = (value: string) => {
-    setFormData({ ...formData, supplier: parseInt(value) });
+    const supplierId = parseInt(value);
+    setFormData({ ...formData, supplier: supplierId });
+
+    // Clear supplier error when supplier is selected
+    if (errors.supplier) {
+      setErrors({ ...errors, supplier: undefined });
+    }
+  };
+
+  const clearError = (fieldName: keyof FormErrors) => {
+    if (errors[fieldName]) {
+      setErrors({ ...errors, [fieldName]: undefined });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setIsSubmitting(true);
+    setErrors({});
+
     // Validate supplier selection
     if (!formData.supplier || formData.supplier === 0) {
-      toast({
-        title: "Error",
-        description: "Please select a supplier",
-        variant: "destructive",
-      });
+      setErrors({ supplier: "Please select a supplier" });
+      setIsSubmitting(false);
       return;
     }
 
@@ -209,12 +236,49 @@ export default function CategoryManagement() {
         }
         setIsDialogOpen(false);
         resetForm();
+        fetchSuppliers();
+        fetchCategoryData();
       } else {
-        const errorText = await response.text();
-        throw new Error(`HTTP ${response.status}: ${errorText}`);
+        const errorData = await response.json();
+        console.log("Backend error response:", errorData);
+
+        const newErrors: FormErrors = {};
+
+        // Handle non_field_errors (like "This Category already exists")
+        if (errorData.non_field_errors && errorData.non_field_errors.length > 0) {
+          newErrors.non_field_errors = errorData.non_field_errors[0];
+        }
+
+        // Handle field-specific errors
+        if (errorData.name_en && errorData.name_en.length > 0) {
+          newErrors.name_en = errorData.name_en[0];
+        }
+        if (errorData.name_uz && errorData.name_uz.length > 0) {
+          newErrors.name_uz = errorData.name_uz[0];
+        }
+        if (errorData.name_ru && errorData.name_ru.length > 0) {
+          newErrors.name_ru = errorData.name_ru[0];
+        }
+        if (errorData.supplier && errorData.supplier.length > 0) {
+          newErrors.supplier = errorData.supplier[0];
+        }
+        if (errorData.image && errorData.image.length > 0) {
+          newErrors.image = errorData.image[0];
+        }
+
+        setErrors(newErrors);
+
+        // If no specific errors found, show generic error
+        if (Object.keys(newErrors).length === 0) {
+          toast({
+            title: "Error",
+            description: `HTTP ${response.status}: ${JSON.stringify(errorData)}`,
+            variant: "destructive",
+          });
+        }
       }
     } catch (error) {
-      console.error(error);
+      console.error("Category submission error:", error);
       toast({
         title: "Error",
         description: t(
@@ -224,6 +288,8 @@ export default function CategoryManagement() {
         ),
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -237,6 +303,7 @@ export default function CategoryManagement() {
       image: "",
     });
     setImagePreview("");
+    setErrors({});
   };
 
   const handleEdit = (item: Category) => {
@@ -249,6 +316,7 @@ export default function CategoryManagement() {
       image: item.image,
     });
     setImagePreview(normalizeImageUrl(item.image));
+    setErrors({});
     setIsDialogOpen(true);
   };
 
@@ -329,7 +397,7 @@ export default function CategoryManagement() {
                 {t("categoryManagement.actions.addCategory")}
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
+            <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>
                   {editingItem
@@ -342,6 +410,14 @@ export default function CategoryManagement() {
                     : t("categoryManagement.createDialog.description")}
                 </DialogDescription>
               </DialogHeader>
+
+              {/* General errors display */}
+              {errors.non_field_errors && (
+                <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                  <p className="text-red-600 text-sm font-medium">{errors.non_field_errors}</p>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 <Tabs defaultValue="en" className="w-full">
                   <TabsList className="grid grid-cols-3 w-full">
@@ -367,14 +443,17 @@ export default function CategoryManagement() {
                       <Input
                         id="name_en"
                         value={formData.name_en}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name_en: e.target.value })
-                        }
-                        placeholder={t(
-                          "categoryManagement.fields.nameEnPlaceholder"
-                        )}
+                        onChange={(e) => {
+                          setFormData({ ...formData, name_en: e.target.value });
+                          clearError('name_en');
+                        }}
+                        placeholder={t("categoryManagement.fields.nameEnPlaceholder")}
                         required
+                        className={errors.name_en ? "border-red-500" : ""}
                       />
+                      {errors.name_en && (
+                        <p className="text-red-500 text-sm mt-1">{errors.name_en}</p>
+                      )}
                     </div>
                   </TabsContent>
 
@@ -386,14 +465,17 @@ export default function CategoryManagement() {
                       <Input
                         id="name_uz"
                         value={formData.name_uz}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name_uz: e.target.value })
-                        }
-                        placeholder={t(
-                          "categoryManagement.fields.nameUzPlaceholder"
-                        )}
+                        onChange={(e) => {
+                          setFormData({ ...formData, name_uz: e.target.value });
+                          clearError('name_uz');
+                        }}
+                        placeholder={t("categoryManagement.fields.nameUzPlaceholder")}
                         required
+                        className={errors.name_uz ? "border-red-500" : ""}
                       />
+                      {errors.name_uz && (
+                        <p className="text-red-500 text-sm mt-1">{errors.name_uz}</p>
+                      )}
                     </div>
                   </TabsContent>
 
@@ -405,14 +487,17 @@ export default function CategoryManagement() {
                       <Input
                         id="name_ru"
                         value={formData.name_ru}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name_ru: e.target.value })
-                        }
-                        placeholder={t(
-                          "categoryManagement.fields.nameRuPlaceholder"
-                        )}
+                        onChange={(e) => {
+                          setFormData({ ...formData, name_ru: e.target.value });
+                          clearError('name_ru');
+                        }}
+                        placeholder={t("categoryManagement.fields.nameRuPlaceholder")}
                         required
+                        className={errors.name_ru ? "border-red-500" : ""}
                       />
+                      {errors.name_ru && (
+                        <p className="text-red-500 text-sm mt-1">{errors.name_ru}</p>
+                      )}
                     </div>
                   </TabsContent>
                 </Tabs>
@@ -420,12 +505,12 @@ export default function CategoryManagement() {
                 {/* Supplier Selector */}
                 <div>
                   <Label htmlFor="supplier">Supplier</Label>
-                  <Select 
-                    value={formData.supplier.toString()} 
+                  <Select
+                    value={formData.supplier.toString()}
                     onValueChange={handleSupplierChange}
                     required
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className={errors.supplier ? "border-red-500" : ""}>
                       <SelectValue placeholder="Select a supplier" />
                     </SelectTrigger>
                     <SelectContent>
@@ -436,6 +521,9 @@ export default function CategoryManagement() {
                       ))}
                     </SelectContent>
                   </Select>
+                  {errors.supplier && (
+                    <p className="text-red-500 text-sm mt-1">{errors.supplier}</p>
+                  )}
                 </div>
 
                 <div>
@@ -447,7 +535,11 @@ export default function CategoryManagement() {
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
+                    className={errors.image ? "border-red-500" : ""}
                   />
+                  {errors.image && (
+                    <p className="text-red-500 text-sm mt-1">{errors.image}</p>
+                  )}
                   {imagePreview && (
                     <div className="relative w-full h-32 border rounded mt-2 overflow-hidden">
                       <Image
@@ -459,19 +551,30 @@ export default function CategoryManagement() {
                     </div>
                   )}
                 </div>
-              
+
                 <div className="flex justify-end gap-2 pt-4">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setIsDialogOpen(false)}
+                    disabled={isSubmitting}
                   >
                     {t("categoryManagement.actions.cancel")}
                   </Button>
-                  <Button type="submit">
-                    {editingItem
-                      ? t("categoryManagement.actions.update")
-                      : t("categoryManagement.actions.create")}
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin h-4 w-4 border-b-2 border-white rounded-full mr-2"></div>
+                        {t("categoryManagement.actions.processing")}
+                      </>
+                    ) : (
+                      editingItem
+                        ? t("categoryManagement.actions.update")
+                        : t("categoryManagement.actions.create")
+                    )}
                   </Button>
                 </div>
               </form>
@@ -531,27 +634,21 @@ export default function CategoryManagement() {
                             <div className="text-xs text-muted-foreground">
                               {cat.name_uz && (
                                 <span>
-                                  {t(
-                                    "categoryManagement.table.languageLabels.uz"
-                                  )}
+                                  {t("categoryManagement.table.languageLabels.uz")}
                                   : {cat.name_uz}
                                 </span>
                               )}
                               {cat.name_en && (
                                 <span>
                                   {cat.name_uz && " | "}
-                                  {t(
-                                    "categoryManagement.table.languageLabels.en"
-                                  )}
+                                  {t("categoryManagement.table.languageLabels.en")}
                                   : {cat.name_en}
                                 </span>
                               )}
                               {cat.name_ru && (
                                 <span>
                                   {(cat.name_uz || cat.name_en) && " | "}
-                                  {t(
-                                    "categoryManagement.table.languageLabels.ru"
-                                  )}
+                                  {t("categoryManagement.table.languageLabels.ru")}
                                   : {cat.name_ru}
                                 </span>
                               )}
@@ -559,7 +656,7 @@ export default function CategoryManagement() {
                           </div>
                         </TableCell>
                         <TableCell>
-                          {cat.supplier.full_name} ({cat.supplier.phone_number})
+                          {cat?.supplier?.full_name} ({cat?.supplier?.phone_number})
                         </TableCell>
                         <TableCell>{cat.slug}</TableCell>
                         <TableCell>
@@ -624,7 +721,7 @@ export default function CategoryManagement() {
                     <div className="absolute bottom-0 w-full bg-black/70 text-white p-3">
                       <div className="font-medium">{getDisplayName(cat)}</div>
                       <div className="text-xs opacity-80 mt-1">
-                        Supplier: {cat.supplier.full_name}
+                        Supplier: {cat?.supplier?.full_name}
                       </div>
                       <div className="text-xs opacity-80 mt-1">
                         {cat.name_uz && (

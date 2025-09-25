@@ -168,6 +168,7 @@ export type Product = {
   title_ru: string
   title_uz: string
   title_en: string
+  stock_quantity:number
   description_ru: string
   description_uz: string
   description_en: string

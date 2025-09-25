@@ -638,6 +638,7 @@ const fetchProductColors = async (productId: number) => {
                     <TableHead>{t("productManagement.titleLabel")}</TableHead>
                     <TableHead>{t("productManagement.descriptionLabel")}</TableHead>
                     <TableHead>{t("productManagement.price")}</TableHead>
+                    <TableHead>Quantity</TableHead>
                     <TableHead>{t("features")}</TableHead>
                     <TableHead className="text-right">{t("productManagement.actions")}</TableHead>
                   </TableRow>
@@ -670,6 +671,7 @@ const fetchProductColors = async (productId: number) => {
                         <TableCell>{prod.title}</TableCell>
                         <TableCell className="max-w-[200px] truncate">{prod.description}</TableCell>
                         <TableCell>{prod.price}</TableCell>
+                        <TableCell>{prod.stock_quantity}</TableCell>
                         <TableCell>
                           {prod.features?.length || 0} {t("features")}
                         </TableCell>
