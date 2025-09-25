@@ -169,6 +169,10 @@ export type Product = {
   title_uz: string
   title_en: string
   description_ru: string
+  buy_price: any
+  sell_price: any
+  created: any
+  quantity: any
   description_uz: string
   description_en: string
   description: string

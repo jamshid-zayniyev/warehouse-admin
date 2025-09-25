@@ -22,6 +22,8 @@ import {
   ShoppingBag,
   ShoppingCart,
   Palette,
+  BadgeInfo,
+  PackagePlus,
 } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { useTranslation } from 'next-i18next'
@@ -48,9 +50,9 @@ const navigation = [
     icon: Grid,
   },
     {
-    name: "Kirim",
-    href: "/admin/banners",
-    icon: ImageIcon,
+    name: "Newly bought products",
+    href: "/admin/new-products",
+    icon: PackagePlus,
   },
   {
     name: "banners",
@@ -85,7 +87,7 @@ const navigation = [
     {
     name: "about",
     href: "/admin/about",
-    icon: Users,
+    icon: BadgeInfo,
   },
   {
     name: "colors",
