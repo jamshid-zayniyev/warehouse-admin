@@ -10,14 +10,14 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
-import { Users, Eye, Trash2, Search, Phone, UserIcon, ImageIcon, Edit, Plus } from "lucide-react"
+import { Users, Eye, Trash2, Search, Phone, UserIcon, ImageIcon, Edit, Plus, Shield } from "lucide-react"
 import type { User } from "@/lib/types"
 import { authService } from "@/lib/auth"
 import Loader from "@/components/ui/loader"
 import { useTranslation } from 'next-i18next'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export default function UserManagement() {
+export default function SupplierManagement() {
   const { t } = useTranslation();
   const [userData, setUserData] = useState<User[]>([])
   const [filteredData, setFilteredData] = useState<User[]>([])
@@ -34,17 +34,16 @@ export default function UserManagement() {
     full_name: "",
     phone_number: "",
     password: "",
-    auth_type: "p", 
-    
   })
-
-const [errorMessage, setErrorMessage] = useState("");
-
+  const [isVerifyDialogOpen, setIsVerifyDialogOpen] = useState(false)
+  const [newlyCreatedUser, setNewlyCreatedUser] = useState<User | null>(null)
+  const [verificationCode, setVerificationCode] = useState("")
+  const [isVerifying, setIsVerifying] = useState(false)
 
   const fetchUserData = async () => {
     setIsLoading(true)
     try {
-      const response = await authService.makeAuthenticatedRequest("/user/")
+      const response = await authService.makeAuthenticatedRequest("/user/supplier/")
       if (response.ok) {
         const data: User[] = await response.json()
         setUserData(data)
@@ -73,9 +72,10 @@ const [errorMessage, setErrorMessage] = useState("");
     setEditForm({ full_name: user.full_name })
     setIsEditDialogOpen(true)
   }
+
   const handleCreateUser = async () => {
     try {
-      const response = await authService.makeAuthenticatedRequest(`/user/`, {
+      const response = await authService.makeAuthenticatedRequest(`/user/supplier/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,11 +88,18 @@ const [errorMessage, setErrorMessage] = useState("");
         const updatedData = [...userData, newUser]
         setUserData(updatedData)
         setFilteredData(updatedData)
+        
+        // Store the newly created user and open verification dialog
+        setNewlyCreatedUser(newUser)
         setIsCreateDialogOpen(false)
-        setCreateForm({ full_name: "", phone_number: "", password: createForm.password, auth_type: "p",   })
+        setIsVerifyDialogOpen(true)
+        
+        // Reset create form but keep password for potential retry
+        setCreateForm(prev => ({ ...prev, full_name: "", phone_number: "" }))
+        
         toast({
           title: t('userManagement.userCreated'),
-          description: t('userManagement.userCreated'),
+          description: t('userManagement.verificationRequired'),
         })
       } else {
         throw new Error("Failed to create user")
@@ -104,22 +111,68 @@ const [errorMessage, setErrorMessage] = useState("");
         variant: "destructive",
       })
     }
-    
   }
 
+  const handleVerifyUser = async () => {
+    if (!newlyCreatedUser || !verificationCode.trim()) {
+      toast({
+        title: t('userManagement.error'),
+        description: t('userManagement.enterVerificationCode'),
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsVerifying(true)
+    try {
+      const response = await authService.makeAuthenticatedRequest("/user/verify/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: verificationCode,
+          user: newlyCreatedUser.id
+        }),
+      })
+
+      if (response.ok) {
+        toast({
+          title: t('userManagement.verificationSuccess'),
+          description: t('userManagement.userVerified'),
+        })
+        setIsVerifyDialogOpen(false)
+        setVerificationCode("")
+        setNewlyCreatedUser(null)
+        
+        // Refresh user data to get updated verification status
+        fetchUserData()
+      } else {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.message || "Verification failed")
+      }
+    } catch (error) {
+      toast({
+        title: t('userManagement.verificationFailed'),
+        description: error instanceof Error ? error.message : t('userManagement.verificationError'),
+        variant: "destructive",
+      })
+    } finally {
+      setIsVerifying(false)
+    }
+  }
 
   const handleSaveEdit = async () => {
     if (!editingUser) return
 
     try {
-      const response = await authService.makeAuthenticatedRequest(`/user/${editingUser.id}/`, {
+      const response = await authService.makeAuthenticatedRequest(`/user/supplier/${editingUser.id}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           full_name: editForm.full_name,
-
         }),
       })
 
@@ -148,7 +201,7 @@ const [errorMessage, setErrorMessage] = useState("");
   const handleDelete = async (id: number) => {
     if (confirm(t('userManagement.deleteConfirm'))) {
       try {
-        const response = await authService.makeAuthenticatedRequest(`/user/${id}/`, {
+        const response = await authService.makeAuthenticatedRequest(`/user/supplier/${id}/`, {
           method: "DELETE",
         })
 
@@ -173,7 +226,6 @@ const [errorMessage, setErrorMessage] = useState("");
     }
   }
 
-
   useEffect(() => {
     let filtered = userData
     if (searchTerm)
@@ -190,9 +242,7 @@ const [errorMessage, setErrorMessage] = useState("");
   }, [])
 
   if (isLoading) {
-    return (
-      <Loader />
-    )
+    return <Loader />
   }
 
   return (
@@ -250,7 +300,7 @@ const [errorMessage, setErrorMessage] = useState("");
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t('userManagement.user')}</TableHead>
+                    <TableHead>{t('userManagement.user')} - Bozor Nomi</TableHead>
                     <TableHead>{t('userManagement.phoneNumber')}</TableHead>
                     <TableHead>{t('userManagement.profileImage')}</TableHead>
                     <TableHead className="text-right">{t('userManagement.actions')}</TableHead>
@@ -259,7 +309,7 @@ const [errorMessage, setErrorMessage] = useState("");
                 <TableBody>
                   {filteredData.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                      <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                         {searchTerm ? t('userManagement.noUsersMatch') : t('userManagement.noUsersFound')}
                       </TableCell>
                     </TableRow>
@@ -292,6 +342,7 @@ const [errorMessage, setErrorMessage] = useState("");
                             )}
                           </div>
                         </TableCell>
+                       
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-2">
                             <Button
@@ -329,6 +380,7 @@ const [errorMessage, setErrorMessage] = useState("");
           </CardContent>
         </Card>
 
+        {/* User Details Dialog */}
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
@@ -336,7 +388,7 @@ const [errorMessage, setErrorMessage] = useState("");
                 <Users className="h-5 w-5" />
                 {t('userManagement.userDetails')}
               </DialogTitle>
-              <DialogDescription>{t('userManagement.profileInfo')} {selectedUser?.full_name}</DialogDescription>
+              <DialogDescription>{t('userManagement.profileInfo')} {selectedUser?.full_name} </DialogDescription>
             </DialogHeader>
             {selectedUser && (
               <div className="space-y-6">
@@ -353,6 +405,7 @@ const [errorMessage, setErrorMessage] = useState("");
                     <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.phoneNumber')}</Label>
                     <p className="font-medium">{selectedUser.phone_number}</p>
                   </div>
+                 
                   <div>
                     <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.profileImage')}</Label>
                     <p className="font-medium">{selectedUser.image ? t('userManagement.available') : t('userManagement.notSet')}</p>
@@ -388,72 +441,123 @@ const [errorMessage, setErrorMessage] = useState("");
             )}
           </DialogContent>
         </Dialog>
+
+        {/* Create User Dialog */}
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-  <DialogContent className="sm:max-w-[500px]">
-    <DialogHeader>
-      <DialogTitle className="flex items-center gap-2">
-        <Plus className="h-5 w-5" /> {t('userManagement.createUser')}
-      </DialogTitle>
-      <DialogDescription>{t('userManagement.addNewUser')}</DialogDescription>
-    </DialogHeader>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Plus className="h-5 w-5" /> {t('userManagement.createUser')}
+              </DialogTitle>
+              <DialogDescription>{t('userManagement.addNewUser')}</DialogDescription>
+            </DialogHeader>
 
-    <div className="space-y-4">
-      <div>
-        <Label htmlFor="auth_type">{t('userManagement.authType')}</Label>
-        <Select 
-          value={createForm.auth_type} 
-          onValueChange={(value) => setCreateForm({ ...createForm, auth_type: value })}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder={t('userManagement.selectAuthType')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="p">{t('userManagement.person')}</SelectItem>
-            <SelectItem value="c">{t('SocialMediaManagement.platforms.telegram')}</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div>
-        <Label htmlFor="full_name">{t('userManagement.fullName')}</Label>
-        <Input
-          id="full_name"
-          value={createForm.full_name}
-          onChange={(e) => setCreateForm({ ...createForm, full_name: e.target.value })}
-          placeholder={t('userManagement.enterFullName')}
-        />
-      </div>
-      
-      <div>
-        <Label htmlFor="phone_number">{t('userManagement.phoneNumber')}</Label>
-        <Input
-          id="phone_number"
-          value={createForm.phone_number}
-          onChange={(e) => setCreateForm({ ...createForm, phone_number: e.target.value })}
-          placeholder={t('userManagement.enterPhoneNumber')}
-        />
-      </div>
-      <div>
-        <Label htmlFor="password">{t('userManagement.password')}</Label>
-        <Input
-          id="password"
-          type="password"
-          value={createForm.password}
-          onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
-          placeholder={t('userManagement.enterPassword')}
-        />
-      </div>
-      <div className="flex justify-end gap-3 pt-4">
-        <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
-          {t('userManagement.cancel')}
-        </Button>
-        <Button onClick={handleCreateUser}>{t('userManagement.create')}</Button>
-      </div>
-    </div>
-  </DialogContent>
-</Dialog>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="full_name">{t('userManagement.fullName')} - Bozor Nomi</Label>
+                <Input
+                  id="full_name"
+                  value={createForm.full_name}
+                  onChange={(e) => setCreateForm({ ...createForm, full_name: e.target.value })}
+                  placeholder='Zilola Shavkatova - Yangi Bozor'
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="phone_number">{t('userManagement.phoneNumber')}</Label>
+                <Input
+                  id="phone_number"
+                  value={createForm.phone_number}
+                  onChange={(e) => setCreateForm({ ...createForm, phone_number: e.target.value })}
+                  placeholder={t('userManagement.enterPhoneNumber')}
+                />
+              </div>
+              <div>
+                <Label htmlFor="password">{t('userManagement.password')}</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={createForm.password}
+                  onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
+                  placeholder={t('userManagement.enterPassword')}
+                />
+              </div>
+              <div className="flex justify-end gap-3 pt-4">
+                <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                  {t('userManagement.cancel')}
+                </Button>
+                <Button onClick={handleCreateUser}>{t('userManagement.create')}</Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
+        {/* Verification Dialog */}
+        <Dialog open={isVerifyDialogOpen} onOpenChange={setIsVerifyDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5" />
+                {t('userManagement.verifyUser')}
+              </DialogTitle>
+              <DialogDescription>
+                {t('userManagement.verificationRequiredDesc')}
+              </DialogDescription>
+            </DialogHeader>
 
+            {newlyCreatedUser && (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
+                  <div>
+                    <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.userId')}</Label>
+                    <p className="font-medium">{newlyCreatedUser.id}</p>
+                  </div>
+                  <div>
+                    <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.fullName')}</Label>
+                    <p className="font-medium">{newlyCreatedUser.full_name}</p>
+                  </div>
+                  <div>
+                    <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.phoneNumber')}</Label>
+                    <p className="font-medium">{newlyCreatedUser.phone_number}</p>
+                  </div>
+                </div>
 
+                <div>
+                  <Label htmlFor="verificationCode">{t('userManagement.verificationCode')}</Label>
+                  <Input
+                    id="verificationCode"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value)}
+                    placeholder={t('userManagement.enterVerificationCode')}
+                    disabled={isVerifying}
+                  />
+                </div>
+
+                <div className="flex justify-end gap-3 pt-4">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      setIsVerifyDialogOpen(false)
+                      setVerificationCode("")
+                      setNewlyCreatedUser(null)
+                    }}
+                    disabled={isVerifying}
+                  >
+                    {t('userManagement.cancel')}
+                  </Button>
+                  <Button 
+                    onClick={handleVerifyUser}
+                    disabled={isVerifying || !verificationCode.trim()}
+                  >
+                    {isVerifying ? t('userManagement.verifying') : t('userManagement.verify')}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        {/* Edit User Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>

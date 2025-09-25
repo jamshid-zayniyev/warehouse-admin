@@ -20,9 +20,17 @@ import { useTranslation } from "next-i18next";
 
 type Supplier = {
   id: number;
-  user: number;
-  user_full_name:string;
-  assigned_categories: number[];
+  role: string;
+  full_name: string;
+  phone_number: string;
+  image: string | null;
+  auth_type: string | null;
+  is_active: boolean;
+  date_joined: string;
+  assigned_categories: {
+    id: number;
+    name: string;
+  }[];
 };
 
 type Category = {
@@ -32,7 +40,11 @@ type Category = {
   name_en: string | null;
   name_ru: string | null;
   slug: string;
-  supplier: number; // This should be the supplier ID
+  supplier: {
+    id: number;
+    full_name: string;
+    phone_number: string;
+  };
   image: string;
 };
 
@@ -40,7 +52,7 @@ type CreateCategory = {
   name_uz: string;
   name_en: string;
   name_ru: string;
-  supplier: number; // Supplier ID
+  supplier: number;
   image: File | string;
 };
 
@@ -72,8 +84,9 @@ export default function CategoryManagement() {
   const fetchSuppliers = async () => {
     try {
       const response = await authService.makeAuthenticatedRequest(
-        "/supplier/suppliers/"
+        "/user/supplier/"
       );
+      
       if (response.ok) {
         const data = await response.json();
         setSuppliers(data);
@@ -232,7 +245,7 @@ export default function CategoryManagement() {
       name_uz: item.name_uz || "",
       name_en: item.name_en || "",
       name_ru: item.name_ru || "",
-      supplier: item.supplier,
+      supplier: item.supplier.id,
       image: item.image,
     });
     setImagePreview(normalizeImageUrl(item.image));
@@ -280,12 +293,10 @@ export default function CategoryManagement() {
     );
   };
 
-  // Helper function to get supplier market name by ID
+  // Helper function to get supplier name by ID
   const getSupplierName = (supplierId: number) => {
-    console.log(suppliers);
-    
     const supplier = suppliers.find(s => s.id === supplierId);
-    return supplier ? `${supplier.user_full_name}` : `Supplier #${supplierId}`;
+    return supplier ? `${supplier.full_name} (${supplier.phone_number})` : `Supplier #${supplierId}`;
   };
 
   useEffect(() => {
@@ -406,7 +417,7 @@ export default function CategoryManagement() {
                   </TabsContent>
                 </Tabs>
 
-                {/* Supplier Selector - Placed above file input */}
+                {/* Supplier Selector */}
                 <div>
                   <Label htmlFor="supplier">Supplier</Label>
                   <Select 
@@ -420,7 +431,7 @@ export default function CategoryManagement() {
                     <SelectContent>
                       {suppliers.map((supplier) => (
                         <SelectItem key={supplier.id} value={supplier.id.toString()}>
-                          {supplier.user_full_name}
+                          {supplier.full_name} ({supplier.phone_number})
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -547,7 +558,9 @@ export default function CategoryManagement() {
                             </div>
                           </div>
                         </TableCell>
-                        <TableCell>{getSupplierName(cat.supplier)}</TableCell>
+                        <TableCell>
+                          {cat.supplier.full_name} ({cat.supplier.phone_number})
+                        </TableCell>
                         <TableCell>{cat.slug}</TableCell>
                         <TableCell>
                           <div className="relative w-16 h-10 border rounded overflow-hidden">
@@ -611,7 +624,7 @@ export default function CategoryManagement() {
                     <div className="absolute bottom-0 w-full bg-black/70 text-white p-3">
                       <div className="font-medium">{getDisplayName(cat)}</div>
                       <div className="text-xs opacity-80 mt-1">
-                        Supplier: {getSupplierName(cat.supplier)}
+                        Supplier: {cat.supplier.full_name}
                       </div>
                       <div className="text-xs opacity-80 mt-1">
                         {cat.name_uz && (
