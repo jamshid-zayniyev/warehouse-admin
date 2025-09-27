@@ -8,7 +8,7 @@ import {
     User, Phone, ImageIcon, Eye, X
 } from "lucide-react"
 import { authService } from "@/lib/auth"
-import { Order } from "@/lib/types"
+import { Order, OrderCom } from "@/lib/types"
 import { AdminLayout } from "@/components/admin-layout"
 import Loader from "@/components/ui/loader"
 import { useTranslation } from 'next-i18next'
@@ -17,7 +17,7 @@ export default function OrdersPage() {
     const { t } = useTranslation();
     const [orders, setOrders] = useState<Order[]>([])
     const [loading, setLoading] = useState(true)
-    const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
+    const [selectedOrder, setSelectedOrder] = useState<OrderCom | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     useEffect(() => {
@@ -260,8 +260,6 @@ export default function OrdersPage() {
 
                                     <div className="space-y-4">
                                         {selectedOrder.items_detail.map((item, i) => {
-                                            const itemTotal = (parseFloat(item.price) * parseInt(item.quantity)).toFixed(2);
-
                                             return (
                                                 <div key={i} className="border border-gray-200 rounded-lg p-4 bg-white">
                                                     <div className="flex justify-between items-start mb-3">
@@ -273,6 +271,45 @@ export default function OrdersPage() {
                                                         <span>${(parseFloat(item.price) / parseInt(item.quantity)).toFixed(1)} × {item.quantity}</span>
                                                         <span>{t('orders.subtotal')}: ${parseFloat(item.price).toFixed(1)}</span>
                                                     </div>
+
+                                                    {/* Supplier information */}
+                                                    {item.is_there && (
+                                                        <div className="mb-3 p-3 bg-gray-50 rounded-md">
+                                                            {typeof item.is_there === 'object' && item.is_there.supplier_requests ? (
+                                                                <div className="space-y-3">
+                                                                    <div className="flex justify-between items-center">
+                                                                        <span className="font-medium text-sm text-gray-700">Status:</span>
+                                                                        <span className="font-semibold text-gray-900 capitalize">
+                                                                            {item.is_there.status.replace(/_/g, ' ')}
+                                                                        </span>
+                                                                    </div>
+                                                                    {item.is_there.supplier_requests.map((supplier, index) => (
+                                                                        <div key={supplier.id} className="border-t pt-2 first:border-t-0 first:pt-0">
+                                                                            <div className="flex justify-between items-center">
+                                                                                <span className="font-medium text-sm text-gray-700">Supplier:</span>
+                                                                                <span className="font-semibold text-gray-900">{supplier.full_name}</span>
+                                                                            </div>
+                                                                            <div className="flex justify-between items-center text-xs text-gray-600">
+                                                                                <span>Phone:</span>
+                                                                                <span>{supplier.phone}</span>
+                                                                            </div>
+                                                                            <div className="flex justify-between items-center text-xs">
+                                                                                <span>Status:</span>
+                                                                                <span className={`font-medium ${supplier.status === 'Rejected' ? 'text-red-600' :
+                                                                                        supplier.status === 'Pending' ? 'text-orange-600' :
+                                                                                            supplier.status === 'Success' ? 'text-green-600' : 'text-blue-600'
+                                                                                    }`}>
+                                                                                    {supplier.status}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            ) : item.is_there === true ? (
+                                                                <div className="text-green-600 font-medium text-sm">✓ In Stock</div>
+                                                            ) : null}
+                                                        </div>
+                                                    )}
 
                                                     {/* Product image */}
                                                     {item.images && item.images.length > 0 ? (
@@ -300,7 +337,7 @@ export default function OrdersPage() {
                                                     {item.color && (
                                                         <div className="flex items-center gap-2 text-sm">
                                                             <span className="text-gray-600">{t('orders.color')}:</span>
-                                                            <div 
+                                                            <div
                                                                 className="w-5 h-5 rounded-full border border-gray-300"
                                                                 style={{ backgroundColor: item.color }}
                                                                 title={item.color}

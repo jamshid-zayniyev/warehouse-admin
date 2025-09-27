@@ -286,4 +286,56 @@ export interface Order {
   price: string
 }
 
+
+export interface OrderItemCom {
+  product: string
+  quantity: string
+  color: string
+  price: string
+  images: string[]
+  is_there?: boolean | {
+    status: string
+    supplier_requests: {
+      id: number
+      full_name: string
+      phone: string
+      status: string
+      total_quantity: number
+      created_at: string
+    }[]
+  }
+}
+
+export interface OrderCom {
+  id: number
+  status: string
+  location: Location
+  receive: string
+  payment: string
+  name: string
+  phone_number: string
+  additional_phone_number: string
+  items_detail: OrderItemCom[]
+  created: string
+  price: string
+}
+
+// types.ts ga qo'shamiz
+
+export interface SupplierRequest {
+  id: number
+  supplier: number
+  product: number
+  orders: number[]
+  total_quantity: number
+  status: 'p' | 'a' | 'r' // pending, accepted, rejected
+  created_at: string
+}
+
+export interface SupplierRequestWithDetails extends SupplierRequest {
+  supplier_details?: User
+  product_details?: Product
+  order_details?: Order[]
+}
+
 export type CreateOrder = Omit<Order, "id" | "created">

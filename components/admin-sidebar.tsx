@@ -99,6 +99,11 @@ const navigation = [
     href: "/admin/suppliers",
     icon: Users,
   },
+    {
+    name: "Suppliers work daily",
+    href: "/admin/suppliers-work-daily",
+    icon: Users,
+  },
 ]
 
 export function AdminSidebar() {

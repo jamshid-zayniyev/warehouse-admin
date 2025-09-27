@@ -166,7 +166,7 @@ export default function SupplierManagement() {
     if (!editingUser) return
 
     try {
-      const response = await authService.makeAuthenticatedRequest(`/user/supplier/${editingUser.id}/`, {
+      const response = await authService.makeAuthenticatedRequest(`/user/${editingUser.id}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -201,7 +201,7 @@ export default function SupplierManagement() {
   const handleDelete = async (id: number) => {
     if (confirm(t('userManagement.deleteConfirm'))) {
       try {
-        const response = await authService.makeAuthenticatedRequest(`/user/supplier/${id}/`, {
+        const response = await authService.makeAuthenticatedRequest(`/user/${id}/`, {
           method: "DELETE",
         })
 
