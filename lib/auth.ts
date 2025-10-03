@@ -3,6 +3,7 @@ import { apiFetch } from "./api"
 interface LoginResponse {
   success: boolean
   status_code: number
+  role:string
   message: string
   data: {
     refresh: string
@@ -46,6 +47,7 @@ export class AuthService {
       // Store tokens in localStorage
       localStorage.setItem("access_token", data.data.access)
       localStorage.setItem("refresh_token", data.data.refresh)
+      localStorage.setItem("role", data.role)
     }
 
     return data
@@ -54,6 +56,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem("access_token")
     localStorage.removeItem("refresh_token")
+    localStorage.removeItem("role")
   }
 
   getAccessToken(): string | null {

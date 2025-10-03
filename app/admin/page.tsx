@@ -6,6 +6,8 @@ import { AdminLayout } from "@/components/admin-layout"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { apiFetch } from "@/lib/api"
 import { ImageIcon, MessageSquare, Newspaper, Phone, Share2, User, Grid, ShoppingBag, ShoppingCart } from "lucide-react"
+import { useRouter } from "next/navigation"
+
 
 export default function AdminDashboard() {
   const { t } = useTranslation()
@@ -18,6 +20,7 @@ export default function AdminDashboard() {
   const [categoryLength, setCategoryLength] = useState(0)
   const [productsLength, setProductsLength] = useState(0)
   const [orderLength, setOrderLength] = useState(0)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchLength = async (url: string, setter: (val: number) => void) => {
@@ -49,6 +52,7 @@ export default function AdminDashboard() {
     fetchLength("/about/our-contact/", setContactInfoLength)
     fetchLength("/about/social-media/", setSocialMediaLength)
   }, [])
+
 
   const stats = [
     { name: t("dashboard.stats.users"), value: userLength.toString(), icon: User, description: t("dashboard.stats.users_desc") },

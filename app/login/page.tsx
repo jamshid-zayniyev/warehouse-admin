@@ -36,7 +36,7 @@ export default function LoginPage() {
 
     try {
       const success = await login(phoneNumber, password)
-
+      
       if (success) {
         router.push("/admin")
       } else {

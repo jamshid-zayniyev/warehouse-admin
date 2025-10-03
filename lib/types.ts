@@ -325,10 +325,12 @@ export interface OrderCom {
 export interface SupplierRequest {
   id: number
   supplier: number
+  new_supplier: number
+  amount_received:number
   product: number
   orders: number[]
   total_quantity: number
-  status: 'p' | 'a' | 'r' // pending, accepted, rejected
+  status: 'p' | 's' | 'r' | 'pt' // pending, accepted, rejected
   created_at: string
 }
 
