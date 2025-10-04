@@ -7,12 +7,11 @@ import { authService } from "@/lib/auth";
 
 interface OrderItemRowProps {
     item: any;
-    orderId: number;
+    order: any;
     onQuantityUpdate: () => void;
 }
 
-const OrderItemRow: React.FC<OrderItemRowProps> = ({ item, orderId, onQuantityUpdate }) => {
-    console.log(item,orderId);
+const OrderItemRow: React.FC<OrderItemRowProps> = ({ item, order, onQuantityUpdate }) => {
     
     const [quantity, setQuantity] = useState(item.quantity);
     const [isEditing, setIsEditing] = useState(false);

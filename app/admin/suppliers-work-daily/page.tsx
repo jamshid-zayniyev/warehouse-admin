@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { authService } from "@/lib/auth"
 import { useToast } from "@/hooks/use-toast"
-import { SupplierRequestWithDetails, User } from "@/lib/types"
+import { Category, Product, SupplierRequestWithDetails, User } from "@/lib/types"
 import { Eye, Calendar, Package, User as UserIcon, Phone, Tag, CalendarIcon, RotateCcw, X, ChevronDown, ChevronUp, CheckCircle, MoreHorizontal } from "lucide-react"
 import { format } from "date-fns"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -44,7 +44,122 @@ export default function SupplierRequestsTable() {
     const [successForm, setSuccessForm] = useState({
         buy_price: ""
     })
+    const [categories, setCategories] = useState<Category[]>([])
+    const [products, setProducts] = useState<Product[]>([])
+    const [selectedCategory, setSelectedCategory] = useState("")
+    const [selectedProduct, setSelectedProduct] = useState("")
+    const [newProductQuantity, setNewProductQuantity] = useState("")
+    const [addProductLoading, setAddProductLoading] = useState(false)
     const { toast } = useToast()
+
+    // Yangi funksiyalar
+    const fetchCategories = async () => {
+        try {
+            const response = await authService.makeAuthenticatedRequest("/product/categories/")
+            if (!response.ok) throw new Error("Failed to fetch categories")
+            const data = await response.json()
+            setCategories(data)
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to fetch categories",
+                variant: "destructive",
+            })
+        }
+    }
+
+    const fetchProductsByCategory = async (categoryId: number) => {
+        if (!categoryId) {
+            setProducts([])
+            return
+        }
+
+        try {
+            const response = await authService.makeAuthenticatedRequest(`/product/category/${categoryId}/products/`)
+            if (!response.ok) throw new Error("Failed to fetch products")
+            const data = await response.json()
+            setProducts(data)
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to fetch products",
+                variant: "destructive",
+            })
+        }
+    }
+
+    const handleAddProduct = async () => {
+        if (!selectedProduct || !newProductQuantity) {
+            toast({
+                title: "Error",
+                description: "Please select product and enter quantity",
+                variant: "destructive"
+            })
+            return
+        }
+
+        const quantity = parseInt(newProductQuantity)
+        if (quantity <= 0) {
+            toast({
+                title: "Error",
+                description: "Quantity must be greater than 0",
+                variant: "destructive"
+            })
+            return
+        }
+
+        setAddProductLoading(true)
+        try {
+            const response = await authService.makeAuthenticatedRequest(
+                `/supplier/supplier-requests/add-product/`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        order_id: selectedOrder.id,
+                        product_id: parseInt(selectedProduct),
+                        quantity: quantity
+                    })
+                }
+            )
+
+            if (!response.ok) throw new Error("Failed to add product")
+
+            toast({
+                title: "Success",
+                description: "Product added to order successfully",
+            })
+
+            // Formani tozalash
+            setSelectedCategory("")
+            setSelectedProduct("")
+            setNewProductQuantity("")
+            setProducts([])
+
+            // Order ma'lumotlarini yangilash
+            const updatedOrderResponse = await authService.makeAuthenticatedRequest(`/order/${selectedOrder.id}/`)
+            if (updatedOrderResponse.ok) {
+                const updatedOrder = await updatedOrderResponse.json()
+                setSelectedOrder(updatedOrder)
+            }
+
+            // Supplier requestlarni yangilash
+            fetchSupplierRequests()
+
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to add product to order",
+                variant: "destructive"
+            })
+        } finally {
+            setAddProductLoading(false)
+        }
+    }
+
+  
 
     // Format date for API endpoint (YYYY/MM/DD)
     const formatDateForAPI = (date: Date) => {
@@ -81,8 +196,10 @@ export default function SupplierRequestsTable() {
                     }
                 })
             )
+            console.log(requestsWithDetails);
 
             setRequests(requestsWithDetails)
+
         } catch (error) {
             toast({
                 title: "Error",
@@ -385,11 +502,12 @@ export default function SupplierRequestsTable() {
 
     useEffect(() => {
         fetchSupplierRequests()
+        fetchSupplierRequests()
+        fetchCategories() // Kategoriyalarni yuklash
         // Don't fetch suppliers here, fetch when reassign dialog opens
     }, [])
 
-    console.log(requests);
-    
+
 
     if (loading) {
         return (
@@ -688,6 +806,14 @@ export default function SupplierRequestsTable() {
                                                                                 </div>
                                                                             </div>
                                                                         )}
+                                                                        {request.status === 'p' && request.reassigned_from && (
+                                                                            <div>
+                                                                                <span className="text-muted-foreground text-xs">Reassigned From:</span>
+                                                                                <div className="font-medium text-sm mt-1 flex items-center gap-2">
+                                                                                    {request.reassigned_from}
+                                                                                </div>
+                                                                            </div>
+                                                                        )}
                                                                     </div>
                                                                 </div>
                                                             </TableCell>
@@ -849,111 +975,193 @@ export default function SupplierRequestsTable() {
                 </Dialog>
 
 
-{/* Order Details Dialog */}
-<Dialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen}>
-    <DialogContent className="w-full max-w-lg md:max-w-3xl lg:max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-                <Tag className="h-5 w-5" />
-                Order Details #{selectedOrder?.id}
-            </DialogTitle>
-            <DialogDescription>
-                Complete information about the selected order
-            </DialogDescription>
-        </DialogHeader>
+                {/* Order Details Dialog */}
+                {/* Order Details Dialog */}
+                <Dialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen}>
+                    <DialogContent className="w-full max-w-lg md:max-w-3xl lg:max-w-4xl max-h-[90vh] overflow-y-auto">
+                        <DialogHeader>
+                            <DialogTitle className="flex items-center gap-2">
+                                <Tag className="h-5 w-5" />
+                                Order Details #{selectedOrder?.id}
+                            </DialogTitle>
+                            <DialogDescription>
+                                Complete information about the selected order
+                            </DialogDescription>
+                        </DialogHeader>
 
-        {selectedOrder && (
-            <div className="space-y-6">
-                {/* Order Basic Info */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Order Information</CardTitle>
-                    </CardHeader>
-                    <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <div className="flex justify-between">
-                                <span className="text-muted-foreground">Status:</span>
-                                <Badge variant="outline">{selectedOrder.status}</Badge>
-                            </div>
-                            <div className="flex justify-between">
-                                <span className="text-muted-foreground">Payment:</span>
-                                <span className="font-medium">{selectedOrder.payment}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span className="text-muted-foreground">Total Price:</span>
-                                <span className="font-medium">${selectedOrder.price}</span>
-                            </div>
-                        </div>
-                        <div className="space-y-2">
-                            <div className="flex justify-between">
-                                <span className="text-muted-foreground">Customer:</span>
-                                <span className="font-medium">{selectedOrder.name}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span className="text-muted-foreground">Phone:</span>
-                                <span className="font-medium">{selectedOrder.phone_number}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span className="text-muted-foreground">Date:</span>
-                                <span className="font-medium">
-                                    {format(new Date(selectedOrder.created), "PPP")}
-                                </span>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+                        {selectedOrder && (
+                            <div className="space-y-6">
+                                {/* Order Basic Info */}
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Order Information</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between">
+                                                <span className="text-muted-foreground">Status:</span>
+                                                <Badge variant="outline">{selectedOrder.status}</Badge>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-muted-foreground">Payment:</span>
+                                                <span className="font-medium">{selectedOrder.payment}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-muted-foreground">Total Price:</span>
+                                                <span className="font-medium">${selectedOrder.price}</span>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between">
+                                                <span className="text-muted-foreground">Customer:</span>
+                                                <span className="font-medium">{selectedOrder.name}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-muted-foreground">Phone:</span>
+                                                <span className="font-medium">{selectedOrder.phone_number}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-muted-foreground">Date:</span>
+                                                <span className="font-medium">
+                                                    {format(new Date(selectedOrder.created), "PPP")}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
 
-                {/* Order Items - YANGILANGAN QISM */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Order Items</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            {selectedOrder.items_detail?.map((item: any, index: number) => (
-                                <OrderItemRow
-                                    key={index} 
-                                    item={item} 
-                                    orderId={item} // bu aniq emas
-                                    onQuantityUpdate={fetchSupplierRequests} // Yangilangan requestlarni olish uchun
-                                />
-                            ))}
-                        </div>
-                    </CardContent>
-                </Card>
+                                {/* Add Product Section - YANGI QO'SHILGAN QISM */}
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Add Product to Order</CardTitle>
+                                        <CardDescription>
+                                            Add additional products to this order
+                                        </CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                            <div className="space-y-2">
+                                                <Label htmlFor="category">Category</Label>
+                                                <Select
+                                                    value={selectedCategory}
+                                                    onValueChange={(value) => {
+                                                        setSelectedCategory(value)
+                                                        fetchProductsByCategory(parseInt(value))
+                                                    }}
+                                                >
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Select category" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {categories.map((category) => (
+                                                            <SelectItem key={category.id} value={category.id.toString()}>
+                                                                {category.name}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
 
-                {/* Location Info */}
-                {selectedOrder.location && (
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Delivery Location</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-2">
-                                <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Address:</span>
-                                    <span className="font-medium text-right">{selectedOrder.location.fullAddress}</span>
-                                </div>
-                                {selectedOrder.location.latitude && selectedOrder.location.longitude && (
-                                    <div className="mt-4 flex justify-end">
+                                            <div className="space-y-2">
+                                                <Label htmlFor="product">Product</Label>
+                                                <Select
+                                                    value={selectedProduct}
+                                                    onValueChange={setSelectedProduct}
+                                                    disabled={!selectedCategory}
+                                                >
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Select product" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {products.map((product) => (
+                                                            <SelectItem key={product.id} value={product.id.toString()}>
+                                                                {product.title_uz || product.title_en || product.title_ru || `Product ${product.id}`}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <Label htmlFor="quantity">Quantity</Label>
+                                                <Input
+                                                    id="quantity"
+                                                    type="number"
+                                                    min="1"
+                                                    step="1"
+                                                    value={newProductQuantity}
+                                                    onChange={(e) => {
+                                                        const value = e.target.value
+                                                        if (value === "" || parseInt(value) >= 1) {
+                                                            setNewProductQuantity(value)
+                                                        }
+                                                    }}
+                                                    placeholder="Enter quantity"
+                                                />
+                                            </div>
+                                        </div>
+
                                         <Button
-                                            onClick={() => {
-                                                const url = `https://www.google.com/maps?q=${selectedOrder.location.latitude},${selectedOrder.location.longitude}`;
-                                                window.open(url, '_blank');
-                                            }}
+                                            onClick={handleAddProduct}
+                                            disabled={!selectedProduct || !newProductQuantity || addProductLoading}
+                                            className="mt-4"
                                         >
-                                            View Location on Map
+                                            {addProductLoading ? "Adding..." : "Add Product to Order"}
                                         </Button>
-                                    </div>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Order Items */}
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Order Items</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-4">
+                                            {selectedOrder.items_detail?.map((item: any, index: number) => (
+                                                <OrderItemRow
+                                                    key={index}
+                                                    item={item}
+                                                    order={requests}
+                                                    onQuantityUpdate={fetchSupplierRequests}
+                                                />
+                                            ))}
+                                        </div>
+                                    </CardContent>
+                                </Card>
+
+                                {/* Location Info */}
+                                {selectedOrder.location && (
+                                    <Card>
+                                        <CardHeader>
+                                            <CardTitle>Delivery Location</CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="space-y-2">
+                                                <div className="flex justify-between">
+                                                    <span className="text-muted-foreground">Address:</span>
+                                                    <span className="font-medium text-right">{selectedOrder.location.fullAddress}</span>
+                                                </div>
+                                                {selectedOrder.location.latitude && selectedOrder.location.longitude && (
+                                                    <div className="mt-4 flex justify-end">
+                                                        <Button
+                                                            onClick={() => {
+                                                                const url = `https://www.google.com/maps?q=${selectedOrder.location.latitude},${selectedOrder.location.longitude}`;
+                                                                window.open(url, '_blank');
+                                                            }}
+                                                        >
+                                                            View Location on Map
+                                                        </Button>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
                                 )}
                             </div>
-                        </CardContent>
-                    </Card>
-                )}
-            </div>
-        )}
-    </DialogContent>
-</Dialog>
+                        )}
+                    </DialogContent>
+                </Dialog>
             </div>
         </AdminLayout>
     )
