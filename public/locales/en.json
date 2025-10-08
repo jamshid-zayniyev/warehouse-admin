@@ -50,6 +50,7 @@
         "orderTotal": "ORDER TOTAL",
         "paymentMethod": "Payment Method",
         "orderStatus": "Order Status",
+        "createdAt":"Created At",
         "close": "Close",
         "color": "Color",
         "noImage": "No image available",

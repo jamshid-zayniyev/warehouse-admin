@@ -50,6 +50,7 @@
         "orderTotal": "ОБЩАЯ СУММА",
         "paymentMethod": "Способ оплаты",
         "orderStatus": "Статус заказа",
+        "createdAt":"Время создания",
         "close": "Закрыть",
         "color": "Цвет",
         "noImage": "Изображение недоступно",

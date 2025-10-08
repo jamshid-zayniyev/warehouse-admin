@@ -50,6 +50,7 @@
         "orderTotal": "UMUMIY SUMMA",
         "paymentMethod": "To'lov usuli",
         "orderStatus": "Buyurtma holati",
+        "createdAt":"Yaratilgan vaqt",
         "close": "Yopish",
         "color": "Rang",
         "noImage": "Rasm mavjud emas",

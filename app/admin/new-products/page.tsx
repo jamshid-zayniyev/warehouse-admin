@@ -29,6 +29,7 @@ interface ProductInput {
   product_title: string
   quantity: number
   sell_price: string
+  supplier_name:string
   buy_price: string
   date_joined: string
   product_details?: {
@@ -655,6 +656,7 @@ function ProductManagementContent() {
                   <TableHead>Buy Price</TableHead>
                   <TableHead>Sell Price</TableHead>
                   <TableHead>Quantity</TableHead>
+                  <TableHead>Agent</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -675,6 +677,7 @@ function ProductManagementContent() {
                       <TableCell>{input.buy_price}</TableCell>
                       <TableCell>{input.sell_price}</TableCell>
                       <TableCell>{input.quantity}</TableCell>
+                      <TableCell>{input.supplier_name}</TableCell>
                       <TableCell>{new Date(input.date_joined).toLocaleDateString()}</TableCell>
                       <TableCell className="text-right">
                         <div className="flex gap-2 justify-end">

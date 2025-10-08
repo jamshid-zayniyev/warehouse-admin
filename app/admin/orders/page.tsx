@@ -237,6 +237,23 @@ export default function OrdersPage() {
                                                 </p>
                                             )}
                                         </div>
+
+                                        {/* Vaqtni birinchi bo'limga qo'shish */}
+                                        <div className="mt-3 pt-3 border-t border-gray-200">
+                                            <p className="text-sm text-gray-800 flex items-center">
+                                                {/* <Calendar className="w-4 h-4 mr-2 text-purple-500" /> */}
+                                                <span className="font-medium">{t('orders.createdAt')}:</span>
+                                                <span className="ml-1">
+                                                    {new Date(selectedOrder.created).toLocaleString('uz-UZ', {
+                                                        year: 'numeric',
+                                                        month: 'numeric',
+                                                        day: 'numeric',
+                                                        hour: '2-digit',
+                                                        minute: '2-digit'
+                                                    })}
+                                                </span>
+                                            </p>
+                                        </div>
                                     </div>
 
                                     <div className="bg-gray-50 p-4 rounded-lg">
@@ -296,8 +313,8 @@ export default function OrdersPage() {
                                                                             <div className="flex justify-between items-center text-xs">
                                                                                 <span>Status:</span>
                                                                                 <span className={`font-medium ${supplier.status === 'Rejected' ? 'text-red-600' :
-                                                                                        supplier.status === 'Pending' ? 'text-orange-600' :
-                                                                                            supplier.status === 'Success' ? 'text-green-600' : 'text-blue-600'
+                                                                                    supplier.status === 'Pending' ? 'text-orange-600' :
+                                                                                        supplier.status === 'Success' ? 'text-green-600' : 'text-blue-600'
                                                                                     }`}>
                                                                                     {supplier.status}
                                                                                 </span>
