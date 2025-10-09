@@ -221,7 +221,7 @@ export default function SocialMediaManagement() {
         {/* Header */}
         <div className="flex items-center justify-between animate-slide-in">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-3">
+            <h1 className="text-[24px] md:text-3xl font-bold flex items-center gap-3">
               <Share2 className="h-6 w-6 md:h-8 md:w-8 text-primary" /> 
               {t("SocialMediaManagement.title")}
             </h1>

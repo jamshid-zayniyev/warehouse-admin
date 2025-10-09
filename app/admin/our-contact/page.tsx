@@ -289,6 +289,7 @@ export default function OurContactManagement() {
                       <Label htmlFor="address_uz" className="text-sm">{t("OurcontactManagement.languages.uzbek")}</Label>
                       <Textarea
                         id="address_uz"
+                        className="text-[12px] md;text-[20px]"
                         value={formData.address_uz}
                         onChange={(e) => setFormData({ ...formData, address_uz: e.target.value })}
                         placeholder={t("OurcontactManagement.placeholders.addressUz")}
@@ -302,6 +303,7 @@ export default function OurContactManagement() {
                       <Textarea
                         id="address_ru"
                         value={formData.address_ru}
+                        className="text-[12px] md;text-[20px]"
                         onChange={(e) => setFormData({ ...formData, address_ru: e.target.value })}
                         placeholder={t("OurcontactManagement.placeholders.addressRu")}
                         rows={2}
@@ -314,6 +316,7 @@ export default function OurContactManagement() {
                       <Textarea
                         id="address_en"
                         value={formData.address_en}
+                        className="text-[12px] md;text-[20px]"
                         onChange={(e) => setFormData({ ...formData, address_en: e.target.value })}
                         placeholder={t("OurcontactManagement.placeholders.addressEn")}
                         rows={2}
@@ -337,6 +340,7 @@ export default function OurContactManagement() {
                       <div className="flex-1">
                         <Input
                           value={phone}
+                          className="text-[14px] md;text-[20px]"
                           onChange={(e) => updatePhoneNumber(index, e.target.value)}
                           placeholder={t("OurcontactManagement.placeholders.phoneNumber")}
                           required
@@ -372,6 +376,7 @@ export default function OurContactManagement() {
                         <Input
                           type="email"
                           value={email}
+                          className="text-[14px] md;text-[20px]"
                           onChange={(e) => updateEmail(index, e.target.value)}
                           placeholder={t("OurcontactManagement.placeholders.emailAddress")}
                           required
@@ -405,6 +410,7 @@ export default function OurContactManagement() {
                       <Input
                         id="working_time_uz"
                         value={formData.working_time_uz}
+                        className="text-[14px] md;text-[20px]"
                         onChange={(e) => setFormData({ ...formData, working_time_uz: e.target.value })}
                         placeholder={t("OurcontactManagement.placeholders.workingTimeUz")}
                         required
@@ -416,6 +422,7 @@ export default function OurContactManagement() {
                       <Input
                         id="working_time_ru"
                         value={formData.working_time_ru}
+                        className="text-[14px] md;text-[20px]"
                         onChange={(e) => setFormData({ ...formData, working_time_ru: e.target.value })}
                         placeholder={t("OurcontactManagement.placeholders.workingTimeRu")}
                         required
@@ -427,6 +434,7 @@ export default function OurContactManagement() {
                       <Input
                         id="working_time_en"
                         value={formData.working_time_en}
+                        className="text-[14px] md;text-[20px]"
                         onChange={(e) => setFormData({ ...formData, working_time_en: e.target.value })}
                         placeholder={t("OurcontactManagement.placeholders.workingTimeEn")}
                         required

@@ -409,10 +409,10 @@ function ProductManagementContent() {
         <div className="animate-slide-in flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center gap-6">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-3">
+              <h1 className="text-[24px] md:text-3xl font-bold flex items-center gap-3">
                 <Plus className="h-6 w-6 md:h-8 md:w-8 text-primary" /> {t("productManagement.title")}
               </h1>
-              <p className="text-muted-foreground mt-2">
+              <p className="text-muted-foreground my-2">
                 {t("productManagement.description")}
               </p>
             </div>

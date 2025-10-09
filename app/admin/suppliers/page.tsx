@@ -395,20 +395,20 @@ export default function SupplierManagement() {
                 <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
                   <div>
                     <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.id')}</Label>
-                    <p className="font-medium">{selectedUser.id}</p>
+                    <p className="text-[14px] md:text-[16px] font-medium">{selectedUser.id}</p>
                   </div>
                   <div>
                     <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.fullName')}</Label>
-                    <p className="font-medium">{selectedUser.full_name}</p>
+                    <p className="text-[14px] md:text-[16px] font-medium">{selectedUser.full_name}</p>
                   </div>
                   <div>
                     <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.phoneNumber')}</Label>
-                    <p className="font-medium">{selectedUser.phone_number}</p>
+                    <p className="text-[14px] md:text-[16px] font-medium">{selectedUser.phone_number}</p>
                   </div>
                  
                   <div>
                     <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.profileImage')}</Label>
-                    <p className="font-medium">{selectedUser.image ? t('userManagement.available') : t('userManagement.notSet')}</p>
+                    <p className="text-[14px] md:text-[16px] font-medium">{selectedUser.image ? t('userManagement.available') : t('userManagement.notSet')}</p>
                   </div>
                 </div>
 
