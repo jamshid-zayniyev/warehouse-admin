@@ -451,7 +451,7 @@ export function FeatureSelector({ selectedFeatures, onFeaturesChange, productId 
               <div className="text-center py-12 border-2 border-dashed rounded-lg">
                 <Settings className="h-12 w-12 text-muted-foreground mx-auto mb-3 opacity-50" />
                 <h3 className="font-semibold text-lg mb-1">{t("nofeature")}</h3>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-muted-foreground text-sm px-2">
                   {t("firstFeature")}
                 </p>
               </div>

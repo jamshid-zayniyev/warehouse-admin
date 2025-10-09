@@ -382,11 +382,11 @@ export default function CategoryManagement() {
         {/* Header */}
         <div className="animate-slide-in flex flex-col md:flex-row items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold flex items-center gap-3">
+            <h1 className="text-[24px] md:text-3xl font-bold flex items-center gap-3">
               <Tags className="h-6 w-6 md:h-8 md:w-8 text-primary" />
               {t("categoryManagement.title")}
             </h1>
-            <p className="text-muted-foreground mt-2">
+            <p className="flex justify-center md:justify-start text-muted-foreground my-2">
               {t("categoryManagement.description")}
             </p>
           </div>

@@ -157,13 +157,13 @@ function ColorsContent() {
         <AdminLayout>
             <div className="space-y-8">
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold flex items-center gap-3">
+                        <h1 className="text-[24px] md:text-3xl font-bold flex items-center gap-3">
                             <Palette className="h-6 w-6 md:h-8 md:w-8 text-primary" />
                             {t("colorManagement.title")}
                         </h1>
-                        <p className="text-muted-foreground mt-2">{t("colorManagement.description")}</p>
+                        <p className="text-muted-foreground my-2">{t("colorManagement.description")}</p>
                     </div>
                     <Button onClick={openCreateDialog}>
                         <Plus className="h-4 w-4 mr-2" /> {t("colorManagement.addColor")}
@@ -179,7 +179,7 @@ function ColorsContent() {
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>{t("colorManagement.id")}</TableHead>
+                                    <TableHead>{t("ID")}</TableHead>
                                     <TableHead>{t("colorManagement.preview")}</TableHead>
                                     <TableHead>{t("colorManagement.name")}</TableHead>
                                     <TableHead className="text-right">{t("colorManagement.actions")}</TableHead>

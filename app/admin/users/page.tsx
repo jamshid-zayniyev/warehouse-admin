@@ -1,78 +1,111 @@
-"use client"
+"use client";
 
-import { Label } from "@/components/ui/label"
-import { useState, useEffect } from "react"
-import { AdminLayout } from "@/components/admin-layout"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { useToast } from "@/hooks/use-toast"
-import { Users, Eye, Trash2, Search, Phone, UserIcon, ImageIcon, Edit, Plus } from "lucide-react"
-import type { User } from "@/lib/types"
-import { authService } from "@/lib/auth"
-import Loader from "@/components/ui/loader"
-import { useTranslation } from 'next-i18next'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { useState, useEffect } from "react";
+import { AdminLayout } from "@/components/admin-layout";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Users,
+  Eye,
+  Trash2,
+  Search,
+  Phone,
+  UserIcon,
+  ImageIcon,
+  Edit,
+  Plus,
+} from "lucide-react";
+import type { User } from "@/lib/types";
+import { authService } from "@/lib/auth";
+import Loader from "@/components/ui/loader";
+import { useTranslation } from "next-i18next";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function UserManagement() {
   const { t } = useTranslation();
-  const [userData, setUserData] = useState<User[]>([])
-  const [filteredData, setFilteredData] = useState<User[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-  const [editingUser, setEditingUser] = useState<User | null>(null)
-  const [editForm, setEditForm] = useState({ full_name: "", })
-  const [searchTerm, setSearchTerm] = useState("")
-  const { toast } = useToast()
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [userData, setUserData] = useState<User[]>([]);
+  const [filteredData, setFilteredData] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editForm, setEditForm] = useState({ full_name: "" });
+  const [searchTerm, setSearchTerm] = useState("");
+  const { toast } = useToast();
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [createForm, setCreateForm] = useState({
     full_name: "",
     phone_number: "",
     password: "",
-    auth_type: "p", 
-    
-  })
+    auth_type: "p",
+  });
 
-const [errorMessage, setErrorMessage] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState("");
 
   const fetchUserData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const response = await authService.makeAuthenticatedRequest("/user/")
+      const response = await authService.makeAuthenticatedRequest("/user/");
       if (response.ok) {
-        const data: User[] = await response.json()
-        setUserData(data)
-        setFilteredData(data)
+        const data: User[] = await response.json();
+        setUserData(data);
+        setFilteredData(data);
       } else {
-        throw new Error("Failed to fetch users")
+        throw new Error("Failed to fetch users");
       }
     } catch (error) {
       toast({
-        title: t('userManagement.error'),
-        description: t('userManagement.failedFetch'),
+        title: t("userManagement.error"),
+        description: t("userManagement.failedFetch"),
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleViewUser = (user: User) => {
-    setSelectedUser(user)
-    setIsDialogOpen(true)
-  }
+    setSelectedUser(user);
+    setIsDialogOpen(true);
+  };
 
   const handleEditUser = (user: User) => {
-    setEditingUser(user)
-    setEditForm({ full_name: user.full_name })
-    setIsEditDialogOpen(true)
-  }
+    setEditingUser(user);
+    setEditForm({ full_name: user.full_name });
+    setIsEditDialogOpen(true);
+  };
   const handleCreateUser = async () => {
     try {
       const response = await authService.makeAuthenticatedRequest(`/user/`, {
@@ -81,118 +114,125 @@ const [errorMessage, setErrorMessage] = useState("");
           "Content-Type": "application/json",
         },
         body: JSON.stringify(createForm),
-      })
+      });
 
       if (response.ok) {
-        const newUser = await response.json()
-        const updatedData = [...userData, newUser]
-        setUserData(updatedData)
-        setFilteredData(updatedData)
-        setIsCreateDialogOpen(false)
-        setCreateForm({ full_name: "", phone_number: "", password: createForm.password, auth_type: "p",   })
+        const newUser = await response.json();
+        const updatedData = [...userData, newUser];
+        setUserData(updatedData);
+        setFilteredData(updatedData);
+        setIsCreateDialogOpen(false);
+        setCreateForm({
+          full_name: "",
+          phone_number: "",
+          password: createForm.password,
+          auth_type: "p",
+        });
         toast({
-          title: t('userManagement.userCreated'),
-          description: t('userManagement.userCreated'),
-        })
+          title: t("userManagement.userCreated"),
+          description: t("userManagement.userCreated"),
+        });
       } else {
-        throw new Error("Failed to create user")
+        throw new Error("Failed to create user");
       }
     } catch (error) {
       toast({
-        title: t('userManagement.error'),
-        description: t('userManagement.failedCreate'),
+        title: t("userManagement.error"),
+        description: t("userManagement.failedCreate"),
         variant: "destructive",
-      })
+      });
     }
-    
-  }
-
+  };
 
   const handleSaveEdit = async () => {
-    if (!editingUser) return
+    if (!editingUser) return;
 
     try {
-      const response = await authService.makeAuthenticatedRequest(`/user/${editingUser.id}/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          full_name: editForm.full_name,
-
-        }),
-      })
+      const response = await authService.makeAuthenticatedRequest(
+        `/user/${editingUser.id}/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            full_name: editForm.full_name,
+          }),
+        }
+      );
 
       if (response.ok) {
-        const updatedUser = await response.json()
-        const updatedData = userData.map((user) => (user.id === editingUser.id ? { ...user, ...updatedUser } : user))
-        setUserData(updatedData)
-        setFilteredData(updatedData)
-        setIsEditDialogOpen(false)
+        const updatedUser = await response.json();
+        const updatedData = userData.map((user) =>
+          user.id === editingUser.id ? { ...user, ...updatedUser } : user
+        );
+        setUserData(updatedData);
+        setFilteredData(updatedData);
+        setIsEditDialogOpen(false);
         toast({
-          title: t('userManagement.userUpdated'),
-          description: t('userManagement.userUpdated'),
-        })
+          title: t("userManagement.userUpdated"),
+          description: t("userManagement.userUpdated"),
+        });
       } else {
-        throw new Error("Failed to update user")
+        throw new Error("Failed to update user");
       }
     } catch (error) {
       toast({
-        title: t('userManagement.error'),
-        description: t('userManagement.failedUpdate'),
+        title: t("userManagement.error"),
+        description: t("userManagement.failedUpdate"),
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const handleDelete = async (id: number) => {
-    if (confirm(t('userManagement.deleteConfirm'))) {
+    if (confirm(t("userManagement.deleteConfirm"))) {
       try {
-        const response = await authService.makeAuthenticatedRequest(`/user/${id}/`, {
-          method: "DELETE",
-        })
+        const response = await authService.makeAuthenticatedRequest(
+          `/user/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
 
         if (response.ok) {
-          const updatedData = userData.filter((item) => item.id !== id)
-          setUserData(updatedData)
-          setFilteredData(updatedData)
+          const updatedData = userData.filter((item) => item.id !== id);
+          setUserData(updatedData);
+          setFilteredData(updatedData);
           toast({
-            title: t('userManagement.userDeleted'),
-            description: t('userManagement.userDeleted'),
-          })
+            title: t("userManagement.userDeleted"),
+            description: t("userManagement.userDeleted"),
+          });
         } else {
-          throw new Error("Failed to delete user")
+          throw new Error("Failed to delete user");
         }
       } catch (error) {
         toast({
-          title: t('userManagement.error'),
-          description: t('userManagement.failedDelete'),
+          title: t("userManagement.error"),
+          description: t("userManagement.failedDelete"),
           variant: "destructive",
-        })
+        });
       }
     }
-  }
-
+  };
 
   useEffect(() => {
-    let filtered = userData
+    let filtered = userData;
     if (searchTerm)
       filtered = filtered.filter(
         (item) =>
           item.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          item.phone_number.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
-    setFilteredData(filtered)
-  }, [userData, searchTerm])
+          item.phone_number.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    setFilteredData(filtered);
+  }, [userData, searchTerm]);
 
   useEffect(() => {
-    fetchUserData()
-  }, [])
+    fetchUserData();
+  }, []);
 
   if (isLoading) {
-    return (
-      <Loader />
-    )
+    return <Loader />;
   }
 
   return (
@@ -202,16 +242,22 @@ const [errorMessage, setErrorMessage] = useState("");
           <div>
             <h1 className="text-xl md:text-3xl font-bold text-foreground flex items-center gap-3 my-4">
               <Users className="h-6 w-6 md:h-8 md:w-8 text-primary" />
-              {t('userManagement.title')}
+              {t("userManagement.title")}
             </h1>
-            <p className="text-muted-foreground mt-2">{t('userManagement.description')}</p>
+            <p className="text-muted-foreground mt-2">
+              {t("userManagement.description")}
+            </p>
           </div>
           <div className="flex items-center gap-2 my-4">
-            <Badge variant="secondary" className="animate-slide-in" style={{ animationDelay: "0.1s" }}>
-              {filteredData.length} {t('userManagement.usersCount')}
+            <Badge
+              variant="secondary"
+              className="animate-slide-in"
+              style={{ animationDelay: "0.1s" }}
+            >
+              {filteredData.length} {t("userManagement.usersCount")}
             </Badge>
             <Button onClick={() => setIsCreateDialogOpen(true)}>
-              <Plus className="h-4 w-4 mr-2" /> {t('userManagement.createUser')}
+              <Plus className="h-4 w-4 mr-2" /> {t("userManagement.createUser")}
             </Button>
           </div>
         </div>
@@ -220,14 +266,14 @@ const [errorMessage, setErrorMessage] = useState("");
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Search className="h-5 w-5" />
-              {t('userManagement.searchUsers')}
+              {t("userManagement.searchUsers")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder={t('userManagement.searchPlaceholder')}
+                placeholder={t("userManagement.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -238,8 +284,8 @@ const [errorMessage, setErrorMessage] = useState("");
 
         <Card className="animate-slide-in" style={{ animationDelay: "0.3s" }}>
           <CardHeader>
-            <CardTitle>{t('userManagement.users')}</CardTitle>
-            <CardDescription>{t('userManagement.allUsers')}</CardDescription>
+            <CardTitle>{t("userManagement.users")}</CardTitle>
+            <CardDescription>{t("userManagement.allUsers")}</CardDescription>
           </CardHeader>
           <CardContent>
             {isLoading ? (
@@ -250,17 +296,24 @@ const [errorMessage, setErrorMessage] = useState("");
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t('userManagement.user')}</TableHead>
-                    <TableHead>{t('userManagement.phoneNumber')}</TableHead>
-                    <TableHead>{t('userManagement.profileImage')}</TableHead>
-                    <TableHead className="text-right">{t('userManagement.actions')}</TableHead>
+                    <TableHead>{t("userManagement.user")}</TableHead>
+                    <TableHead>{t("userManagement.phoneNumber")}</TableHead>
+                    <TableHead>{t("userManagement.profileImage")}</TableHead>
+                    <TableHead className="text-right">
+                      {t("userManagement.actions")}
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredData.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
-                        {searchTerm ? t('userManagement.noUsersMatch') : t('userManagement.noUsersFound')}
+                      <TableCell
+                        colSpan={4}
+                        className="text-center py-8 text-muted-foreground"
+                      >
+                        {searchTerm
+                          ? t("userManagement.noUsersMatch")
+                          : t("userManagement.noUsersFound")}
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -286,9 +339,13 @@ const [errorMessage, setErrorMessage] = useState("");
                           <div className="flex items-center gap-2">
                             <ImageIcon className="h-3 w-3 text-muted-foreground" />
                             {item.image ? (
-                              <Badge variant="secondary">{t('userManagement.hasImage')}</Badge>
+                              <Badge variant="secondary">
+                                {t("userManagement.hasImage")}
+                              </Badge>
                             ) : (
-                              <Badge variant="outline">{t('userManagement.noImage')}</Badge>
+                              <Badge variant="outline">
+                                {t("userManagement.noImage")}
+                              </Badge>
                             )}
                           </div>
                         </TableCell>
@@ -334,34 +391,50 @@ const [errorMessage, setErrorMessage] = useState("");
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5" />
-                {t('userManagement.userDetails')}
+                {t("userManagement.userDetails")}
               </DialogTitle>
-              <DialogDescription>{t('userManagement.profileInfo')} {selectedUser?.full_name}</DialogDescription>
+              <DialogDescription>
+                {t("userManagement.profileInfo")} {selectedUser?.full_name}
+              </DialogDescription>
             </DialogHeader>
             {selectedUser && (
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.id')}</Label>
-                    <p className="font-medium">{selectedUser.id}</p>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("userManagement.id")}
+                    </Label>
+                    <p className="text-[14px] md:text-[16px] font-medium">{selectedUser.id}</p>
                   </div>
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.fullName')}</Label>
-                    <p className="font-medium">{selectedUser.full_name}</p>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("userManagement.fullName")}
+                    </Label>
+                    <p className="text-[14px] md:text-[16px] font-medium">{selectedUser.full_name}</p>
                   </div>
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.phoneNumber')}</Label>
-                    <p className="font-medium">{selectedUser.phone_number}</p>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("userManagement.phoneNumber")}
+                    </Label>
+                    <p className="text-[14px] md:text-[16px] font-medium">{selectedUser.phone_number}</p>
                   </div>
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.profileImage')}</Label>
-                    <p className="font-medium">{selectedUser.image ? t('userManagement.available') : t('userManagement.notSet')}</p>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("userManagement.profileImage")}
+                    </Label>
+                    <p className="text-[14px] md:text-[16px] font-medium">
+                      {selectedUser.image
+                        ? t("userManagement.available")
+                        : t("userManagement.notSet")}
+                    </p>
                   </div>
                 </div>
 
                 {selectedUser.image && (
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">{t('userManagement.profileImage')}</Label>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      {t("userManagement.profileImage")}
+                    </Label>
                     <div className="mt-2 p-4 bg-background border border-border rounded-lg">
                       <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center">
                         <UserIcon className="h-8 w-8 text-muted-foreground" />
@@ -371,17 +444,23 @@ const [errorMessage, setErrorMessage] = useState("");
                 )}
 
                 <div className="flex justify-end gap-3 pt-4">
-                  <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                    {t('userManagement.close')}
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsDialogOpen(false)}
+                  >
+                    {t("userManagement.close")}
                   </Button>
                   <Button
                     variant="outline"
                     onClick={() => {
-                      navigator.clipboard.writeText(selectedUser.phone_number)
-                      toast({ title: t('userManagement.copied'), description: t('userManagement.phoneCopied') })
+                      navigator.clipboard.writeText(selectedUser.phone_number);
+                      toast({
+                        title: t("userManagement.copied"),
+                        description: t("userManagement.phoneCopied"),
+                      });
                     }}
                   >
-                    {t('userManagement.copyPhone')}
+                    {t("userManagement.copyPhone")}
                   </Button>
                 </div>
               </div>
@@ -389,97 +468,136 @@ const [errorMessage, setErrorMessage] = useState("");
           </DialogContent>
         </Dialog>
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-  <DialogContent className="sm:max-w-[500px]">
-    <DialogHeader>
-      <DialogTitle className="flex items-center gap-2">
-        <Plus className="h-5 w-5" /> {t('userManagement.createUser')}
-      </DialogTitle>
-      <DialogDescription>{t('userManagement.addNewUser')}</DialogDescription>
-    </DialogHeader>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Plus className="h-5 w-5" /> {t("userManagement.createUser")}
+              </DialogTitle>
+              <DialogDescription>
+                {t("userManagement.addNewUser")}
+              </DialogDescription>
+            </DialogHeader>
 
-    <div className="space-y-4">
-      <div>
-        <Label htmlFor="auth_type">{t('userManagement.authType')}</Label>
-        <Select 
-          value={createForm.auth_type} 
-          onValueChange={(value) => setCreateForm({ ...createForm, auth_type: value })}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder={t('userManagement.selectAuthType')} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="p">{t('userManagement.person')}</SelectItem>
-            <SelectItem value="c">{t('SocialMediaManagement.platforms.telegram')}</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div>
-        <Label htmlFor="full_name">{t('userManagement.fullName')}</Label>
-        <Input
-          id="full_name"
-          value={createForm.full_name}
-          onChange={(e) => setCreateForm({ ...createForm, full_name: e.target.value })}
-          placeholder={t('userManagement.enterFullName')}
-        />
-      </div>
-      
-      <div>
-        <Label htmlFor="phone_number">{t('userManagement.phoneNumber')}</Label>
-        <Input
-          id="phone_number"
-          value={createForm.phone_number}
-          onChange={(e) => setCreateForm({ ...createForm, phone_number: e.target.value })}
-          placeholder={t('userManagement.enterPhoneNumber')}
-        />
-      </div>
-      <div>
-        <Label htmlFor="password">{t('userManagement.password')}</Label>
-        <Input
-          id="password"
-          type="password"
-          value={createForm.password}
-          onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
-          placeholder={t('userManagement.enterPassword')}
-        />
-      </div>
-      <div className="flex justify-end gap-3 pt-4">
-        <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
-          {t('userManagement.cancel')}
-        </Button>
-        <Button onClick={handleCreateUser}>{t('userManagement.create')}</Button>
-      </div>
-    </div>
-  </DialogContent>
-</Dialog>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="auth_type">
+                  {t("userManagement.authType")}
+                </Label>
+                <Select
+                  value={createForm.auth_type}
+                  onValueChange={(value) =>
+                    setCreateForm({ ...createForm, auth_type: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder={t("userManagement.selectAuthType")}
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="p">
+                      {t("userManagement.person")}
+                    </SelectItem>
+                    <SelectItem value="c">
+                      {t("SocialMediaManagement.platforms.telegram")}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="full_name">
+                  {t("userManagement.fullName")}
+                </Label>
+                <Input
+                  id="full_name"
+                  value={createForm.full_name}
+                  onChange={(e) =>
+                    setCreateForm({ ...createForm, full_name: e.target.value })
+                  }
+                  placeholder={t("userManagement.enterFullName")}
+                />
+              </div>
 
-
+              <div>
+                <Label htmlFor="phone_number">
+                  {t("userManagement.phoneNumber")}
+                </Label>
+                <Input
+                  id="phone_number"
+                  value={createForm.phone_number}
+                  onChange={(e) =>
+                    setCreateForm({
+                      ...createForm,
+                      phone_number: e.target.value,
+                    })
+                  }
+                  placeholder={t("userManagement.enterPhoneNumber")}
+                />
+              </div>
+              <div>
+                <Label htmlFor="password">{t("userManagement.password")}</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={createForm.password}
+                  onChange={(e) =>
+                    setCreateForm({ ...createForm, password: e.target.value })
+                  }
+                  placeholder={t("userManagement.enterPassword")}
+                />
+              </div>
+              <div className="flex justify-end gap-3 pt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsCreateDialogOpen(false)}
+                >
+                  {t("userManagement.cancel")}
+                </Button>
+                <Button onClick={handleCreateUser}>
+                  {t("userManagement.create")}
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <Edit className="h-5 w-5" />
-                {t('userManagement.editUser')}
+                {t("userManagement.editUser")}
               </DialogTitle>
-              <DialogDescription>{t('userManagement.updateUser')}</DialogDescription>
+              <DialogDescription>
+                {t("userManagement.updateUser")}
+              </DialogDescription>
             </DialogHeader>
             {editingUser && (
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="full_name">{t('userManagement.fullName')}</Label>
+                  <Label htmlFor="full_name">
+                    {t("userManagement.fullName")}
+                  </Label>
                   <Input
                     id="full_name"
                     value={editForm.full_name}
-                    onChange={(e) => setEditForm({ ...editForm, full_name: e.target.value })}
-                    placeholder={t('userManagement.enterFullName')}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, full_name: e.target.value })
+                    }
+                    placeholder={t("userManagement.enterFullName")}
                   />
                 </div>
 
                 <div className="flex justify-end gap-3 pt-4">
-                  <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
-                    {t('userManagement.cancel')}
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsEditDialogOpen(false)}
+                  >
+                    {t("userManagement.cancel")}
                   </Button>
-                  <Button onClick={handleSaveEdit}>{t('userManagement.saveChanges')}</Button>
+                  <Button onClick={handleSaveEdit}>
+                    {t("userManagement.saveChanges")}
+                  </Button>
                 </div>
               </div>
             )}
@@ -487,5 +605,5 @@ const [errorMessage, setErrorMessage] = useState("");
         </Dialog>
       </div>
     </AdminLayout>
-  )
+  );
 }

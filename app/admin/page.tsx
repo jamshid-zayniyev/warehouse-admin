@@ -67,7 +67,7 @@ export default function AdminDashboard() {
       <div className="space-y-8">
         {/* Header */}
         <div className="animate-slide-in">
-          <h1 className="text-3xl font-bold text-foreground">{t("dashboard.title")}</h1>
+          <h1 className=" text-[24px] md:text-3xl font-bold text-foreground">{t("dashboard.title")}</h1>
           <p className="text-muted-foreground mt-2">{t("dashboard.subtitle")}</p>
         </div>
 

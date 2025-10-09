@@ -139,9 +139,10 @@ export function AdminSidebar() {
         )}
       >
         <div className="flex h-full flex-col">
-          {/* Header */}
-          <div className="flex h-12 items-center mt-[20px] border-b border-sidebar-border px-6 text-[20px] md:text-[30px] font-bold">
-            {/* <Image src={logo} alt="logo" /> */} Amaar Plus
+          <div className="flex h-16 items-center border-b border-sidebar-border mt-[20px] md:mt-0 px-6 lg:px-6 lg:h-12 lg:mt-[20px]">
+            <div className="text-[20px] md:text-[30px] font-bold pl-10 lg:pl-0">
+              Amaar Plus
+            </div>
           </div>
 
           <ScrollArea className="flex-1 px-3 py-4">

@@ -424,10 +424,10 @@ const fetchProductColors = async (productId: number) => {
         <div className="animate-slide-in flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center gap-6">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-3">
+              <h1 className="text-[24px] md:text-3xl font-bold flex items-center gap-3">
                 <Plus className="h-6 w-6 md:h-8 md:w-8 text-primary" /> {t("productManagement.title")}
               </h1>
-              <p className="text-muted-foreground mt-2">
+              <p className="text-muted-foreground my-2">
                 {t("productManagement.description")}
               </p>
             </div>
@@ -613,7 +613,6 @@ const fetchProductColors = async (productId: number) => {
           <div className="flex justify-between px-2">
             <CardHeader className="w-full">
               <CardTitle>{t("productManagement.productList")}</CardTitle>
-              <CardDescription>{t("productManagement.description")}</CardDescription>
             </CardHeader>
             <CategorySelector
               categories={[{ id: 0, name_en: "All Categories", slug: "all" }, ...categories]}
@@ -788,7 +787,7 @@ const fetchProductColors = async (productId: number) => {
                   <div className="space-y-3">
                     {productColors.length === 0 ? (
                       <p className="text-muted-foreground text-sm text-center py-4">
-                        {t("productManagement.noColorsAdded")}
+                        {t("colorManagement.noColors")}
                       </p>
                     ) : (
                       productColors.map((productColor) => {
