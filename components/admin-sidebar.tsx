@@ -49,7 +49,7 @@ const navigation = [
     href: "/admin/categories",
     icon: Grid,
   },
-    {
+  {
     name: "Newly bought products",
     href: "/admin/new-products",
     icon: PackagePlus,
@@ -65,10 +65,10 @@ const navigation = [
     icon: MessageSquare,
   },
   {
-  name: "users",
-  href: "/admin/users",
-  icon: User,
-},
+    name: "users",
+    href: "/admin/users",
+    icon: User,
+  },
   {
     name: "news",
     href: "/admin/news",
@@ -84,7 +84,7 @@ const navigation = [
     href: "/admin/social-media",
     icon: Share2,
   },
-    {
+  {
     name: "about",
     href: "/admin/about",
     icon: BadgeInfo,
@@ -99,7 +99,7 @@ const navigation = [
     href: "/admin/suppliers",
     icon: Users,
   },
-    {
+  {
     name: "Suppliers work daily",
     href: "/admin/suppliers-work-daily",
     icon: Users,
@@ -138,38 +138,45 @@ export function AdminSidebar() {
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
         )}
       >
-        <div className="flex h-full flex-col">
-          <div className="flex h-16 items-center border-b border-sidebar-border mt-[20px] md:mt-0 px-6 lg:px-6 lg:h-12 lg:mt-[20px]">
+        <div className="h-full flex flex-col">
+          {/* Header - Fixed at top */}
+          <div className="flex-shrink-0 h-16 flex items-center border-b border-sidebar-border mt-[20px] md:mt-0 px-6 lg:px-6 lg:h-12 lg:mt-[20px]">
             <div className="text-[20px] md:text-[30px] font-bold pl-10 lg:pl-0">
               Amaar Plus
             </div>
           </div>
 
-          <ScrollArea className="flex-1 px-3 py-4">
-            <nav className="space-y-2">
-              {navigation.map((item) => {
-                const isActive = pathname === item.href
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                      isActive
-                        ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
-                        : "text-sidebar-foreground",
-                    )}
-                  >
-                    <item.icon className="h-4 w-4" />
-                    {t(item.name)}
-                  </Link>
-                )
-              })}
-            </nav>
-          </ScrollArea>
+          {/* Scrollable navigation area - Takes remaining space */}
+          <div className="flex-1 min-h-0 overflow-hidden">
+            <ScrollArea className="h-full">
+              <div className="px-3 py-4">
+                <nav className="space-y-2">
+                  {navigation.map((item) => {
+                    const isActive = pathname === item.href
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={cn(
+                          "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                          isActive
+                            ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
+                            : "text-sidebar-foreground",
+                        )}
+                      >
+                        <item.icon className="h-4 w-4" />
+                        {t(item.name)}
+                      </Link>
+                    )
+                  })}
+                </nav>
+              </div>
+            </ScrollArea>
+          </div>
 
-          <div className="border-t border-sidebar-border p-4">
+          {/* User profile section - Fixed at bottom */}
+          <div className="flex-shrink-0 border-t border-sidebar-border p-4">
             <div className="flex items-center gap-3 mb-3 px-3 py-2">
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                 <User className="w-4 h-4 text-primary-foreground" />
