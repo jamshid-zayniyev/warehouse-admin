@@ -68,7 +68,7 @@ web_modules/
 .parcel-cache
 
 # Next.js
-.next/
+# .next/
 out/
 
 # Nuxt.js

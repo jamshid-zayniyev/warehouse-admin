@@ -1,0 +1,17 @@
+{
+  "/page": "app/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/orders/page": "app/admin/orders/page.js",
+  "/admin/products/page": "app/admin/products/page.js",
+  "/admin/categories/page": "app/admin/categories/page.js",
+  "/admin/new-products/page": "app/admin/new-products/page.js",
+  "/admin/banners/page": "app/admin/banners/page.js",
+  "/admin/contact/page": "app/admin/contact/page.js",
+  "/admin/users/page": "app/admin/users/page.js",
+  "/admin/news/page": "app/admin/news/page.js",
+  "/admin/our-contact/page": "app/admin/our-contact/page.js",
+  "/admin/social-media/page": "app/admin/social-media/page.js",
+  "/admin/about/page": "app/admin/about/page.js",
+  "/admin/colors/page": "app/admin/colors/page.js",
+  "/admin/suppliers/page": "app/admin/suppliers/page.js"
+}
