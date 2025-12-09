@@ -560,7 +560,7 @@
             "deleteFailed": "Failed to delete item"
         }
     },
-    "companyName": "Amaar Plus",
+    "companyName": "DMX Group",
     "Dashdashboard": "Dashboard",
     "Dashorders": "Orders",
     "users": "Users",
@@ -635,7 +635,7 @@
     "login": {
         "subtitle": "Sign in to manage your content",
         "welcome": "Welcome back",
-        "description": "Enter your credentials to access the Amaar Plus",
+        "description": "Enter your credentials to access the DMX Group",
         "phoneLabel": "Phone Number",
         "passwordLabel": "Password",
         "passwordPlaceholder": "Enter your password",

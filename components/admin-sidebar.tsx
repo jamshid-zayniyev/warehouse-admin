@@ -142,7 +142,7 @@ export function AdminSidebar() {
           {/* Header - Fixed at top */}
           <div className="flex-shrink-0 h-16 flex items-center border-b border-sidebar-border mt-[20px] md:mt-0 px-6 lg:px-6 lg:h-12 lg:mt-[20px]">
             <div className="text-[20px] md:text-[30px] font-bold pl-10 lg:pl-0">
-              Amaar Plus
+              DMX Group
             </div>
           </div>
 

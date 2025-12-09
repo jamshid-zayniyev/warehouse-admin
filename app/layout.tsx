@@ -6,10 +6,9 @@ import "./globals.css"
 import { AuthProvider } from "@/contexts/auth-context"
 import { Providers } from "./providers"
 import { ColorsProvider } from "@/contexts/ColorsContext"
-import { I18nextProvider } from "react-i18next"
 
 export const metadata: Metadata = {
-  title: "Amaar plus",
+  title: "DMX Group",
   description: "Professional Content Management System",
   generator: "ATS",
   icons: {
