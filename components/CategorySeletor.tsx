@@ -38,7 +38,6 @@ export function CategorySelector({ selectedCategory, onCategoryChange }: Categor
         <SelectContent>
           <SelectItem value="0">{t("AllCategories")}</SelectItem>
 
-          {/* ✅ Render all categories */}
           {categories.map((category) => (
             <SelectItem key={category.id} value={category.id.toString()}>
               {category.name}

@@ -18,7 +18,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const [selectedLang, setSelectedLang] = useState<"en" | "uz" | "ru">("ru");
 
   useEffect(() => {
-    const lang = (localStorage.getItem("lang") as "en" | "uz" | "ru") || "ru";
+    const lang = (localStorage.getItem("lang") as "en" | "uz" | "ru") || "ru" ;
     setSelectedLang(lang);
   }, []);
 

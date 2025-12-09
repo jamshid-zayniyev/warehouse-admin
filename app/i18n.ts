@@ -27,7 +27,7 @@ i18n
       loadPath: '/locales/{{lng}}.json', // Path to translation files
     },
     react: {
-      useSuspense: false, // Disable suspense for SSR compatibility (optional, adjust based on your needs)
+      useSuspense: false, 
     },
   });
 
