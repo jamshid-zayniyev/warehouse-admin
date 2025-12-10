@@ -8,19 +8,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Image from "next/image"
-import { Plus, Edit, Trash2, Languages, Search, Calendar } from "lucide-react"
+import { Plus, Edit, Trash2, Search, Calendar } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { authService } from "@/lib/auth"
-import { CategoriesProvider, useCategories } from "@/contexts/CategoriesContext"
+import { CategoriesProvider } from "@/contexts/CategoriesContext"
 import { useTranslation } from 'next-i18next'
-import { CategorySelector } from "@/components/CategorySeletor"
-import { ProductSelector } from "@/components/ProductSelector"
 import Loader from "@/components/ui/loader"
 
-// Yangi typelar
+// Types
 interface ProductInput {
   id: number
   category: number
@@ -29,7 +24,7 @@ interface ProductInput {
   product_title: string
   quantity: number
   sell_price: string
-  supplier_name:string
+  supplier_name: string
   buy_price: string
   date_joined: string
   product_details?: {
@@ -88,7 +83,7 @@ function ProductManagementContent() {
   const [products, setProducts] = useState<Product[]>([])
   const { toast } = useToast()
 
-  // Kategoriyalarni olish
+  // Fetch categories
   const fetchCategories = async () => {
     try {
       const response = await authService.makeAuthenticatedRequest("/product/categories/")
@@ -104,7 +99,7 @@ function ProductManagementContent() {
     }
   }
 
-  // Kategoriya bo'yicha mahsulotlarni olish
+  // Fetch products by category
   const fetchProductsByCategory = async (categoryId: number) => {
     if (!categoryId) {
       setProducts([])
@@ -125,7 +120,7 @@ function ProductManagementContent() {
     }
   }
 
-  // Kunlik mahsulot kirimlarini olish (faqat bir marta)
+  // Fetch daily product inputs
   const fetchDailyInputs = useCallback(async (year?: string, month?: string, day?: string) => {
     setIsLoading(true)
     try {
@@ -134,7 +129,7 @@ function ProductManagementContent() {
       if (year && month && day) {
         endpoint = `/product/daily/${year}/${month}/${day}/`
       } else {
-        // Agar sana berilmasa, bugungi sana uchun so'rov yuboramiz
+        // If no date provided, fetch for today
         const today = new Date()
         endpoint = `/product/daily/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}/`
       }
@@ -143,10 +138,10 @@ function ProductManagementContent() {
       if (!response.ok) throw new Error("Failed to fetch daily inputs")
       const data = await response.json()
       
-      // Barcha ma'lumotlarni saqlaymiz
+      // Save all data
       setAllProductInputs(data)
       
-      // Filtrlash funksiyasini chaqiramiz
+      // Apply filters
       applyFilters(data, searchFilter, { year, month, day })
     } catch (error) {
       toast({
@@ -159,11 +154,11 @@ function ProductManagementContent() {
     }
   }, [searchFilter, toast, t])
 
-  // Filtrlash funksiyasi
+  // Filter function
   const applyFilters = useCallback((data: ProductInput[], search: string, date: { year?: string, month?: string, day?: string }) => {
     let filteredData = data
 
-    // Sana bo'yicha filtrlash
+    // Filter by date
     if (date.year && date.month && date.day) {
       filteredData = filteredData.filter(item => {
         const itemDate = new Date(item.date_joined)
@@ -173,7 +168,7 @@ function ProductManagementContent() {
       })
     }
 
-    // Qidiruv bo'yicha filtrlash
+    // Filter by search
     if (search) {
       const searchLower = search.toLowerCase()
       filteredData = filteredData.filter(item =>
@@ -188,13 +183,13 @@ function ProductManagementContent() {
     setProductInputs(filteredData)
   }, [])
 
-  // Faqat birinchi renderda va kerak bo'lganda ma'lumotlarni yuklash
+  // Load data on initial render
   useEffect(() => {
     fetchCategories()
     fetchDailyInputs()
   }, [fetchDailyInputs])
 
-  // Kategoriya o'zgarganda mahsulotlarni olish
+  // Load products when category changes
   useEffect(() => {
     if (formData.category > 0) {
       fetchProductsByCategory(formData.category)
@@ -204,17 +199,17 @@ function ProductManagementContent() {
     }
   }, [formData.category])
 
-  // Faqat search filter o'zgarganda filtrlash
+  // Filter when search changes
   useEffect(() => {
     applyFilters(allProductInputs, searchFilter, dateFilter)
   }, [searchFilter, allProductInputs, applyFilters])
 
-  // Sana filter o'zgarganda yangi ma'lumotlarni yuklash
+  // Load new data when date filter changes
   useEffect(() => {
     if (dateFilter.year && dateFilter.month && dateFilter.day) {
       fetchDailyInputs(dateFilter.year, dateFilter.month, dateFilter.day)
     } else if (!dateFilter.year && !dateFilter.month && !dateFilter.day) {
-      // Agar sana filteri bo'sh bo'lsa, barcha ma'lumotlarni ko'rsatish
+      // If date filter is empty, show all data
       fetchDailyInputs()
     }
   }, [dateFilter.year, dateFilter.month, dateFilter.day, fetchDailyInputs])
@@ -236,7 +231,7 @@ function ProductManagementContent() {
   const normalizeImageUrl = (url?: string) => {
     if (!url) return "/placeholder.svg"
     if (url.startsWith("http")) return url
-    return `https://warehouseats.pythonanywhere.com${url}`
+    return `https://backend.dmx-group.uz${url}`
   }
 
   const openCreateDialog = () => {
@@ -269,7 +264,7 @@ function ProductManagementContent() {
       })
       if (!response.ok) throw new Error("Delete failed")
       
-      // Yangi ma'lumotlarni yuklash
+      // Reload data
       if (dateFilter.year && dateFilter.month && dateFilter.day) {
         await fetchDailyInputs(dateFilter.year, dateFilter.month, dateFilter.day)
       } else {
@@ -292,7 +287,7 @@ function ProductManagementContent() {
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault()
 
-    // Sanani tekshirish (kelajakdagi sanani cheklash)
+    // Date validation (restrict future dates)
     const selectedDate = new Date(formData.date_joined).toDateString()
     const today = new Date().toDateString()
 
@@ -335,7 +330,7 @@ function ProductManagementContent() {
         throw new Error(`HTTP ${response.status} ${text}`)
       }
 
-      // Yangi ma'lumotlarni yuklash
+      // Reload data
       if (dateFilter.year && dateFilter.month && dateFilter.day) {
         await fetchDailyInputs(dateFilter.year, dateFilter.month, dateFilter.day)
       } else {
@@ -361,17 +356,17 @@ function ProductManagementContent() {
     }
   }
 
-  // Sana filterini o'rnatish
+  // Set date filter
   const handleDateFilterChange = (type: 'year' | 'month' | 'day', value: string) => {
     setDateFilter(prev => {
       const newFilter = { ...prev, [type]: value }
 
-      // Agar barcha sana qismlari to'ldirilgan bo'lsa, filter qo'llaymiz
+      // If all date parts are filled, apply filter
       if (newFilter.year && newFilter.month && newFilter.day) {
         return newFilter
       }
 
-      // Agar biron bir qism o'chirilsa, filter ni to'liq olib tashlaymiz
+      // If any part is removed, clear the filter
       if (!value) {
         return { year: '', month: '', day: '' }
       }
@@ -380,7 +375,7 @@ function ProductManagementContent() {
     })
   }
 
-  // Bugungi sana uchun filter
+  // Set today's filter
   const setTodayFilter = () => {
     const today = new Date()
     setSelectedDate(today)
@@ -391,7 +386,7 @@ function ProductManagementContent() {
     })
   }
 
-  // Filterni tozalash
+  // Clear filter
   const clearDateFilter = () => {
     setSelectedDate(null)
     setDateFilter({ year: '', month: '', day: '' })
@@ -435,10 +430,10 @@ function ProductManagementContent() {
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Category va Product selection */}
+                  {/* Category and Product selection */}
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="category">Category</Label>
+                      <Label htmlFor="category">{t("productManagement.fields.category")}</Label>
                       <select
                         id="category"
                         value={formData.category}
@@ -446,7 +441,7 @@ function ProductManagementContent() {
                         className="w-full p-2 border rounded-md"
                         required
                       >
-                        <option value={0}>Select Category</option>
+                        <option value={0}>{t("productManagement.placeholders.selectCategory")}</option>
                         {categories.map((category) => (
                           <option key={category.id} value={category.id}>
                             {category.name}
@@ -456,7 +451,7 @@ function ProductManagementContent() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="product">Product</Label>
+                      <Label htmlFor="product">{t("productManagement.fields.product")}</Label>
                       <select
                         id="product"
                         value={formData.product}
@@ -465,7 +460,7 @@ function ProductManagementContent() {
                         disabled={!formData.category}
                         required
                       >
-                        <option value={0}>Select Product</option>
+                        <option value={0}>{t("productManagement.placeholders.selectProduct")}</option>
                         {products.map((product) => (
                           <option key={product.id} value={product.id}>
                             {product.title_en || product.title_uz || product.title_ru || `Product ${product.id}`}
@@ -473,7 +468,9 @@ function ProductManagementContent() {
                         ))}
                       </select>
                       {!formData.category && (
-                        <p className="text-sm text-muted-foreground">Please select a category first</p>
+                        <p className="text-sm text-muted-foreground">
+                          {t("productManagement.placeholders.selectCategoryFirst")}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -481,7 +478,7 @@ function ProductManagementContent() {
                   {/* Pricing and Quantity */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="buy_price">Buy Price</Label>
+                      <Label htmlFor="buy_price">{t("productManagement.fields.buyPrice")}</Label>
                       <Input
                         id="buy_price"
                         type="number"
@@ -492,7 +489,7 @@ function ProductManagementContent() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="sell_price">Sell Price</Label>
+                      <Label htmlFor="sell_price">{t("productManagement.fields.sellPrice")}</Label>
                       <Input
                         id="sell_price"
                         type="number"
@@ -503,7 +500,7 @@ function ProductManagementContent() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="quantity">Quantity</Label>
+                      <Label htmlFor="quantity">{t("productManagement.fields.quantity")}</Label>
                       <Input
                         id="quantity"
                         type="number"
@@ -517,13 +514,13 @@ function ProductManagementContent() {
 
                   {/* Date */}
                   <div className="space-y-2">
-                    <Label htmlFor="date_joined">Date</Label>
+                    <Label htmlFor="date_joined">{t("productManagement.fields.dateJoined")}</Label>
                     <Input
                       id="date_joined"
                       type="date"
                       value={formData.date_joined}
                       onChange={(e) => setFormData({ ...formData, date_joined: e.target.value })}
-                      max={new Date().toISOString().split('T')[0]} // Kelajakdagi sanalarni cheklash
+                      max={new Date().toISOString().split('T')[0]} // Restrict future dates
                       required
                     />
                   </div>
@@ -553,16 +550,16 @@ function ProductManagementContent() {
         {/* Filter Section */}
         <Card>
           <CardHeader>
-            <CardTitle>Filters</CardTitle>
-            <CardDescription>Filter products by date and search</CardDescription>
+            <CardTitle>{t("productManagement.filter.title")}</CardTitle>
+            <CardDescription>{t("productManagement.filter.description")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-              {/* Sana filteri */}
+              {/* Date filter */}
               <div className="space-y-2">
                 <Label htmlFor="date-filter" className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  Select Date
+                  {t("productManagement.filter.selectDate")}
                 </Label>
                 <div className="relative">
                   <Input
@@ -578,7 +575,7 @@ function ProductManagementContent() {
                         const [year, month, day] = selectedDate.split('-')
                         setDateFilter({
                           year: year,
-                          month: month.replace(/^0+/, ''), // Leading nollarni olib tashlash
+                          month: month.replace(/^0+/, ''), // Remove leading zeros
                           day: day.replace(/^0+/, '')
                         })
                       } else {
@@ -592,16 +589,16 @@ function ProductManagementContent() {
                 </div>
               </div>
 
-              {/* Qidiruv filteri */}
+              {/* Search filter */}
               <div className="space-y-2">
                 <Label htmlFor="search-filter" className="flex items-center gap-2">
                   <Search className="h-4 w-4" />
-                  Search Products & Categories
+                  {t("productManagement.placeholders.searchProducts")}
                 </Label>
                 <div className="relative">
                   <Input
                     id="search-filter"
-                    placeholder="Search by product name or category..."
+                    placeholder={t("productManagement.placeholders.searchProducts")}
                     value={searchFilter}
                     onChange={(e) => setSearchFilter(e.target.value)}
                     className="w-full pl-10"
@@ -620,13 +617,13 @@ function ProductManagementContent() {
 
               {/* Action buttons */}
               <div className="space-y-2">
-                <Label>Actions</Label>
+                <Label>{t("productManagement.table.actions")}</Label>
                 <div className="flex gap-2">
                   <Button variant="outline" onClick={setTodayFilter} size="sm" className="flex-1">
-                    Today
+                    {t("productManagement.filter.today")}
                   </Button>
                   <Button variant="outline" onClick={clearDateFilter} size="sm" className="flex-1">
-                    Clear
+                    {t("productManagement.filter.clear")}
                   </Button>
                 </div>
               </div>
@@ -640,31 +637,31 @@ function ProductManagementContent() {
             <CardTitle>{t("productManagement.productList")}</CardTitle>
             <CardDescription>
               {dateFilter.year && dateFilter.month && dateFilter.day
-                ? `Showing products for ${dateFilter.year}-${dateFilter.month}-${dateFilter.day}`
-                : "Showing recent products"
+                ? `${t("productManagement.filter.showingProductsFor")} ${dateFilter.year}-${dateFilter.month}-${dateFilter.day}`
+                : t("productManagement.filter.showingRecent")
               }
-              {searchFilter && ` • Filtered by: "${searchFilter}"`}
+              {searchFilter && ` • ${t("productManagement.filter.filteredBy")}: "${searchFilter}"`}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Product</TableHead>
-                  <TableHead>Buy Price</TableHead>
-                  <TableHead>Sell Price</TableHead>
-                  <TableHead>Quantity</TableHead>
-                  <TableHead>Agent</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead>{t("productManagement.table.id")}</TableHead>
+                  <TableHead>{t("productManagement.table.category")}</TableHead>
+                  <TableHead>{t("productManagement.table.product")}</TableHead>
+                  <TableHead>{t("productManagement.table.buyPrice")}</TableHead>
+                  <TableHead>{t("productManagement.table.sellPrice")}</TableHead>
+                  <TableHead>{t("productManagement.table.quantity")}</TableHead>
+                  <TableHead>{t("productManagement.table.agent")}</TableHead>
+                  <TableHead>{t("productManagement.table.date")}</TableHead>
+                  <TableHead className="text-right">{t("productManagement.table.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {productInputs.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={9} className="text-center py-8 text-muted-foreground">
                       {t("productManagement.noProducts")}
                     </TableCell>
                   </TableRow>

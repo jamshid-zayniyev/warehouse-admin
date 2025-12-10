@@ -242,7 +242,6 @@
         "createProduct": "Create Product",
         "editProduct": "Edit Product",
         "updateProduct": "Update product details",
-        "addProduct": "Add a new product with colors, features, and images",
         "addFeaturesColors": "Add Features & Colors",
         "addFeaturesDescription": "Add features and colors for your newly created product",
         "titleLabel": "Title",
@@ -269,7 +268,47 @@
         "deleteConfirm": "Are you sure you want to delete this product?",
         "imagesUploaded": "Images uploaded successfully",
         "errorUploading": "Error uploading images",
-        "placeholderTitle": "Write the title of the product"
+        "placeholderTitle": "Write the title of the product",
+    "addProduct": "Add new product to inventory",
+    "failedFetchCategories": "Failed to fetch categories",
+    "failedFetchProducts": "Failed to fetch products",
+    "futureDateError": "Cannot select future dates. Please select today or a past date.",
+    "fields": {
+      "category": "Category",
+      "product": "Product",
+      "quantity": "Quantity",
+      "buyPrice": "Buy Price",
+      "sellPrice": "Sell Price",
+      "dateJoined": "Date"
+    },
+    "placeholders": {
+      "selectCategory": "Select Category",
+      "selectProduct": "Select Product",
+      "selectCategoryFirst": "Please select a category first",
+      "searchProducts": "Search by product name or category..."
+    },
+    "table": {
+      "id": "ID",
+      "category": "Category",
+      "product": "Product",
+      "buyPrice": "Buy Price",
+      "sellPrice": "Sell Price",
+      "quantity": "Quantity",
+      "agent": "Agent",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "filter": {
+      "title": "Filters",
+      "description": "Filter products by date and search",
+      "selectDate": "Select Date",
+      "today": "Today",
+      "clear": "Clear",
+      "showingProductsFor": "Showing products for",
+      "showingRecent": "Showing recent products",
+      "filteredBy": "Filtered by"
+    }
+
     },
     "bannerManagement": {
         "title": "Banner Management",
@@ -581,6 +620,9 @@
     "AllCategories": "All Categories",
     "Selectcategory": "Select category",
     "colors": "Colors",
+    "Newly bought products": "Newly bought products",
+    "Suppliers work daily": "Suppliers work daily",
+    "Suppliers": "Suppliers",
     "addColor": "Add Color",
     "createNewColor": "Create New Color",
     "colorName": "Color Name",
@@ -749,5 +791,123 @@
             },
             "confirmDelete": "Are you sure you want to delete this currency?"
         }
+    },
+  "supplierRequests": {
+    "title": "Supplier Requests",
+    "description": "Manage and view all supplier requests with detailed information",
+    "loadingRequests": "Loading supplier requests...",
+    "noRequestsFound": "No supplier requests found for",
+    "requestsFound": "requests found",
+    "showingRequestsFor": "Showing requests for:",
+    "unknownSupplier": "Unknown Supplier",
+    "unknownProduct": "Unknown Product",
+    "product": "Product",
+    "more": "More",
+    "orders": "Orders",
+    "amountInformation": "Amount Information",
+    "amountReceived": "Amount Received",
+    "transferredQuantity": "Transferred Quantity",
+    "units": "units",
+    "createdDate": "Created Date",
+    "transferredTo": "Transferred To",
+    "reassignedFrom": "Reassigned From",
+    "requestDetails": "Request Details",
+    "currentRequestDetails": "Current Request Details",
+    "viewLocationOnMap": "View Location on Map",
+    "adding": "Adding...",
+    "addProductToOrder": "Add Product to Order",
+    "success": "Success",
+    "error": "Error",
+    "failedLoadRequests": "Failed to load supplier requests",
+    "failedFetchCategories": "Failed to fetch categories",
+    "failedFetchProducts": "Failed to fetch products",
+    "failedLoadSuppliers": "Failed to load suppliers",
+    "failedLoadOrder": "Failed to load order details",
+    "failedSuccessRequest": "Failed to mark request as success",
+    "failedReassignRequest": "Failed to reassign request",
+    "failedRejectRequest": "Failed to reject request",
+    "failedAddProduct": "Failed to add product to order",
+    "selectProductAndQuantity": "Please select product and enter quantity",
+    "quantityGreaterThanZero": "Quantity must be greater than 0",
+    "enterBuyPrice": "Please enter buy price",
+    "priceGreaterThanZero": "Buy price must be greater than 0",
+    "fillAllFields": "Please fill all required fields",
+    "quantityAndPriceGreaterThanZero": "Quantity and buy price must be greater than 0",
+    "requestSuccess": "Request marked as successful",
+    "requestReassigned": "Request reassigned successfully",
+    "requestRejected": "Request rejected successfully",
+    "productAddedSuccess": "Product added to order successfully",
+    "processing": "Processing...",
+    "reassigning": "Reassigning...",
+    "markAsSuccess": "Mark as Success",
+    "reassignRequest": "Reassign Request",
+    "status": {
+      "pending": "Pending",
+      "success": "Success",
+      "rejected": "Rejected",
+      "partial": "Partial"
+    },
+    "actions": {
+      "success": "Success",
+      "reassign": "Reassign",
+      "reject": "Reject",
+      "cancel": "Cancel"
+    },
+    "table": {
+      "supplier": "Supplier",
+      "product": "Product",
+      "totalQty": "Total Qty",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "fields": {
+      "category": "Category",
+      "product": "Product",
+      "quantity": "Quantity",
+      "buyPrice": "Buy Price",
+      "newSupplier": "New Supplier",
+      "quantityToTransfer": "Quantity to Transfer",
+      "originalQuantity": "Original Quantity",
+      "currentSupplier": "Current Supplier",
+      "selectCategory": "Select category",
+      "selectProduct": "Select product",
+      "selectSupplier": "Select a supplier",
+      "buyPricePlaceholder": "Enter buy price",
+      "quantityPlaceholder": "Enter quantity",
+      "mustBeGreaterThanZero": "Must be greater than 0"
+    },
+    "filter": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "last7": "Last 7 days",
+      "last30": "Last 30 days",
+      "quickSelect": "Quick select",
+      "pickDate": "Pick a date"
+    },
+    "successDialog": {
+      "title": "Mark Request as Success",
+      "description": "Enter the buy price to mark this request as successfully completed."
+    },
+    "reassignDialog": {
+      "title": "Reassign Request",
+      "description": "Transfer this request to another supplier with the desired quantity and buy price."
+    },
+    "orderDetails": {
+      "title": "Order Details",
+      "description": "Complete information about the selected order",
+      "orderInfo": "Order Information",
+      "addProduct": "Add Product to Order",
+      "addProductDesc": "Add additional products to this order",
+      "orderItems": "Order Items",
+      "deliveryLocation": "Delivery Location",
+      "status": "Status",
+      "payment": "Payment",
+      "totalPrice": "Total Price",
+      "customer": "Customer",
+      "phone": "Phone",
+      "date": "Date",
+      "address": "Address"
     }
+  }
+    
 }

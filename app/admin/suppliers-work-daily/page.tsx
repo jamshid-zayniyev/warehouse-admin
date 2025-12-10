@@ -20,8 +20,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import OrderItemRow from "@/components/OrderItemRow"
+import { useTranslation } from "next-i18next"
 
 export default function SupplierRequestsTable() {
+    const { t } = useTranslation()
     const [requests, setRequests] = useState<SupplierRequestWithDetails[]>([])
     const [loading, setLoading] = useState(true)
     const [selectedOrder, setSelectedOrder] = useState<any>(null)
@@ -52,7 +54,6 @@ export default function SupplierRequestsTable() {
     const [addProductLoading, setAddProductLoading] = useState(false)
     const { toast } = useToast()
 
-    // Yangi funksiyalar
     const fetchCategories = async () => {
         try {
             const response = await authService.makeAuthenticatedRequest("/product/categories/")
@@ -61,8 +62,8 @@ export default function SupplierRequestsTable() {
             setCategories(data)
         } catch (error) {
             toast({
-                title: "Error",
-                description: "Failed to fetch categories",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.failedFetchCategories"),
                 variant: "destructive",
             })
         }
@@ -81,8 +82,8 @@ export default function SupplierRequestsTable() {
             setProducts(data)
         } catch (error) {
             toast({
-                title: "Error",
-                description: "Failed to fetch products",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.failedFetchProducts"),
                 variant: "destructive",
             })
         }
@@ -91,8 +92,8 @@ export default function SupplierRequestsTable() {
     const handleAddProduct = async () => {
         if (!selectedProduct || !newProductQuantity) {
             toast({
-                title: "Error",
-                description: "Please select product and enter quantity",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.selectProductAndQuantity"),
                 variant: "destructive"
             })
             return
@@ -101,8 +102,8 @@ export default function SupplierRequestsTable() {
         const quantity = parseInt(newProductQuantity)
         if (quantity <= 0) {
             toast({
-                title: "Error",
-                description: "Quantity must be greater than 0",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.quantityGreaterThanZero"),
                 variant: "destructive"
             })
             return
@@ -128,30 +129,27 @@ export default function SupplierRequestsTable() {
             if (!response.ok) throw new Error("Failed to add product")
 
             toast({
-                title: "Success",
-                description: "Product added to order successfully",
+                title: t("supplierRequests.success"),
+                description: t("supplierRequests.productAddedSuccess"),
             })
 
-            // Formani tozalash
             setSelectedCategory("")
             setSelectedProduct("")
             setNewProductQuantity("")
             setProducts([])
 
-            // Order ma'lumotlarini yangilash
             const updatedOrderResponse = await authService.makeAuthenticatedRequest(`/order/${selectedOrder.id}/`)
             if (updatedOrderResponse.ok) {
                 const updatedOrder = await updatedOrderResponse.json()
                 setSelectedOrder(updatedOrder)
             }
 
-            // Supplier requestlarni yangilash
             fetchSupplierRequests()
 
         } catch (error) {
             toast({
-                title: "Error",
-                description: "Failed to add product to order",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.failedAddProduct"),
                 variant: "destructive"
             })
         } finally {
@@ -159,9 +157,6 @@ export default function SupplierRequestsTable() {
         }
     }
 
-  
-
-    // Format date for API endpoint (YYYY/MM/DD)
     const formatDateForAPI = (date: Date) => {
         const year = date.getFullYear()
         const month = String(date.getMonth() + 1).padStart(2, '0')
@@ -196,14 +191,13 @@ export default function SupplierRequestsTable() {
                     }
                 })
             )
-            console.log(requestsWithDetails);
 
             setRequests(requestsWithDetails)
 
         } catch (error) {
             toast({
-                title: "Error",
-                description: "Failed to load supplier requests",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.failedLoadRequests"),
                 variant: "destructive"
             })
         } finally {
@@ -251,7 +245,6 @@ export default function SupplierRequestsTable() {
             const response = await authService.makeAuthenticatedRequest(`/user/supplier/`)
             if (!response.ok) throw new Error("Failed to fetch suppliers")
             const data = await response.json()
-            // Filter out the current supplier from the list
             if (selectedRequest?.supplier) {
                 const filteredSuppliers = data.filter((supplier: User) => supplier.id !== selectedRequest.supplier)
                 setSuppliers(filteredSuppliers)
@@ -260,8 +253,8 @@ export default function SupplierRequestsTable() {
             }
         } catch (error) {
             toast({
-                title: "Error",
-                description: "Failed to load suppliers",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.failedLoadSuppliers"),
                 variant: "destructive"
             })
         }
@@ -280,8 +273,8 @@ export default function SupplierRequestsTable() {
 
         if (!successForm.buy_price) {
             toast({
-                title: "Error",
-                description: "Please enter buy price",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.enterBuyPrice"),
                 variant: "destructive"
             })
             return
@@ -290,8 +283,8 @@ export default function SupplierRequestsTable() {
         const buyPrice = parseFloat(successForm.buy_price)
         if (buyPrice < 0) {
             toast({
-                title: "Error",
-                description: "Buy price must be greater than 0",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.priceGreaterThanZero"),
                 variant: "destructive"
             })
             return
@@ -315,17 +308,17 @@ export default function SupplierRequestsTable() {
             if (!response.ok) throw new Error("Failed to mark request as success")
 
             toast({
-                title: "Success",
-                description: "Request marked as successful",
+                title: t("supplierRequests.success"),
+                description: t("supplierRequests.requestSuccess"),
             })
 
             setSuccessDialogOpen(false)
             setSelectedRequest(null)
-            fetchSupplierRequests() // Refresh the list
+            fetchSupplierRequests()
         } catch (error) {
             toast({
-                title: "Error",
-                description: "Failed to mark request as success",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.failedSuccessRequest"),
                 variant: "destructive"
             })
         } finally {
@@ -340,7 +333,6 @@ export default function SupplierRequestsTable() {
             quantity: "0",
             buy_price: ""
         })
-        // Fetch suppliers after setting selectedRequest to ensure we can filter out current supplier
         fetchSuppliers()
         setReassignDialogOpen(true)
     }
@@ -350,8 +342,8 @@ export default function SupplierRequestsTable() {
 
         if (!reassignForm.new_supplier || !reassignForm.quantity || !reassignForm.buy_price) {
             toast({
-                title: "Error",
-                description: "Please fill all required fields",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.fillAllFields"),
                 variant: "destructive"
             })
             return
@@ -361,8 +353,8 @@ export default function SupplierRequestsTable() {
         const buyPrice = parseFloat(reassignForm.buy_price)
         if (quantity < 0 || buyPrice < 0) {
             toast({
-                title: "Error",
-                description: "Quantity and buy price must be greater than 0",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.quantityAndPriceGreaterThanZero"),
                 variant: "destructive"
             })
             return
@@ -388,17 +380,17 @@ export default function SupplierRequestsTable() {
             if (!response.ok) throw new Error("Failed to reassign request")
 
             toast({
-                title: "Success",
-                description: "Request reassigned successfully",
+                title: t("supplierRequests.success"),
+                description: t("supplierRequests.requestReassigned"),
             })
 
             setReassignDialogOpen(false)
             setSelectedRequest(null)
-            fetchSupplierRequests() // Refresh the list
+            fetchSupplierRequests()
         } catch (error) {
             toast({
-                title: "Error",
-                description: "Failed to reassign request",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.failedReassignRequest"),
                 variant: "destructive"
             })
         } finally {
@@ -419,15 +411,15 @@ export default function SupplierRequestsTable() {
             if (!response.ok) throw new Error("Failed to reject request")
 
             toast({
-                title: "Success",
-                description: "Request rejected successfully",
+                title: t("supplierRequests.success"),
+                description: t("supplierRequests.requestRejected"),
             })
 
-            fetchSupplierRequests() // Refresh the list
+            fetchSupplierRequests()
         } catch (error) {
             toast({
-                title: "Error",
-                description: "Failed to reject request",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.failedRejectRequest"),
                 variant: "destructive"
             })
         } finally {
@@ -439,14 +431,14 @@ export default function SupplierRequestsTable() {
         const { status, new_supplier, amount_received } = request
 
         if (status === 'pt' && new_supplier !== null && typeof new_supplier === 'number') {
-            return <Badge variant="outline">Partial</Badge>
+            return <Badge variant="outline">{t("supplierRequests.status.partial")}</Badge>
         }
 
         const statusConfig = {
-            p: { label: "Pending", variant: "secondary" as const },
-            s: { label: "Success", variant: "default" as const },
-            r: { label: "Rejected", variant: "destructive" as const },
-            pt: { label: "Partial", variant: "outline" as const }
+            p: { label: t("supplierRequests.status.pending"), variant: "secondary" as const },
+            s: { label: t("supplierRequests.status.success"), variant: "default" as const },
+            r: { label: t("supplierRequests.status.rejected"), variant: "destructive" as const },
+            pt: { label: t("supplierRequests.status.partial"), variant: "outline" as const }
         }
 
         const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.p
@@ -456,7 +448,7 @@ export default function SupplierRequestsTable() {
     const normalizeImageUrl = (url?: string) => {
         if (!url) return "/placeholder.svg"
         if (url.startsWith("http")) return url
-        return `https://warehouseats.pythonanywhere.com${url}`
+        return `https://backend.dmx-group.uz${url}`
     }
 
     const handleViewOrder = async (orderId: number) => {
@@ -468,8 +460,8 @@ export default function SupplierRequestsTable() {
             setOrderDialogOpen(true)
         } catch (error) {
             toast({
-                title: "Error",
-                description: "Failed to load order details",
+                title: t("supplierRequests.error"),
+                description: t("supplierRequests.failedLoadOrder"),
                 variant: "destructive"
             })
         }
@@ -492,30 +484,25 @@ export default function SupplierRequestsTable() {
         setExpandedRows(newExpanded)
     }
 
-    // Quick date selection options
     const quickDateOptions = [
-        { label: "Today", value: "today", date: new Date() },
-        { label: "Yesterday", value: "yesterday", date: new Date(new Date().setDate(new Date().getDate() - 1)) },
-        { label: "Last 7 days", value: "last7", date: new Date(new Date().setDate(new Date().getDate() - 7)) },
-        { label: "Last 30 days", value: "last30", date: new Date(new Date().setDate(new Date().getDate() - 30)) },
+        { label: t("supplierRequests.filter.today"), value: "today", date: new Date() },
+        { label: t("supplierRequests.filter.yesterday"), value: "yesterday", date: new Date(new Date().setDate(new Date().getDate() - 1)) },
+        { label: t("supplierRequests.filter.last7"), value: "last7", date: new Date(new Date().setDate(new Date().getDate() - 7)) },
+        { label: t("supplierRequests.filter.last30"), value: "last30", date: new Date(new Date().setDate(new Date().getDate() - 30)) },
     ]
 
     useEffect(() => {
         fetchSupplierRequests()
-        fetchSupplierRequests()
-        fetchCategories() // Kategoriyalarni yuklash
-        // Don't fetch suppliers here, fetch when reassign dialog opens
+        fetchCategories()
     }, [])
-
-
 
     if (loading) {
         return (
             <AdminLayout>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Supplier Requests</CardTitle>
-                        <CardDescription>Loading supplier requests...</CardDescription>
+                        <CardTitle>{t("supplierRequests.title")}</CardTitle>
+                        <CardDescription>{t("supplierRequests.loadingRequests")}</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
@@ -544,16 +531,14 @@ export default function SupplierRequestsTable() {
                             <div>
                                 <CardTitle className="flex items-center gap-2">
                                     <Package className="h-6 w-6" />
-                                    Supplier Requests
+                                    {t("supplierRequests.title")}
                                 </CardTitle>
                                 <CardDescription>
-                                    Manage and view all supplier requests with detailed information
+                                    {t("supplierRequests.description")}
                                 </CardDescription>
                             </div>
 
-                            {/* Date Selection */}
                             <div className="flex flex-col sm:flex-row gap-3">
-                                {/* Quick Date Selector */}
                                 <Select onValueChange={(value) => {
                                     const option = quickDateOptions.find(opt => opt.value === value)
                                     if (option) {
@@ -561,7 +546,7 @@ export default function SupplierRequestsTable() {
                                     }
                                 }}>
                                     <SelectTrigger className="w-full sm:w-[180px]">
-                                        <SelectValue placeholder="Quick select" />
+                                        <SelectValue placeholder={t("supplierRequests.filter.quickSelect")} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {quickDateOptions.map((option) => (
@@ -572,7 +557,6 @@ export default function SupplierRequestsTable() {
                                     </SelectContent>
                                 </Select>
 
-                                {/* Custom Date Picker */}
                                 <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                                     <PopoverTrigger asChild>
                                         <Button
@@ -583,7 +567,7 @@ export default function SupplierRequestsTable() {
                                             )}
                                         >
                                             <CalendarIcon className="mr-2 h-4 w-4" />
-                                            {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
+                                            {selectedDate ? format(selectedDate, "PPP") : t("supplierRequests.filter.pickDate")}
                                         </Button>
                                     </PopoverTrigger>
                                     <PopoverContent className="w-auto p-0" align="end">
@@ -599,18 +583,17 @@ export default function SupplierRequestsTable() {
                         </div>
                     </CardHeader>
                     <CardContent>
-                        {/* Selected Date Info */}
                         <div className="mb-4 p-3 bg-muted/50 rounded-lg">
                             <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-sm">
                                 <div className="flex items-center gap-2">
                                     <Calendar className="h-4 w-4 flex-shrink-0" />
-                                    <span>Showing requests for:</span>
+                                    <span>{t("supplierRequests.showingRequestsFor")}</span>
                                     <Badge variant="secondary" className="ml-1">
                                         {format(selectedDate, "MMMM d, yyyy")}
                                     </Badge>
                                 </div>
                                 <span className="text-muted-foreground sm:ml-2">
-                                    ({requests.length} requests found)
+                                    ({requests.length} {t("supplierRequests.requestsFound")})
                                 </span>
                             </div>
                         </div>
@@ -620,18 +603,18 @@ export default function SupplierRequestsTable() {
                                 <Table className="min-w-[800px]">
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead className="whitespace-nowrap">Supplier</TableHead>
-                                            <TableHead className="whitespace-nowrap">Product</TableHead>
-                                            <TableHead className="whitespace-nowrap">Total Qty</TableHead>
-                                            <TableHead className="whitespace-nowrap">Status</TableHead>
-                                            <TableHead className="whitespace-nowrap">Actions</TableHead>
+                                            <TableHead className="whitespace-nowrap">{t("supplierRequests.table.supplier")}</TableHead>
+                                            <TableHead className="whitespace-nowrap">{t("supplierRequests.table.product")}</TableHead>
+                                            <TableHead className="whitespace-nowrap">{t("supplierRequests.table.totalQty")}</TableHead>
+                                            <TableHead className="whitespace-nowrap">{t("supplierRequests.table.status")}</TableHead>
+                                            <TableHead className="whitespace-nowrap">{t("supplierRequests.table.actions")}</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
                                         {requests.length === 0 ? (
                                             <TableRow>
                                                 <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                                                    No supplier requests found for {format(selectedDate, "MMMM d, yyyy")}
+                                                    {t("supplierRequests.noRequestsFound")} {format(selectedDate, "MMMM d, yyyy")}
                                                 </TableCell>
                                             </TableRow>
                                         ) : (
@@ -653,7 +636,7 @@ export default function SupplierRequestsTable() {
                                                                 )}
                                                                 <div className="min-w-0 flex-1">
                                                                     <div className="font-medium text-sm truncate">
-                                                                        {request.supplier_details?.full_name || "Unknown Supplier"}
+                                                                        {request.supplier_details?.full_name || t("supplierRequests.unknownSupplier")}
                                                                     </div>
                                                                     <div className="text-xs text-muted-foreground flex items-center gap-1 truncate">
                                                                         <Phone className="h-3 w-3 flex-shrink-0" />
@@ -677,7 +660,7 @@ export default function SupplierRequestsTable() {
                                                                 )}
                                                                 <div className="min-w-0 flex-1">
                                                                     <div className="font-medium text-sm line-clamp-1">
-                                                                        {request.product_details?.title || "Unknown Product"}
+                                                                        {request.product_details?.title || t("supplierRequests.unknownProduct")}
                                                                     </div>
                                                                     <div className="text-xs text-muted-foreground">
                                                                         ${request.product_details?.price || "N/A"}
@@ -704,7 +687,7 @@ export default function SupplierRequestsTable() {
                                                                     ) : (
                                                                         <ChevronDown className="h-3 w-3 mr-1" />
                                                                     )}
-                                                                    More
+                                                                    {t("supplierRequests.more")}
                                                                 </Button>
                                                                 <DropdownMenu>
                                                                     <DropdownMenuTrigger asChild>
@@ -718,14 +701,14 @@ export default function SupplierRequestsTable() {
                                                                             disabled={request.status !== 'p'}
                                                                         >
                                                                             <CheckCircle className="h-4 w-4 mr-2" />
-                                                                            Success
+                                                                            {t("supplierRequests.actions.success")}
                                                                         </DropdownMenuItem>
                                                                         <DropdownMenuItem
                                                                             onClick={() => handleReassign(request)}
                                                                             disabled={request.status !== 'p'}
                                                                         >
                                                                             <RotateCcw className="h-4 w-4 mr-2" />
-                                                                            Reassign
+                                                                            {t("supplierRequests.actions.reassign")}
                                                                         </DropdownMenuItem>
                                                                         <DropdownMenuItem
                                                                             onClick={() => handleReject(request.id)}
@@ -733,7 +716,7 @@ export default function SupplierRequestsTable() {
                                                                             className="text-destructive"
                                                                         >
                                                                             <X className="h-4 w-4 mr-2" />
-                                                                            Reject
+                                                                            {t("supplierRequests.actions.reject")}
                                                                         </DropdownMenuItem>
                                                                     </DropdownMenuContent>
                                                                 </DropdownMenu>
@@ -746,7 +729,7 @@ export default function SupplierRequestsTable() {
                                                                 <div className="p-4 space-y-4">
                                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                                         <div>
-                                                                            <h4 className="font-medium text-sm mb-2">Orders</h4>
+                                                                            <h4 className="font-medium text-sm mb-2">{t("supplierRequests.orders")}</h4>
                                                                             <div className="flex flex-wrap gap-1">
                                                                                 {request.orders.map((orderId) => (
                                                                                     <Button
@@ -762,19 +745,19 @@ export default function SupplierRequestsTable() {
                                                                             </div>
                                                                         </div>
                                                                         <div>
-                                                                            <h4 className="font-medium text-sm mb-2">Amount Information</h4>
+                                                                            <h4 className="font-medium text-sm mb-2">{t("supplierRequests.amountInformation")}</h4>
                                                                             <div className="space-y-2 text-sm">
                                                                                 <div className="flex justify-between">
-                                                                                    <span className="text-muted-foreground">Amount Received:</span>
+                                                                                    <span className="text-muted-foreground">{t("supplierRequests.amountReceived")}:</span>
                                                                                     <span className="font-medium">
                                                                                         {request.amount_received ? request.amount_received.toLocaleString() : "0"}
                                                                                     </span>
                                                                                 </div>
                                                                                 {request.status === 'pt' && request.new_supplier && (
                                                                                     <div className="flex justify-between">
-                                                                                        <span className="text-muted-foreground">Transferred Quantity:</span>
+                                                                                        <span className="text-muted-foreground">{t("supplierRequests.transferredQuantity")}:</span>
                                                                                         <span className="font-medium">
-                                                                                            {request.total_quantity - (request.amount_received || 0)} units
+                                                                                            {request.total_quantity - (request.amount_received || 0)} {t("supplierRequests.units")}
                                                                                         </span>
                                                                                     </div>
                                                                                 )}
@@ -783,7 +766,7 @@ export default function SupplierRequestsTable() {
                                                                     </div>
                                                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                                                                         <div>
-                                                                            <span className="text-muted-foreground text-xs">Created Date:</span>
+                                                                            <span className="text-muted-foreground text-xs">{t("supplierRequests.createdDate")}:</span>
                                                                             <div className="flex items-center gap-2 mt-1">
                                                                                 <Calendar className="h-3 w-3" />
                                                                                 <span className="text-sm">{format(new Date(request.created_at), "MMM dd, yyyy")}</span>
@@ -791,7 +774,7 @@ export default function SupplierRequestsTable() {
                                                                         </div>
                                                                         {request.status === 'pt' && request.new_supplier_details && (
                                                                             <div>
-                                                                                <span className="text-muted-foreground text-xs">Transferred To:</span>
+                                                                                <span className="text-muted-foreground text-xs">{t("supplierRequests.transferredTo")}:</span>
                                                                                 <div className="font-medium text-sm mt-1 flex items-center gap-2">
                                                                                     {request.new_supplier_details.image ? (
                                                                                         <img
@@ -808,7 +791,7 @@ export default function SupplierRequestsTable() {
                                                                         )}
                                                                         {request.status === 'p' && request.reassigned_from && (
                                                                             <div>
-                                                                                <span className="text-muted-foreground text-xs">Reassigned From:</span>
+                                                                                <span className="text-muted-foreground text-xs">{t("supplierRequests.reassignedFrom")}:</span>
                                                                                 <div className="font-medium text-sm mt-1 flex items-center gap-2">
                                                                                     {request.reassigned_from}
                                                                                 </div>
@@ -833,14 +816,14 @@ export default function SupplierRequestsTable() {
                 <Dialog open={successDialogOpen} onOpenChange={setSuccessDialogOpen}>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                            <DialogTitle>Mark Request as Success</DialogTitle>
+                            <DialogTitle>{t("supplierRequests.successDialog.title")}</DialogTitle>
                             <DialogDescription>
-                                Enter the buy price to mark this request as successfully completed.
+                                {t("supplierRequests.successDialog.description")}
                             </DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-4 py-4">
                             <div className="grid gap-2">
-                                <Label htmlFor="buy_price">Buy Price *</Label>
+                                <Label htmlFor="buy_price">{t("supplierRequests.fields.buyPrice")} *</Label>
                                 <Input
                                     id="buy_price"
                                     type="number"
@@ -853,15 +836,15 @@ export default function SupplierRequestsTable() {
                                             setSuccessForm(prev => ({ ...prev, buy_price: value }))
                                         }
                                     }}
-                                    placeholder="Enter buy price"
+                                    placeholder={t("supplierRequests.fields.buyPricePlaceholder")}
                                 />
                             </div>
                             {selectedRequest && (
                                 <div className="p-3 bg-muted/50 rounded-lg text-sm">
-                                    <div className="font-medium">Request Details:</div>
-                                    <div>Product: {selectedRequest.product_details?.title}</div>
-                                    <div>Quantity: {selectedRequest.total_quantity}</div>
-                                    <div>Supplier: {selectedRequest.supplier_details?.full_name}</div>
+                                    <div className="font-medium">{t("supplierRequests.requestDetails")}:</div>
+                                    <div>{t("supplierRequests.fields.product")}: {selectedRequest.product_details?.title}</div>
+                                    <div>{t("supplierRequests.table.totalQty")}: {selectedRequest.total_quantity}</div>
+                                    <div>{t("supplierRequests.table.supplier")}: {selectedRequest.supplier_details?.full_name}</div>
                                 </div>
                             )}
                         </div>
@@ -871,13 +854,13 @@ export default function SupplierRequestsTable() {
                                 onClick={() => setSuccessDialogOpen(false)}
                                 disabled={successLoading}
                             >
-                                Cancel
+                                {t("supplierRequests.actions.cancel")}
                             </Button>
                             <Button
                                 onClick={handleSuccessSubmit}
                                 disabled={successLoading}
                             >
-                                {successLoading ? "Processing..." : "Mark as Success"}
+                                {successLoading ? t("supplierRequests.processing") : t("supplierRequests.markAsSuccess")}
                             </Button>
                         </DialogFooter>
                     </DialogContent>
@@ -887,20 +870,20 @@ export default function SupplierRequestsTable() {
                 <Dialog open={reassignDialogOpen} onOpenChange={setReassignDialogOpen}>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                            <DialogTitle>Reassign Request</DialogTitle>
+                            <DialogTitle>{t("supplierRequests.reassignDialog.title")}</DialogTitle>
                             <DialogDescription>
-                                Transfer this request to another supplier with the desired quantity and buy price.
+                                {t("supplierRequests.reassignDialog.description")}
                             </DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-4 py-4">
                             <div className="grid gap-2">
-                                <Label htmlFor="new_supplier">New Supplier *</Label>
+                                <Label htmlFor="new_supplier">{t("supplierRequests.fields.newSupplier")} *</Label>
                                 <Select
                                     value={reassignForm.new_supplier}
                                     onValueChange={(value) => setReassignForm(prev => ({ ...prev, new_supplier: value }))}
                                 >
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Select a supplier" />
+                                        <SelectValue placeholder={t("supplierRequests.fields.selectSupplier")} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {suppliers.map((supplier) => (
@@ -912,7 +895,7 @@ export default function SupplierRequestsTable() {
                                 </Select>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="quantity">Quantity to Transfer *</Label>
+                                <Label htmlFor="quantity">{t("supplierRequests.fields.quantityToTransfer")} *</Label>
                                 <Input
                                     id="quantity"
                                     type="number"
@@ -924,14 +907,14 @@ export default function SupplierRequestsTable() {
                                             setReassignForm(prev => ({ ...prev, quantity: value }))
                                         }
                                     }}
-                                    placeholder="Enter quantity"
+                                    placeholder={t("supplierRequests.fields.quantityPlaceholder")}
                                 />
                                 <p className="text-xs text-muted-foreground">
-                                    Must be greater than 0
+                                    {t("supplierRequests.fields.mustBeGreaterThanZero")}
                                 </p>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="reassign_buy_price">Buy Price *</Label>
+                                <Label htmlFor="reassign_buy_price">{t("supplierRequests.fields.buyPrice")} *</Label>
                                 <Input
                                     id="reassign_buy_price"
                                     type="number"
@@ -944,15 +927,15 @@ export default function SupplierRequestsTable() {
                                             setReassignForm(prev => ({ ...prev, buy_price: value }))
                                         }
                                     }}
-                                    placeholder="Enter buy price"
+                                    placeholder={t("supplierRequests.fields.buyPricePlaceholder")}
                                 />
                             </div>
                             {selectedRequest && (
                                 <div className="p-3 bg-muted/50 rounded-lg text-sm">
-                                    <div className="font-medium">Current Request Details:</div>
-                                    <div>Product: {selectedRequest.product_details?.title}</div>
-                                    <div>Original Quantity: {selectedRequest.total_quantity}</div>
-                                    <div>Current Supplier: {selectedRequest.supplier_details?.full_name}</div>
+                                    <div className="font-medium">{t("supplierRequests.currentRequestDetails")}:</div>
+                                    <div>{t("supplierRequests.fields.product")}: {selectedRequest.product_details?.title}</div>
+                                    <div>{t("supplierRequests.fields.originalQuantity")}: {selectedRequest.total_quantity}</div>
+                                    <div>{t("supplierRequests.fields.currentSupplier")}: {selectedRequest.supplier_details?.full_name}</div>
                                 </div>
                             )}
                         </div>
@@ -962,66 +945,63 @@ export default function SupplierRequestsTable() {
                                 onClick={() => setReassignDialogOpen(false)}
                                 disabled={reassignLoading}
                             >
-                                Cancel
+                                {t("supplierRequests.actions.cancel")}
                             </Button>
                             <Button
                                 onClick={handleReassignSubmit}
                                 disabled={reassignLoading}
                             >
-                                {reassignLoading ? "Reassigning..." : "Reassign Request"}
+                                {reassignLoading ? t("supplierRequests.reassigning") : t("supplierRequests.reassignRequest")}
                             </Button>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
 
-
-                {/* Order Details Dialog */}
                 {/* Order Details Dialog */}
                 <Dialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen}>
                     <DialogContent className="w-full max-w-lg md:max-w-3xl lg:max-w-4xl max-h-[90vh] overflow-y-auto">
                         <DialogHeader>
                             <DialogTitle className="flex items-center gap-2">
                                 <Tag className="h-5 w-5" />
-                                Order Details #{selectedOrder?.id}
+                                {t("supplierRequests.orderDetails.title")} #{selectedOrder?.id}
                             </DialogTitle>
                             <DialogDescription>
-                                Complete information about the selected order
+                                {t("supplierRequests.orderDetails.description")}
                             </DialogDescription>
                         </DialogHeader>
 
                         {selectedOrder && (
                             <div className="space-y-6">
-                                {/* Order Basic Info */}
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle>Order Information</CardTitle>
+                                        <CardTitle>{t("supplierRequests.orderDetails.orderInfo")}</CardTitle>
                                     </CardHeader>
                                     <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <div className="flex justify-between">
-                                                <span className="text-muted-foreground">Status:</span>
+                                                <span className="text-muted-foreground">{t("supplierRequests.orderDetails.status")}:</span>
                                                 <Badge variant="outline">{selectedOrder.status}</Badge>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-muted-foreground">Payment:</span>
+                                                <span className="text-muted-foreground">{t("supplierRequests.orderDetails.payment")}:</span>
                                                 <span className="font-medium">{selectedOrder.payment}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-muted-foreground">Total Price:</span>
+                                                <span className="text-muted-foreground">{t("supplierRequests.orderDetails.totalPrice")}:</span>
                                                 <span className="font-medium">${selectedOrder.price}</span>
                                             </div>
                                         </div>
                                         <div className="space-y-2">
                                             <div className="flex justify-between">
-                                                <span className="text-muted-foreground">Customer:</span>
+                                                <span className="text-muted-foreground">{t("supplierRequests.orderDetails.customer")}:</span>
                                                 <span className="font-medium">{selectedOrder.name}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-muted-foreground">Phone:</span>
+                                                <span className="text-muted-foreground">{t("supplierRequests.orderDetails.phone")}:</span>
                                                 <span className="font-medium">{selectedOrder.phone_number}</span>
                                             </div>
                                             <div className="flex justify-between">
-                                                <span className="text-muted-foreground">Date:</span>
+                                                <span className="text-muted-foreground">{t("supplierRequests.orderDetails.date")}:</span>
                                                 <span className="font-medium">
                                                     {format(new Date(selectedOrder.created), "PPP")}
                                                 </span>
@@ -1030,18 +1010,17 @@ export default function SupplierRequestsTable() {
                                     </CardContent>
                                 </Card>
 
-                                {/* Add Product Section - YANGI QO'SHILGAN QISM */}
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle>Add Product to Order</CardTitle>
+                                        <CardTitle>{t("supplierRequests.orderDetails.addProduct")}</CardTitle>
                                         <CardDescription>
-                                            Add additional products to this order
+                                            {t("supplierRequests.orderDetails.addProductDesc")}
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                             <div className="space-y-2">
-                                                <Label htmlFor="category">Category</Label>
+                                                <Label htmlFor="category">{t("supplierRequests.fields.category")}</Label>
                                                 <Select
                                                     value={selectedCategory}
                                                     onValueChange={(value) => {
@@ -1050,7 +1029,7 @@ export default function SupplierRequestsTable() {
                                                     }}
                                                 >
                                                     <SelectTrigger>
-                                                        <SelectValue placeholder="Select category" />
+                                                        <SelectValue placeholder={t("supplierRequests.fields.selectCategory")} />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {categories.map((category) => (
@@ -1063,19 +1042,19 @@ export default function SupplierRequestsTable() {
                                             </div>
 
                                             <div className="space-y-2">
-                                                <Label htmlFor="product">Product</Label>
+                                                <Label htmlFor="product">{t("supplierRequests.fields.product")}</Label>
                                                 <Select
                                                     value={selectedProduct}
                                                     onValueChange={setSelectedProduct}
                                                     disabled={!selectedCategory}
                                                 >
                                                     <SelectTrigger>
-                                                        <SelectValue placeholder="Select product" />
+                                                        <SelectValue placeholder={t("supplierRequests.fields.selectProduct")} />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         {products.map((product) => (
                                                             <SelectItem key={product.id} value={product.id.toString()}>
-                                                                {product.title_uz || product.title_en || product.title_ru || `Product ${product.id}`}
+                                                                {product.title_uz || product.title_en || product.title_ru || `${t("supplierRequests.product")} ${product.id}`}
                                                             </SelectItem>
                                                         ))}
                                                     </SelectContent>
@@ -1083,7 +1062,7 @@ export default function SupplierRequestsTable() {
                                             </div>
 
                                             <div className="space-y-2">
-                                                <Label htmlFor="quantity">Quantity</Label>
+                                                <Label htmlFor="quantity">{t("supplierRequests.fields.quantity")}</Label>
                                                 <Input
                                                     id="quantity"
                                                     type="number"
@@ -1096,7 +1075,7 @@ export default function SupplierRequestsTable() {
                                                             setNewProductQuantity(value)
                                                         }
                                                     }}
-                                                    placeholder="Enter quantity"
+                                                    placeholder={t("supplierRequests.fields.quantityPlaceholder")}
                                                 />
                                             </div>
                                         </div>
@@ -1106,15 +1085,14 @@ export default function SupplierRequestsTable() {
                                             disabled={!selectedProduct || !newProductQuantity || addProductLoading}
                                             className="mt-4"
                                         >
-                                            {addProductLoading ? "Adding..." : "Add Product to Order"}
+                                            {addProductLoading ? t("supplierRequests.adding") : t("supplierRequests.addProductToOrder")}
                                         </Button>
                                     </CardContent>
                                 </Card>
 
-                                {/* Order Items */}
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle>Order Items</CardTitle>
+                                        <CardTitle>{t("supplierRequests.orderDetails.orderItems")}</CardTitle>
                                     </CardHeader>
                                     <CardContent>
                                         <div className="space-y-4">
@@ -1130,16 +1108,15 @@ export default function SupplierRequestsTable() {
                                     </CardContent>
                                 </Card>
 
-                                {/* Location Info */}
                                 {selectedOrder.location && (
                                     <Card>
                                         <CardHeader>
-                                            <CardTitle>Delivery Location</CardTitle>
+                                            <CardTitle>{t("supplierRequests.orderDetails.deliveryLocation")}</CardTitle>
                                         </CardHeader>
                                         <CardContent>
                                             <div className="space-y-2">
                                                 <div className="flex justify-between">
-                                                    <span className="text-muted-foreground">Address:</span>
+                                                    <span className="text-muted-foreground">{t("supplierRequests.orderDetails.address")}:</span>
                                                     <span className="font-medium text-right">{selectedOrder.location.fullAddress}</span>
                                                 </div>
                                                 {selectedOrder.location.latitude && selectedOrder.location.longitude && (
@@ -1150,7 +1127,7 @@ export default function SupplierRequestsTable() {
                                                                 window.open(url, '_blank');
                                                             }}
                                                         >
-                                                            View Location on Map
+                                                            {t("supplierRequests.viewLocationOnMap")}
                                                         </Button>
                                                     </div>
                                                 )}

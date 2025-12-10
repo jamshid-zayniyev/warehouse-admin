@@ -88,7 +88,7 @@ export default function CategoryManagement() {
   const normalizeImageUrl = (url: string) => {
     if (!url) return "/placeholder.svg";
     if (url.startsWith("http")) return url;
-    return `https://warehouseats.pythonanywhere.com${url}?t=${Date.now()}`;
+    return `https://backend.dmx-group.uz${url}?t=${Date.now()}`;
   };
 
   // Fetch suppliers
@@ -307,18 +307,18 @@ export default function CategoryManagement() {
   };
 
   const handleEdit = (item: Category) => {
-    setEditingItem(item);
-    setFormData({
-      name_uz: item.name_uz || "",
-      name_en: item.name_en || "",
-      name_ru: item.name_ru || "",
-      supplier: item.supplier.id,
-      image: item.image,
-    });
-    setImagePreview(normalizeImageUrl(item.image));
-    setErrors({});
-    setIsDialogOpen(true);
-  };
+  setEditingItem(item);
+  setFormData({
+    name_uz: item.name_uz || "",
+    name_en: item.name_en || "",
+    name_ru: item.name_ru || "",
+    supplier: item.supplier?.id || 0, 
+    image: item.image,
+  });
+  setImagePreview(normalizeImageUrl(item.image));
+  setErrors({});
+  setIsDialogOpen(true);
+};
 
   const handleDelete = async (id: number) => {
     if (confirm(t("categoryManagement.messages.confirmDelete"))) {
