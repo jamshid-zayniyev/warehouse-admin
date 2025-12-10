@@ -44,8 +44,8 @@ export default function AdminDashboard() {
 
     fetchLength("/user/", setUserLength)
     fetchLength("/product/categories/", setCategoryLength)
-    fetchLength("/order/all/", setProductsLength)
-    fetchLength("/product/all/", setOrderLength)
+    fetchLength("/order/all/", setOrderLength)
+    fetchLength("/product/all/", setProductsLength)
     fetchLength("/about/banners/", setBannersLength)
     fetchLength("/about/contact/", setContactMessagesLength)
     fetchLength("/about/news/", setNewsLength)
