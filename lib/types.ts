@@ -338,6 +338,8 @@ export interface SupplierRequestWithDetails extends SupplierRequest {
   supplier_details?: User
   product_details?: Product
   order_details?: Order[]
+  new_supplier_details?: User
+  reassigned_from?: any
 }
 
 export type CreateOrder = Omit<Order, "id" | "created">

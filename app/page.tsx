@@ -12,9 +12,9 @@ export default function HomePage() {
   useEffect(() => {
     if (!loading) {
       if (isAuthenticated) {
-        router.push("/admin")
+        router.push("/admin/")
       } else {
-        router.push("/login")
+        router.push("/login/")
       }
     }
   }, [isAuthenticated, loading, router])

@@ -31,77 +31,77 @@ import { useTranslation } from 'next-i18next'
 const navigation = [
   {
     name: "Dashdashboard",
-    href: "/admin",
+    href: "/admin/",
     icon: LayoutDashboard,
   },
   {
     name: "Dashorders",
-    href: "/admin/orders",
+    href: "/admin/orders/",
     icon: ShoppingCart,
   },
   {
     name: "products",
-    href: "/admin/products",
+    href: "/admin/products/",
     icon: ShoppingBag,
   },
   {
     name: "categories",
-    href: "/admin/categories",
+    href: "/admin/categories/",
     icon: Grid,
   },
   {
     name: "Newly bought products",
-    href: "/admin/new-products",
+    href: "/admin/new-products/",
     icon: PackagePlus,
   },
   {
     name: "banners",
-    href: "/admin/banners",
+    href: "/admin/banners/",
     icon: ImageIcon,
   },
   {
     name: "contactMessages",
-    href: "/admin/contact",
+    href: "/admin/contact/",
     icon: MessageSquare,
   },
   {
     name: "users",
-    href: "/admin/users",
+    href: "/admin/users/",
     icon: User,
   },
   {
     name: "news",
-    href: "/admin/news",
+    href: "/admin/news/",
     icon: Newspaper,
   },
   {
     name: "ourContact",
-    href: "/admin/our-contact",
+    href: "/admin/our-contact/",
     icon: Phone,
   },
   {
     name: "socialMedia",
-    href: "/admin/social-media",
+    href: "/admin/social-media/",
     icon: Share2,
   },
   {
     name: "about",
-    href: "/admin/about",
+    href: "/admin/about/",
     icon: BadgeInfo,
   },
   {
     name: "colors",
-    href: "/admin/colors",
+    href: "/admin/colors/",
     icon: Palette,
   },
   {
     name: "Suppliers",
-    href: "/admin/suppliers",
+    href: "/admin/suppliers/",
     icon: Users,
   },
   {
     name: "Suppliers work daily",
-    href: "/admin/suppliers-work-daily",
+    href: "/admin/suppliers-work-daily/",
     icon: Users,
   },
 ]
