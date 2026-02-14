@@ -16,7 +16,7 @@ interface LoginCredentials {
   password: string
 }
 
-const API_BASE_URL = "https://backend.dmx-group.uz/api/v1"
+const API_BASE_URL = "https://warehouseats.pythonanywhere.com/api/v1"
 
 export class AuthService {
   private static instance: AuthService

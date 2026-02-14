@@ -4,13 +4,39 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { AdminLayout } from "@/components/admin-layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Edit, Trash2, Tags, Languages } from "lucide-react";
 import Image from "next/image";
@@ -88,7 +114,7 @@ export default function CategoryManagement() {
   const normalizeImageUrl = (url: string) => {
     if (!url) return "/placeholder.svg";
     if (url.startsWith("http")) return url;
-    return `https://backend.dmx-group.uz${url}?t=${Date.now()}`;
+    return `https://warehouseats.pythonanywhere.com${url}?t=${Date.now()}`;
   };
 
   // Fetch suppliers
@@ -245,7 +271,10 @@ export default function CategoryManagement() {
         const newErrors: FormErrors = {};
 
         // Handle non_field_errors (like "This Category already exists")
-        if (errorData.non_field_errors && errorData.non_field_errors.length > 0) {
+        if (
+          errorData.non_field_errors &&
+          errorData.non_field_errors.length > 0
+        ) {
           newErrors.non_field_errors = errorData.non_field_errors[0];
         }
 
@@ -272,7 +301,9 @@ export default function CategoryManagement() {
         if (Object.keys(newErrors).length === 0) {
           toast({
             title: "Error",
-            description: `HTTP ${response.status}: ${JSON.stringify(errorData)}`,
+            description: `HTTP ${response.status}: ${JSON.stringify(
+              errorData
+            )}`,
             variant: "destructive",
           });
         }
@@ -307,18 +338,18 @@ export default function CategoryManagement() {
   };
 
   const handleEdit = (item: Category) => {
-  setEditingItem(item);
-  setFormData({
-    name_uz: item.name_uz || "",
-    name_en: item.name_en || "",
-    name_ru: item.name_ru || "",
-    supplier: item.supplier?.id || 0, 
-    image: item.image,
-  });
-  setImagePreview(normalizeImageUrl(item.image));
-  setErrors({});
-  setIsDialogOpen(true);
-};
+    setEditingItem(item);
+    setFormData({
+      name_uz: item.name_uz || "",
+      name_en: item.name_en || "",
+      name_ru: item.name_ru || "",
+      supplier: item.supplier?.id || 0,
+      image: item.image,
+    });
+    setImagePreview(normalizeImageUrl(item.image));
+    setErrors({});
+    setIsDialogOpen(true);
+  };
 
   const handleDelete = async (id: number) => {
     if (confirm(t("categoryManagement.messages.confirmDelete"))) {
@@ -363,8 +394,10 @@ export default function CategoryManagement() {
 
   // Helper function to get supplier name by ID
   const getSupplierName = (supplierId: number) => {
-    const supplier = suppliers.find(s => s.id === supplierId);
-    return supplier ? `${supplier.full_name} (${supplier.phone_number})` : `Supplier #${supplierId}`;
+    const supplier = suppliers.find((s) => s.id === supplierId);
+    return supplier
+      ? `${supplier.full_name} (${supplier.phone_number})`
+      : `Supplier #${supplierId}`;
   };
 
   useEffect(() => {
@@ -414,7 +447,9 @@ export default function CategoryManagement() {
               {/* General errors display */}
               {errors.non_field_errors && (
                 <div className="bg-red-50 border border-red-200 rounded-md p-3">
-                  <p className="text-red-600 text-sm font-medium">{errors.non_field_errors}</p>
+                  <p className="text-red-600 text-sm font-medium">
+                    {errors.non_field_errors}
+                  </p>
                 </div>
               )}
 
@@ -445,14 +480,18 @@ export default function CategoryManagement() {
                         value={formData.name_en}
                         onChange={(e) => {
                           setFormData({ ...formData, name_en: e.target.value });
-                          clearError('name_en');
+                          clearError("name_en");
                         }}
-                        placeholder={t("categoryManagement.fields.nameEnPlaceholder")}
+                        placeholder={t(
+                          "categoryManagement.fields.nameEnPlaceholder"
+                        )}
                         required
                         className={errors.name_en ? "border-red-500" : ""}
                       />
                       {errors.name_en && (
-                        <p className="text-red-500 text-sm mt-1">{errors.name_en}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.name_en}
+                        </p>
                       )}
                     </div>
                   </TabsContent>
@@ -467,14 +506,18 @@ export default function CategoryManagement() {
                         value={formData.name_uz}
                         onChange={(e) => {
                           setFormData({ ...formData, name_uz: e.target.value });
-                          clearError('name_uz');
+                          clearError("name_uz");
                         }}
-                        placeholder={t("categoryManagement.fields.nameUzPlaceholder")}
+                        placeholder={t(
+                          "categoryManagement.fields.nameUzPlaceholder"
+                        )}
                         required
                         className={errors.name_uz ? "border-red-500" : ""}
                       />
                       {errors.name_uz && (
-                        <p className="text-red-500 text-sm mt-1">{errors.name_uz}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.name_uz}
+                        </p>
                       )}
                     </div>
                   </TabsContent>
@@ -489,14 +532,18 @@ export default function CategoryManagement() {
                         value={formData.name_ru}
                         onChange={(e) => {
                           setFormData({ ...formData, name_ru: e.target.value });
-                          clearError('name_ru');
+                          clearError("name_ru");
                         }}
-                        placeholder={t("categoryManagement.fields.nameRuPlaceholder")}
+                        placeholder={t(
+                          "categoryManagement.fields.nameRuPlaceholder"
+                        )}
                         required
                         className={errors.name_ru ? "border-red-500" : ""}
                       />
                       {errors.name_ru && (
-                        <p className="text-red-500 text-sm mt-1">{errors.name_ru}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.name_ru}
+                        </p>
                       )}
                     </div>
                   </TabsContent>
@@ -510,19 +557,26 @@ export default function CategoryManagement() {
                     onValueChange={handleSupplierChange}
                     required
                   >
-                    <SelectTrigger className={errors.supplier ? "border-red-500" : ""}>
+                    <SelectTrigger
+                      className={errors.supplier ? "border-red-500" : ""}
+                    >
                       <SelectValue placeholder="Select a supplier" />
                     </SelectTrigger>
                     <SelectContent>
                       {suppliers.map((supplier) => (
-                        <SelectItem key={supplier.id} value={supplier.id.toString()}>
+                        <SelectItem
+                          key={supplier.id}
+                          value={supplier.id.toString()}
+                        >
                           {supplier.full_name} ({supplier.phone_number})
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                   {errors.supplier && (
-                    <p className="text-red-500 text-sm mt-1">{errors.supplier}</p>
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.supplier}
+                    </p>
                   )}
                 </div>
 
@@ -561,19 +615,16 @@ export default function CategoryManagement() {
                   >
                     {t("categoryManagement.actions.cancel")}
                   </Button>
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
+                  <Button type="submit" disabled={isSubmitting}>
                     {isSubmitting ? (
                       <>
                         <div className="animate-spin h-4 w-4 border-b-2 border-white rounded-full mr-2"></div>
                         {t("categoryManagement.actions.processing")}
                       </>
+                    ) : editingItem ? (
+                      t("categoryManagement.actions.update")
                     ) : (
-                      editingItem
-                        ? t("categoryManagement.actions.update")
-                        : t("categoryManagement.actions.create")
+                      t("categoryManagement.actions.create")
                     )}
                   </Button>
                 </div>
@@ -634,21 +685,27 @@ export default function CategoryManagement() {
                             <div className="text-xs text-muted-foreground">
                               {cat.name_uz && (
                                 <span>
-                                  {t("categoryManagement.table.languageLabels.uz")}
+                                  {t(
+                                    "categoryManagement.table.languageLabels.uz"
+                                  )}
                                   : {cat.name_uz}
                                 </span>
                               )}
                               {cat.name_en && (
                                 <span>
                                   {cat.name_uz && " | "}
-                                  {t("categoryManagement.table.languageLabels.en")}
+                                  {t(
+                                    "categoryManagement.table.languageLabels.en"
+                                  )}
                                   : {cat.name_en}
                                 </span>
                               )}
                               {cat.name_ru && (
                                 <span>
                                   {(cat.name_uz || cat.name_en) && " | "}
-                                  {t("categoryManagement.table.languageLabels.ru")}
+                                  {t(
+                                    "categoryManagement.table.languageLabels.ru"
+                                  )}
                                   : {cat.name_ru}
                                 </span>
                               )}
@@ -656,7 +713,8 @@ export default function CategoryManagement() {
                           </div>
                         </TableCell>
                         <TableCell>
-                          {cat?.supplier?.full_name} ({cat?.supplier?.phone_number})
+                          {cat?.supplier?.full_name} (
+                          {cat?.supplier?.phone_number})
                         </TableCell>
                         <TableCell>{cat.slug}</TableCell>
                         <TableCell>

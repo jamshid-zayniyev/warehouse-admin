@@ -1,6 +1,6 @@
 // services/api.ts
 // export const API_BASE_URL = "https://warehouseats.pythonanywhere.com/api/v1";
-export const API_BASE_URL = "https://backend.dmx-group.uz/api/v1";
+export const API_BASE_URL = "https://warehouseats.pythonanywhere.com/api/v1/";
 
 // https://warehouseats.pythonanywhere.com/api/swagger/
 
