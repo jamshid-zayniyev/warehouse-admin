@@ -41,7 +41,7 @@ const navigation = [
   },
   {
     name: "products",
-    href: "/admin/products.html/",
+    href: "/admin/products/",
     icon: ShoppingBag,
   },
   {

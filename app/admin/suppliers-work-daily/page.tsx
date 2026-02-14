@@ -112,7 +112,7 @@ export default function SupplierRequestsTable() {
   const fetchCategories = async () => {
     try {
       const response = await authService.makeAuthenticatedRequest(
-        "/product/categories/"
+        "/product/categories/",
       );
       if (!response.ok) throw new Error("Failed to fetch categories");
       const data = await response.json();
@@ -134,7 +134,7 @@ export default function SupplierRequestsTable() {
 
     try {
       const response = await authService.makeAuthenticatedRequest(
-        `/product/category/${categoryId}/products/`
+        `/product/category/${categoryId}/products/`,
       );
       if (!response.ok) throw new Error("Failed to fetch products");
       const data = await response.json();
@@ -182,7 +182,7 @@ export default function SupplierRequestsTable() {
             product_id: parseInt(selectedProduct),
             quantity: quantity,
           }),
-        }
+        },
       );
 
       if (!response.ok) throw new Error("Failed to add product");
@@ -198,7 +198,7 @@ export default function SupplierRequestsTable() {
       setProducts([]);
 
       const updatedOrderResponse = await authService.makeAuthenticatedRequest(
-        `/order/${selectedOrder.id}/`
+        `/order/${selectedOrder.id}/`,
       );
       if (updatedOrderResponse.ok) {
         const updatedOrder = await updatedOrderResponse.json();
@@ -230,7 +230,7 @@ export default function SupplierRequestsTable() {
       const dateString = formatDateForAPI(targetDate);
 
       const response = await authService.makeAuthenticatedRequest(
-        `/supplier/supplier-requests/${dateString}/`
+        `/supplier/supplier-requests/${dateString}/`,
       );
       if (!response.ok) throw new Error("Failed to fetch requests");
       const data = await response.json();
@@ -258,7 +258,7 @@ export default function SupplierRequestsTable() {
             order_details: orderDetails,
             new_supplier_details: newSupplierDetails,
           };
-        })
+        }),
       );
 
       setRequests(requestsWithDetails);
@@ -274,11 +274,11 @@ export default function SupplierRequestsTable() {
   };
 
   const fetchSupplierDetails = async (
-    supplierId: number
+    supplierId: number,
   ): Promise<User | null> => {
     try {
       const response = await authService.makeAuthenticatedRequest(
-        `/user/${supplierId}/`
+        `/user/${supplierId}/`,
       );
       if (!response.ok) return null;
       return await response.json();
@@ -288,11 +288,11 @@ export default function SupplierRequestsTable() {
   };
 
   const fetchProductDetails = async (
-    productId: number
+    productId: number,
   ): Promise<any | null> => {
     try {
       const response = await authService.makeAuthenticatedRequest(
-        `/product/${productId}/`
+        `/product/${productId}/`,
       );
       if (!response.ok) return null;
       return await response.json();
@@ -306,11 +306,11 @@ export default function SupplierRequestsTable() {
       const orders = await Promise.all(
         orderIds.map(async (orderId) => {
           const response = await authService.makeAuthenticatedRequest(
-            `/order/${orderId}/`
+            `/order/${orderId}/`,
           );
           if (!response.ok) return null;
           return await response.json();
-        })
+        }),
       );
       return orders.filter(Boolean) as any[];
     } catch {
@@ -320,14 +320,13 @@ export default function SupplierRequestsTable() {
 
   const fetchSuppliers = async () => {
     try {
-      const response = await authService.makeAuthenticatedRequest(
-        `/user/supplier/`
-      );
+      const response =
+        await authService.makeAuthenticatedRequest(`/user/supplier/`);
       if (!response.ok) throw new Error("Failed to fetch suppliers");
       const data = await response.json();
       if (selectedRequest?.supplier) {
         const filteredSuppliers = data.filter(
-          (supplier: User) => supplier.id !== selectedRequest.supplier
+          (supplier: User) => supplier.id !== selectedRequest.supplier,
         );
         setSuppliers(filteredSuppliers);
       } else {
@@ -384,7 +383,7 @@ export default function SupplierRequestsTable() {
           body: JSON.stringify({
             buy_price: buyPrice.toString(),
           }),
-        }
+        },
       );
 
       if (!response.ok) throw new Error("Failed to mark request as success");
@@ -460,7 +459,7 @@ export default function SupplierRequestsTable() {
             quantity: quantity,
             buy_price: buyPrice.toString(),
           }),
-        }
+        },
       );
 
       if (!response.ok) throw new Error("Failed to reassign request");
@@ -491,7 +490,7 @@ export default function SupplierRequestsTable() {
         `/supplier/supplier-requests/${requestId}/reject/`,
         {
           method: "POST",
-        }
+        },
       );
 
       if (!response.ok) throw new Error("Failed to reject request");
@@ -553,13 +552,13 @@ export default function SupplierRequestsTable() {
   const normalizeImageUrl = (url?: string) => {
     if (!url) return "/placeholder.svg";
     if (url.startsWith("http")) return url;
-    return `https://warehouseats.pythonanywhere.com${url}`;
+    return `https://backend.dmx-group.uz${url}`;
   };
 
   const handleViewOrder = async (orderId: number) => {
     try {
       const response = await authService.makeAuthenticatedRequest(
-        `/order/${orderId}/`
+        `/order/${orderId}/`,
       );
       if (!response.ok) throw new Error("Failed to fetch order");
       const order = await response.json();
@@ -667,7 +666,7 @@ export default function SupplierRequestsTable() {
                 <Select
                   onValueChange={(value) => {
                     const option = quickDateOptions.find(
-                      (opt) => opt.value === value
+                      (opt) => opt.value === value,
                     );
                     if (option) {
                       handleDateChange(option.date);
@@ -694,7 +693,7 @@ export default function SupplierRequestsTable() {
                       variant="outline"
                       className={cn(
                         "w-full sm:w-[240px] justify-start text-left font-normal",
-                        !selectedDate && "text-muted-foreground"
+                        !selectedDate && "text-muted-foreground",
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -775,7 +774,7 @@ export default function SupplierRequestsTable() {
                                 {request.supplier_details?.image ? (
                                   <img
                                     src={normalizeImageUrl(
-                                      request.supplier_details.image
+                                      request.supplier_details.image,
                                     )}
                                     alt={request.supplier_details.full_name}
                                     className="h-8 w-8 rounded-full object-cover flex-shrink-0"
@@ -803,7 +802,7 @@ export default function SupplierRequestsTable() {
                                 {request.product_details?.images?.[0] ? (
                                   <img
                                     src={normalizeImageUrl(
-                                      request.product_details.images[0].image
+                                      request.product_details.images[0].image,
                                     )}
                                     alt={request.product_details.title}
                                     className="h-8 w-8 rounded object-cover flex-shrink-0"
@@ -916,14 +915,14 @@ export default function SupplierRequestsTable() {
                                     <div>
                                       <h4 className="font-medium text-sm mb-2">
                                         {t(
-                                          "supplierRequests.amountInformation"
+                                          "supplierRequests.amountInformation",
                                         )}
                                       </h4>
                                       <div className="space-y-2 text-sm">
                                         <div className="flex justify-between">
                                           <span className="text-muted-foreground">
                                             {t(
-                                              "supplierRequests.amountReceived"
+                                              "supplierRequests.amountReceived",
                                             )}
                                             :
                                           </span>
@@ -938,7 +937,7 @@ export default function SupplierRequestsTable() {
                                             <div className="flex justify-between">
                                               <span className="text-muted-foreground">
                                                 {t(
-                                                  "supplierRequests.transferredQuantity"
+                                                  "supplierRequests.transferredQuantity",
                                                 )}
                                                 :
                                               </span>
@@ -963,7 +962,7 @@ export default function SupplierRequestsTable() {
                                         <span className="text-sm">
                                           {format(
                                             new Date(request.created_at),
-                                            "MMM dd, yyyy"
+                                            "MMM dd, yyyy",
                                           )}
                                         </span>
                                       </div>
@@ -973,7 +972,7 @@ export default function SupplierRequestsTable() {
                                         <div>
                                           <span className="text-muted-foreground text-xs">
                                             {t(
-                                              "supplierRequests.transferredTo"
+                                              "supplierRequests.transferredTo",
                                             )}
                                             :
                                           </span>
@@ -983,7 +982,7 @@ export default function SupplierRequestsTable() {
                                               <img
                                                 src={normalizeImageUrl(
                                                   request.new_supplier_details
-                                                    .image
+                                                    .image,
                                                 )}
                                                 alt={
                                                   request.new_supplier_details
@@ -1006,7 +1005,7 @@ export default function SupplierRequestsTable() {
                                         <div>
                                           <span className="text-muted-foreground text-xs">
                                             {t(
-                                              "supplierRequests.reassignedFrom"
+                                              "supplierRequests.reassignedFrom",
                                             )}
                                             :
                                           </span>
@@ -1320,7 +1319,7 @@ export default function SupplierRequestsTable() {
                           <SelectTrigger>
                             <SelectValue
                               placeholder={t(
-                                "supplierRequests.fields.selectCategory"
+                                "supplierRequests.fields.selectCategory",
                               )}
                             />
                           </SelectTrigger>
@@ -1349,7 +1348,7 @@ export default function SupplierRequestsTable() {
                           <SelectTrigger>
                             <SelectValue
                               placeholder={t(
-                                "supplierRequests.fields.selectProduct"
+                                "supplierRequests.fields.selectProduct",
                               )}
                             />
                           </SelectTrigger>
@@ -1388,7 +1387,7 @@ export default function SupplierRequestsTable() {
                             }
                           }}
                           placeholder={t(
-                            "supplierRequests.fields.quantityPlaceholder"
+                            "supplierRequests.fields.quantityPlaceholder",
                           )}
                         />
                       </div>
@@ -1426,7 +1425,7 @@ export default function SupplierRequestsTable() {
                             order={requests}
                             onQuantityUpdate={fetchSupplierRequests}
                           />
-                        )
+                        ),
                       )}
                     </div>
                   </CardContent>

@@ -114,15 +114,14 @@ export default function CategoryManagement() {
   const normalizeImageUrl = (url: string) => {
     if (!url) return "/placeholder.svg";
     if (url.startsWith("http")) return url;
-    return `https://warehouseats.pythonanywhere.com${url}?t=${Date.now()}`;
+    return `https://backend.dmx-group.uz${url}?t=${Date.now()}`;
   };
 
   // Fetch suppliers
   const fetchSuppliers = async () => {
     try {
-      const response = await authService.makeAuthenticatedRequest(
-        "/user/supplier/"
-      );
+      const response =
+        await authService.makeAuthenticatedRequest("/user/supplier/");
 
       if (response.ok) {
         const data = await response.json();
@@ -145,7 +144,7 @@ export default function CategoryManagement() {
     setIsLoading(true);
     try {
       const response = await authService.makeAuthenticatedRequest(
-        "/product/categories/"
+        "/product/categories/",
       );
       if (response.ok) {
         const data = await response.json();
@@ -243,8 +242,8 @@ export default function CategoryManagement() {
             categoryData.map((item) =>
               item.id === editingItem.id
                 ? { ...result, image: normalizeImageUrl(result.image) }
-                : item
-            )
+                : item,
+            ),
           );
           toast({
             title: "Success",
@@ -302,7 +301,7 @@ export default function CategoryManagement() {
           toast({
             title: "Error",
             description: `HTTP ${response.status}: ${JSON.stringify(
-              errorData
+              errorData,
             )}`,
             variant: "destructive",
           });
@@ -315,7 +314,7 @@ export default function CategoryManagement() {
         description: t(
           editingItem
             ? "categoryManagement.messages.error.update"
-            : "categoryManagement.messages.error.create"
+            : "categoryManagement.messages.error.create",
         ),
         variant: "destructive",
       });
@@ -358,7 +357,7 @@ export default function CategoryManagement() {
           `/product/categories/${id}/`,
           {
             method: "DELETE",
-          }
+          },
         );
 
         if (response.ok) {
@@ -483,7 +482,7 @@ export default function CategoryManagement() {
                           clearError("name_en");
                         }}
                         placeholder={t(
-                          "categoryManagement.fields.nameEnPlaceholder"
+                          "categoryManagement.fields.nameEnPlaceholder",
                         )}
                         required
                         className={errors.name_en ? "border-red-500" : ""}
@@ -509,7 +508,7 @@ export default function CategoryManagement() {
                           clearError("name_uz");
                         }}
                         placeholder={t(
-                          "categoryManagement.fields.nameUzPlaceholder"
+                          "categoryManagement.fields.nameUzPlaceholder",
                         )}
                         required
                         className={errors.name_uz ? "border-red-500" : ""}
@@ -535,7 +534,7 @@ export default function CategoryManagement() {
                           clearError("name_ru");
                         }}
                         placeholder={t(
-                          "categoryManagement.fields.nameRuPlaceholder"
+                          "categoryManagement.fields.nameRuPlaceholder",
                         )}
                         required
                         className={errors.name_ru ? "border-red-500" : ""}
@@ -686,7 +685,7 @@ export default function CategoryManagement() {
                               {cat.name_uz && (
                                 <span>
                                   {t(
-                                    "categoryManagement.table.languageLabels.uz"
+                                    "categoryManagement.table.languageLabels.uz",
                                   )}
                                   : {cat.name_uz}
                                 </span>
@@ -695,7 +694,7 @@ export default function CategoryManagement() {
                                 <span>
                                   {cat.name_uz && " | "}
                                   {t(
-                                    "categoryManagement.table.languageLabels.en"
+                                    "categoryManagement.table.languageLabels.en",
                                   )}
                                   : {cat.name_en}
                                 </span>
@@ -704,7 +703,7 @@ export default function CategoryManagement() {
                                 <span>
                                   {(cat.name_uz || cat.name_en) && " | "}
                                   {t(
-                                    "categoryManagement.table.languageLabels.ru"
+                                    "categoryManagement.table.languageLabels.ru",
                                   )}
                                   : {cat.name_ru}
                                 </span>

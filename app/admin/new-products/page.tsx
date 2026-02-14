@@ -111,7 +111,7 @@ function ProductManagementContent() {
   const fetchCategories = async () => {
     try {
       const response = await authService.makeAuthenticatedRequest(
-        "/product/categories/"
+        "/product/categories/",
       );
       if (!response.ok) throw new Error("Failed to fetch categories");
       const data = await response.json();
@@ -134,7 +134,7 @@ function ProductManagementContent() {
 
     try {
       const response = await authService.makeAuthenticatedRequest(
-        `/product/category/${categoryId}/products/`
+        `/product/category/${categoryId}/products/`,
       );
       if (!response.ok) throw new Error("Failed to fetch products");
       const data = await response.json();
@@ -184,7 +184,7 @@ function ProductManagementContent() {
         setIsLoading(false);
       }
     },
-    [searchFilter, toast, t]
+    [searchFilter, toast, t],
   );
 
   // Filter function
@@ -192,7 +192,7 @@ function ProductManagementContent() {
     (
       data: ProductInput[],
       search: string,
-      date: { year?: string; month?: string; day?: string }
+      date: { year?: string; month?: string; day?: string },
     ) => {
       let filteredData = data;
 
@@ -221,13 +221,13 @@ function ProductManagementContent() {
             item.product_details?.title_en
               ?.toLowerCase()
               .includes(searchLower) ||
-            item.product_details?.title_ru?.toLowerCase().includes(searchLower)
+            item.product_details?.title_ru?.toLowerCase().includes(searchLower),
         );
       }
 
       setProductInputs(filteredData);
     },
-    []
+    [],
   );
 
   // Load data on initial render
@@ -282,7 +282,7 @@ function ProductManagementContent() {
   const normalizeImageUrl = (url?: string) => {
     if (!url) return "/placeholder.svg";
     if (url.startsWith("http")) return url;
-    return `https://warehouseats.pythonanywhere.com${url}`;
+    return `https://backend.dmx-group.uz${url}`;
   };
 
   const openCreateDialog = () => {
@@ -314,7 +314,7 @@ function ProductManagementContent() {
         `/product/input/${id}/`,
         {
           method: "DELETE",
-        }
+        },
       );
       if (!response.ok) throw new Error("Delete failed");
 
@@ -323,7 +323,7 @@ function ProductManagementContent() {
         await fetchDailyInputs(
           dateFilter.year,
           dateFilter.month,
-          dateFilter.day
+          dateFilter.day,
         );
       } else {
         await fetchDailyInputs();
@@ -376,7 +376,7 @@ function ProductManagementContent() {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
-          }
+          },
         );
       } else {
         response = await authService.makeAuthenticatedRequest(
@@ -385,7 +385,7 @@ function ProductManagementContent() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
-          }
+          },
         );
       }
 
@@ -399,7 +399,7 @@ function ProductManagementContent() {
         await fetchDailyInputs(
           dateFilter.year,
           dateFilter.month,
-          dateFilter.day
+          dateFilter.day,
         );
       } else {
         await fetchDailyInputs();
@@ -430,7 +430,7 @@ function ProductManagementContent() {
   // Set date filter
   const handleDateFilterChange = (
     type: "year" | "month" | "day",
-    value: string
+    value: string,
   ) => {
     setDateFilter((prev) => {
       const newFilter = { ...prev, [type]: value };
@@ -574,7 +574,7 @@ function ProductManagementContent() {
                       {!formData.category && (
                         <p className="text-sm text-muted-foreground">
                           {t(
-                            "productManagement.placeholders.selectCategoryFirst"
+                            "productManagement.placeholders.selectCategoryFirst",
                           )}
                         </p>
                       )}
@@ -710,7 +710,7 @@ function ProductManagementContent() {
                       dateFilter.year && dateFilter.month && dateFilter.day
                         ? `${dateFilter.year}-${dateFilter.month.padStart(
                             2,
-                            "0"
+                            "0",
                           )}-${dateFilter.day.padStart(2, "0")}`
                         : ""
                     }
@@ -747,7 +747,7 @@ function ProductManagementContent() {
                   <Input
                     id="search-filter"
                     placeholder={t(
-                      "productManagement.placeholders.searchProducts"
+                      "productManagement.placeholders.searchProducts",
                     )}
                     value={searchFilter}
                     onChange={(e) => setSearchFilter(e.target.value)}
@@ -803,7 +803,7 @@ function ProductManagementContent() {
                 : t("productManagement.filter.showingRecent")}
               {searchFilter &&
                 ` • ${t(
-                  "productManagement.filter.filteredBy"
+                  "productManagement.filter.filteredBy",
                 )}: "${searchFilter}"`}
             </CardDescription>
           </CardHeader>
