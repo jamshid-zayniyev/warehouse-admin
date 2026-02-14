@@ -88,7 +88,7 @@ export default function CategoryManagement() {
   const normalizeImageUrl = (url: string) => {
     if (!url) return "/placeholder.svg";
     if (url.startsWith("http")) return url;
-    return `https://warehouseats.pythonanywhere.com${url}?t=${Date.now()}`;
+    return `https://api.dmx-group.uz${url}?t=${Date.now()}`;
   };
 
   // Fetch suppliers

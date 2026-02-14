@@ -1,7 +1,7 @@
 // services/api.ts
-// export const API_BASE_URL = "https://warehouseats.pythonanywhere.com/api/v1";
-export const API_BASE_URL = "https://warehouseats.pythonanywhere.com/api/v1";
-// https://warehouseats.pythonanywhere.com/api/swagger/
+// export const API_BASE_URL = "https://api.dmx-group.uz/api/v1";
+export const API_BASE_URL = "https://api.dmx-group.uz/api/v1";
+// https://api.dmx-group.uz/api/swagger/
 
 
 // umumiy wrapper

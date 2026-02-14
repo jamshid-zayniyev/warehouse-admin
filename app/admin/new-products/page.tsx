@@ -236,7 +236,7 @@ function ProductManagementContent() {
   const normalizeImageUrl = (url?: string) => {
     if (!url) return "/placeholder.svg"
     if (url.startsWith("http")) return url
-    return `https://warehouseats.pythonanywhere.com${url}`
+    return `https://api.dmx-group.uz${url}`
   }
 
   const openCreateDialog = () => {
